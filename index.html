@@ -1,0 +1,1200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JPP PMKL Student Portal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #3b82f6;
+            --primary-dark: #1e40af;
+            --secondary: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --dark: #1f2937;
+            --light: #f3f4f6;
+            --border: #e5e7eb;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: url('Background Pmkl.jpg') center/cover fixed no-repeat;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+
+        /* Navigation */
+        nav {
+            background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo img {
+            height: 40px;
+            width: auto;
+            display: block;
+            border-radius: 8px;
+        }
+
+        .logo i {
+            color: var(--primary);
+        }
+
+        .nav-center {
+            display: flex;
+            gap: 2rem;
+            flex: 1;
+            justify-content: center;
+        }
+
+        .nav-center a {
+            color: #d1d5db;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .nav-center a:hover,
+        .nav-center a.active {
+            color: var(--primary);
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 0.25rem;
+        }
+
+        .nav-right {
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .nav-right button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.5rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-right button:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            overflow: hidden;
+            border-radius: 1rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3);
+            min-height: 400px;
+            background: #111827;
+        }
+
+        .banner-slider {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .slide {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            transition: opacity 0.8s ease;
+        }
+
+        .slide.active {
+            opacity: 1;
+            z-index: 1;
+        }
+
+        .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .slide-caption {
+            position: absolute;
+            left: 2rem;
+            bottom: 2rem;
+            color: white;
+            font-size: 1.2rem;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 1rem 1.5rem;
+            border-radius: 0.75rem;
+            max-width: calc(100% - 4rem);
+        }
+
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            background: linear-gradient(180deg, rgba(17, 24, 39, 0.25), rgba(17, 24, 39, 0.65));
+            z-index: 2;
+        }
+
+        .slider-dots {
+            display: flex;
+            gap: 0.75rem;
+            margin-top: 1.5rem;
+        }
+
+        .slider-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .slider-dot.active {
+            background: white;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+            animation: slideDown 0.6s ease-out;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            animation: slideUp 0.6s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Sections */
+        .section {
+            display: none;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+            border-color: var(--primary);
+        }
+
+        .stat-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #6b7280;
+            font-weight: 500;
+        }
+
+        /* Cards */
+        .card {
+            background: white;
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            margin-bottom: 1.5rem;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, var(--primary), #1e40af);
+            color: white;
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .card-header h3 {
+            font-size: 1.3rem;
+            margin: 0;
+        }
+
+        .card-body {
+            padding: 2rem;
+        }
+
+        /* Announcement Items */
+        .announcement-item {
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .announcement-item:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .announcement-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .announcement-category {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 0.25rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .announcement-content {
+            color: #6b7280;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .announcement-date {
+            color: #9ca3af;
+            font-size: 0.85rem;
+        }
+
+        /* Event Cards */
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .event-card {
+            background: white;
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .event-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+        }
+
+        .event-image {
+            height: 150px;
+            background: linear-gradient(135deg, var(--primary), #ec4899);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+        }
+
+        .event-content {
+            padding: 1.5rem;
+        }
+
+        .event-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+
+        .event-info {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+            color: #6b7280;
+            font-size: 0.95rem;
+        }
+
+        .event-button {
+            width: 100%;
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+        }
+
+        .event-button:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        /* Members Grid */
+        .members-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        .member-card {
+            background: white;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .member-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+        }
+
+        .member-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), #10b981);
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: bold;
+            color: white;
+        }
+
+        .member-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 0.25rem;
+        }
+
+        .member-role {
+            color: #6b7280;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Documents List */
+        .document-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .document-item:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .document-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex: 1;
+        }
+
+        .document-icon {
+            font-size: 2rem;
+        }
+
+        .document-details {
+            flex: 1;
+        }
+
+        .document-name {
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 0.25rem;
+        }
+
+        .document-meta {
+            color: #6b7280;
+            font-size: 0.85rem;
+        }
+
+        .download-button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.5rem 1.5rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .download-button:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        /* Forms */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: var(--secondary);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #059669;
+            transform: translateY(-2px);
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-center {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .events-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .members-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .document-item {
+                flex-direction: column;
+                text-align: center;
+                gap: 1rem;
+            }
+        }
+
+
+
+        /* Notifications */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: white;
+            padding: 1.5rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            animation: slideInRight 0.3s ease-out;
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .notification.success {
+            border-left: 4px solid var(--secondary);
+        }
+
+        .notification.error {
+            border-left: 4px solid var(--danger);
+        }
+
+        .notification.info {
+            border-left: 4px solid var(--primary);
+        }
+    </style>
+</head>
+<body>
+    <!-- Main Portal -->
+    <div id="mainPortal" style="display: block;">
+        <!-- Navigation -->
+        <nav>
+            <div class="logo">
+                <img src="JPP LOGO.png" alt="JPP Logo">
+                JPP PMKL STUDENT PORTAL
+            </div>
+
+            <div class="nav-center">
+                <a class="nav-link active" data-section="dashboard">Dashboard</a>
+                <a class="nav-link" data-section="announcements">Announcements</a>
+                <a class="nav-link" data-section="events">Events</a>
+                <a class="nav-link" data-section="members">Members</a>
+                <a class="nav-link" data-section="rent">Rent House</a>
+                <a class="nav-link" data-section="contact">Contact</a>
+            </div>
+
+        </nav>
+
+        <div class="container">
+            <!-- Dashboard Section -->
+            <section id="dashboard" class="section active">
+                <div class="hero">
+                    <div class="banner-slider">
+                        <div class="slide active" style="background-image: url('pic 1.JPG'); background-size: cover; background-position: center;">
+                            <div class="slide-caption">Welcome to the JPP PMKL Student Portal — events, announcements, and community updates.</div>
+                        </div>
+                        <div class="slide" style="background-image: url('pic 2.JPG'); background-size: cover; background-position: center;">
+                            <div class="slide-caption">Discover the latest campus activities and student organization events.</div>
+                        </div>
+                        <div class="slide" style="background-image: url('carta.jpg'); background-size: cover; background-position: center;">
+                            <div class="slide-caption">Connect with peers, explore committees, and take part in student life.</div>
+                        </div>
+                    </div>
+                    <div class="hero-overlay">
+                        <h1><i class="fas fa-home"></i> Selamat Datang!</h1>
+                        <p>Website Rasmi JPP PMKL OFFICIAL</p>
+                        <div class="slider-dots">
+                            <span class="slider-dot active" data-index="0"></span>
+                            <span class="slider-dot" data-index="1"></span>
+                            <span class="slider-dot" data-index="2"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">👥</div>
+                        <div class="stat-number">1+++</div>
+                        <div class="stat-label">Pelajar</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">📋</div>
+                        <div class="stat-number">20</div>
+                        <div class="stat-label">Ahli</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">📅</div>
+                        <div class="stat-number">2</div>
+                        <div class="stat-label">Acara Bulan Ini</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">📄</div>
+                        <div class="stat-number">0</div>
+                        <div class="stat-label">Dokumen</div>
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-bottom: 2rem;">
+                    <div class="card">
+                        <div class="card-header">
+                            <i class="fas fa-bell"></i>
+                            <h3>Announcements</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="announcement-item">
+                                <div class="announcement-title">Pendaftaran Pelajar Baharu Sesi I: 2026 / 2027</div>
+                                <span class="announcement-category">Important</span>
+                                <div class="announcement-content">Tahniah kepada semua pelajar yang telah mendaftar untuk sesi baru.</div>
+                                <div class="announcement-date">22 Jun, 2026</div>
+                            </div>
+                            <div class="announcement-item">
+                                <div class="announcement-title">SuperStar Esport Championship</div>
+                                <span class="announcement-category">Events</span>
+                                <div class="announcement-content">Nantikan acara esport yang terhebat tahun ini!</div>
+                                <div class="announcement-date">Coming Soon!</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <i class="fas fa-calendar"></i>
+                            <h3>Upcoming Events</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="announcement-item">
+                                <div class="announcement-title">Pendaftaran Pelajar Baharu Sesi I: 2026 / 2027</div>
+                                <div class="announcement-content">
+                                    <i class="fas fa-clock"></i> 8:00 AM<br>
+                                    <i class="fas fa-map-marker-alt"></i> PMKL
+                                </div>
+                                <div class="announcement-date">22 Jun, 2026</div>
+                            </div>
+                            <div class="announcement-item">
+                                <div class="announcement-title">SuperStar Esport Championship</div>
+                                <div class="announcement-content">
+                                    <i class="fas fa-clock"></i> TBD<br>
+                                    <i class="fas fa-map-marker-alt"></i> TBD
+                                </div>
+                                <div class="announcement-date">Coming Soon!</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Announcements Section -->
+            <section id="announcements" class="section">
+                <h2 style="margin-bottom: 2rem; color: var(--dark);"><i class="fas fa-bell"></i> All Announcements</h2>
+
+                <div class="card">
+                    <div class="card-body">
+                        <div class="announcement-item">
+                            <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 0.5rem;">
+                                <div class="announcement-title" style="flex: 1; margin: 0;">Pendaftaran Pelajar Baharu Sesi I: 2026 / 2027</div>
+                                <span class="announcement-category">Important</span>
+                            </div>
+                            <div class="announcement-content">Selamat datang kepada pelajar baharu!</div>
+                            <div class="announcement-date">22 Jun, 2026</div>
+                        </div>
+
+                        <div class="announcement-item">
+                            <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 0.5rem;">
+                                <div class="announcement-title" style="flex: 1; margin: 0;">SuperStar Esport Championship</div>
+                                <span class="announcement-category">Events</span>
+                            </div>
+                            <div class="announcement-content">Nantikan acara esport yang terhebat tahun ini!</div>
+                            <div class="announcement-date">Coming Soon!</div>
+                        </div>
+
+                        <div class="announcement-item">
+                            <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 0.5rem;">
+                                <div class="announcement-title" style="flex: 1; margin: 0;">Coming Soon!</div>
+                                <span class="announcement-category">Activities</span>
+                            </div>
+                            <div class="announcement-content">TBD</div>
+                            <div class="announcement-date">TBD</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Events Section -->
+            <section id="events" class="section">
+                <h2 style="margin-bottom: 2rem; color: var(--dark);"><i class="fas fa-calendar"></i> Upcoming Events</h2>
+
+                <div class="events-grid">
+                    <div class="event-card">
+                        <div class="event-image">📢</div>
+                        <div class="event-content">
+                            <div class="event-title">TBD</div>
+                            <div class="event-info">
+                                <i class="fas fa-calendar-alt"></i> TBD
+                            </div>
+                            <div class="event-info">
+                                <i class="fas fa-clock"></i> TBD
+                            </div>
+                            <div class="event-info">
+                                <i class="fas fa-map-marker-alt"></i> TBD
+                            </div>
+                            <div class="event-info">
+                                <i class="fas fa-users"></i> TBD
+                            </div>
+                            <button class="event-button">Learn More</button>
+                        </div>
+                    </div>
+
+                    <div class="event-card">
+                        <div class="event-image">🏆</div>
+                        <div class="event-content">
+                            <div class="event-title">TBD</div>
+                            <div class="event-info">
+                                <i class="fas fa-calendar-alt"></i> TBD
+                            </div>
+                            <div class="event-info">
+                                <i class="fas fa-clock"></i> TBD
+                            </div>
+                            <div class="event-info">
+                                <i class="fas fa-map-marker-alt"></i> TBD
+                            </div>
+                            <div class="event-info">
+                                <i class="fas fa-users"></i> TBD
+                            </div>
+                            <button class="event-button">Learn More</button>
+                        </div>
+                    </div>
+
+                    <div class="event-card">
+                        <div class="event-image">🎭</div>
+                        <div class="event-content">
+                            <div class="event-title">TBD</div>
+                            <div class="event-info">
+                                <i class="fas fa-calendar-alt"></i> TBD
+                            </div>
+                            <div class="event-info">
+                                <i class="fas fa-clock"></i> TBD
+                            </div>
+                            <div class="event-info">
+                                <i class="fas fa-map-marker-alt"></i> TBD
+                            </div>
+                            <div class="event-info">
+                                <i class="fas fa-users"></i> TBD
+                            </div>
+                            <button class="event-button">Learn More</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Members Section -->
+            <section id="members" class="section">
+                <h2 style="margin-bottom: 2rem; color: var(--dark);"><i class="fas fa-users"></i> Active Members</h2>
+
+                <div class="members-grid">
+                    <div class="member-card">
+                        <div class="member-avatar">H</div>
+                        <div class="member-name">HABIB HIDAYATULLAH KHAIRUNNAS BIN HAMRAN</div>
+                        <div class="member-role">YANG DI-PERTUA</div>
+                    </div>
+
+                    <div class="member-card">
+                        <div class="member-avatar">A</div>
+                        <div class="member-name">MUHAMAD AFIF BIN AWALUDIN</div>
+                        <div class="member-role">NAIB YANG DI-PERTUA</div>
+                    </div>
+
+                    <div class="member-card">
+                        <div class="member-avatar">M</div>
+                        <div class="member-name">MUHAMMAD IRFAN BIN MOHD ZAMBRI</div>
+                        <div class="member-role">SETIAUSAHA 1</div>
+                    </div>
+
+                    <div class="member-card">
+                        <div class="member-avatar">H</div>
+                        <div class="member-name">NURUL HUMAIRA' BINTI SYAHRIL</div>
+                        <div class="member-role">SETIAUSAHA 2</div>
+                    </div>
+
+                    <div class="member-card">
+                        <div class="member-avatar">H</div>
+                        <div class="member-name">HUSSEIN HIRAWADY BIN REZA HIRAWADY</div>
+                        <div class="member-role">BENDAHARI</div>
+                    </div>
+
+                    <div class="member-card">
+                        <div class="member-avatar">A</div>
+                        <div class="member-name">ABDUL AZIZ BIN SAMSUDIN</div>
+                        <div class="member-role">EXCO DISIPLIN 1</div>
+                    </div>
+
+                    <div class="member-card">
+                        <div class="member-avatar">M</div>
+                        <div class="member-name">MIRUTHULAN A/L THULASI THARAN </div>
+                        <div class="member-role">EXCO DISIPLIN 2</div>
+                    </div>
+
+                    <div class="member-card">
+                        <div class="member-avatar">L</div>
+                        <div class="member-name">NURUL LAILI BINTI SAMSURI</div>
+                        <div class="member-role">EXCO DISIPLIN 3</div>
+                    </div>
+
+                    <div class="member-card">
+                        <div class="member-avatar">M</div>
+                        <div class="member-name">AHMAD MUTTAQI BIN HASLY</div>
+                        <div class="member-role">EXCO MULTIMEDIA, KOMUNIKASI & PENERBITAN</div>
+                    </div>
+
+                    <div class="member-card">
+                        <div class="member-avatar">E</div>
+                        <div class="member-name">MUHAMMAD EUSOFF BIN HANIDAN </div>
+                        <div class="member-role">EXCO MULTIMEDIA, KOMUNIKASI & PENERBITAN</div>
+                    </div>
+
+                    <div class="member-card">
+                        <div class="member-avatar">A</div>
+                        <div class="member-name">NUR ANIYAH SAFWAH BINTI MOHD NIZAM</div>
+                        <div class="member-role">EXCO MULTIMEDIA, KOMUNIKASI & PENERBITAN</div>
+                    </div>
+
+                    <div class="member-card">
+                        <div class="member-avatar">A</div>
+                        <div class="member-name">NORALIYA BINTI NORAZMI</div>
+                        <div class="member-role">EXCO SUKAN, KEBUDAYAAN & PERPADUAN</div>
+                    </div>
+
+                    <div class="member-card">
+                        <div class="member-avatar">A</div>
+                        <div class="member-name">AMIRUL ABDUL ROSHIED BIN ZULKEFLI</div>
+                        <div class="member-role">EXCO SUKAN, KEBUDAYAAN & PERPADUAN</div>
+                    </div>
+
+                    <div class="member-card">
+                        <div class="member-avatar">S</div>
+                        <div class="member-name">SHARIFAH NURSHAHIRAH BINTI SYED ABDUL HALIM</div>
+                        <div class="member-role">EXCO SUKAN, KEBUDAYAAN & PERPADUAN</div>
+                    </div>
+
+                    <div class="member-card">
+                        <div class="member-avatar">A</div>
+                        <div class="member-name">AINA NADIA BINTI MOHD SANUSI</div>
+                        <div class="member-role">EXCO KESUKARELAWAN & KEUSAHAWANAN</div>
+                    </div>
+
+                    <div class="member-card">
+                        <div class="member-avatar">A</div>
+                        <div class="member-name">MUHAMMAD AKIF ARMAND BIN JOHARI </div>
+                        <div class="member-role">EXCO KESUKARELAWAN & KEUSAHAWANAN</div>
+                    </div>
+
+                    <div class="member-card">
+                        <div class="member-avatar">A</div>
+                        <div class="member-name">AIRA HANNAN BINTI AZMAN</div>
+                        <div class="member-role">EXCO KESUKARELAWAN & KEUSAHAWANAN</div>
+                    </div>
+
+                    <div class="member-card">
+                        <div class="member-avatar">P</div>
+                        <div class="member-name">PUTERI ZAHRATUL UMMAIRAH BINTI MUHAMMAD FADZIL NOOR</div>
+                        <div class="member-role">EXCO KEROHANIAN & KEBAJIKAN</div>
+                    </div>
+
+                    <div class="member-card">
+                        <div class="member-avatar">A</div>
+                        <div class="member-name">MUHAMMAD AQEEL FAKHEEM BIN MOHD YUSOF</div>
+                        <div class="member-role">EXCO KEROHANIAN & KEBAJIKAN</div>
+                    </div>
+
+                    <div class="member-card">
+                        <div class="member-avatar">A</div>
+                        <div class="member-name">NUR ADRIENA BINTI SUKRI</div>
+                        <div class="member-role">EXCO KEROHANIAN & KEBAJIKAN</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Rent House Section -->
+            <section id="rent" class="section">
+                <h2 style="margin-bottom: 2rem; color: var(--dark);"><i class="fas fa-home"></i> Rent House Listings</h2>
+
+                <div style="display:flex; gap:1rem; margin-bottom:1.5rem; align-items:center;">
+                    <input type="text" id="rentSearch" placeholder="Search by area or price..." style="flex:1; padding:0.75rem; border:1px solid var(--border); border-radius:0.5rem;">
+                    <select id="rentFilter" style="padding:0.75rem; border:1px solid var(--border); border-radius:0.5rem;">
+                        <option value="all">All Types</option>
+                        <option value="apartment">Apartment</option>
+                        <option value="house">House</option>
+                        <option value="studio">Studio</option>
+                    </select>
+                    <button class="btn btn-primary" onclick="alert('Search demo — implement backend to filter results')">Search</button>
+                </div>
+
+                <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap:1.25rem;">
+                    <div class="card">
+                        <div style="height:150px; background-image:url('pic 1.JPG'); background-size:cover; background-position:center; border-top-left-radius:0.75rem; border-top-right-radius:0.75rem;"></div>
+                        <div class="card-body">
+                            <h4>Cozy 2-bedroom near Campus</h4>
+                            <p style="color:#6b7280; margin:0.25rem 0;">Location: Taman Universiti • RM 900 / month • 2 Beds • Furnished</p>
+                            <button class="btn btn-primary" onclick="alert('Contact landlord (demo)')">Contact</button>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div style="height:150px; background-image:url('pic 2.JPG'); background-size:cover; background-position:center; border-top-left-radius:0.75rem; border-top-right-radius:0.75rem;"></div>
+                        <div class="card-body">
+                            <h4>Modern Studio Apartment</h4>
+                            <p style="color:#6b7280; margin:0.25rem 0;">Location: City Center • RM 700 / month • Studio • Utilities included</p>
+                            <button class="btn btn-primary" onclick="alert('Contact landlord (demo)')">Contact</button>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div style="height:150px; background-image:url('carta.jpg'); background-size:cover; background-position:center; border-top-left-radius:0.75rem; border-top-right-radius:0.75rem;"></div>
+                        <div class="card-body">
+                            <h4>Spacious 3-bedroom House</h4>
+                            <p style="color:#6b7280; margin:0.25rem 0;">Location: Green Park • RM 1,200 / month • 3 Beds • Garden</p>
+                            <button class="btn btn-primary" onclick="alert('Contact landlord (demo)')">Contact</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Contact Section -->
+            <section id="contact" class="section">
+                <h2 style="margin-bottom: 2rem; color: var(--dark);"><i class="fas fa-envelope"></i> Contact Us</h2>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+                    <div class="card">
+                        <div class="card-header">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <h3>Location</h3>
+                        </div>
+                        <div class="card-body">
+                            <p>Student Center</p>
+                            <p>Campus Avenue</p>
+                            <p>University of Excellence</p>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <i class="fas fa-phone"></i>
+                            <h3>Phone</h3>
+                        </div>
+                        <div class="card-body">
+                            <p>+60 3-7956-6000</p>
+                            <p>+60 3-7956-6001</p>
+                            <p>Available: Mon-Fri 9AM-5PM</p>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <i class="fas fa-envelope"></i>
+                            <h3>Email</h3>
+                        </div>
+                        <div class="card-body">
+                            <p>info@jpppmkl.edu</p>
+                            <p>events@jpppmkl.edu</p>
+                            <p>support@jpppmkl.edu</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card" style="margin-top: 2rem;">
+                    <div class="card-header">
+                        <i class="fas fa-comments"></i>
+                        <h3>Send us a Message</h3>
+                    </div>
+                    <div class="card-body">
+                        <form>
+                            <div class="form-group">
+                                <label for="contactName">Name</label>
+                                <input type="text" id="contactName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="contactEmail">Email</label>
+                                <input type="email" id="contactEmail" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="contactSubject">Subject</label>
+                                <input type="text" id="contactSubject" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="contactMessage">Message</label>
+                                <textarea id="contactMessage" rows="5" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Send Message</button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <p>&copy; 2026 JPP PMKL Student Portal. All rights reserved.</p>
+            <p style="margin-top: 1rem; font-size: 0.9rem;">Empowering Student Leadership & Community Engagement</p>
+        </footer>
+    </div>
+
+    <script>
+        // Navigation
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Update active link
+                document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Show section
+                const section = this.getAttribute('data-section');
+                document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+                document.getElementById(section).classList.add('active');
+            });
+        });
+
+        const slides = document.querySelectorAll('.slide');
+        const dots = document.querySelectorAll('.slider-dot');
+        let currentSlide = 0;
+
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                slide.classList.toggle('active', i === index);
+            });
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === index);
+            });
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % slides.length;
+            showSlide(currentSlide);
+        }
+
+        dots.forEach(dot => {
+            dot.addEventListener('click', function() {
+                currentSlide = Number(this.getAttribute('data-index'));
+                showSlide(currentSlide);
+            });
+        });
+
+        setInterval(nextSlide, 5000);
+
+    </script>
+</body>
+</html>
