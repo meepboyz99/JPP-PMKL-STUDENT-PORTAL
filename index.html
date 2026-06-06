@@ -1116,7 +1116,7 @@
                         <option value="house">House</option>
                         <option value="studio">Studio</option>
                     </select>
-                    <button class="btn btn-primary" onclick="alert('Search demo — implement backend to filter results')">Search</button>
+                    <button class="btn btn-primary" onclick="alert('Search')">Search</button>
                 </div>
 
                 <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap:1.25rem;">
@@ -1124,26 +1124,26 @@
                         <div style="height:150px; background-image:url('pic 1.JPG'); background-size:cover; background-position:center; border-top-left-radius:0.75rem; border-top-right-radius:0.75rem;"></div>
                         <div class="card-body">
                             <h4>Mahsuri Apartment</h4>
-                            <p style="color:#6b7280; margin:0.25rem 0;">Mahsuri Apartment, Jalan Setiawangsa 13, Taman Setiawangsa, 54200 Kuala Lumpur</p>
-                            <button class="btn btn-primary" onclick="openRentModal('Mahsuri Apartment','Mahsuri Apartment, Jalan Setiawangsa 13, Taman Setiawangsa, 54200 Kuala Lumpur','RM 850 / month','2 bedroom, 1 bathroom')">Click Here for Details</button>
+                            <p style="color:#6b7280; margin:0.25rem 0;">Rented to Muslim students only, gender-segregated houses for male and female students.</p>
+                            <button class="btn btn-primary" onclick="openRentModal('Mahsuri Apartment','Mahsuri Apartment, Jalan Setiawangsa 13, Taman Setiawangsa, 54200 Kuala Lumpur','RM 270 / RM 300 / RM 300','Terbuka kepada pelajar LELAKI dan PEREMPUAN; Pelajar Muslim sahaja; Rumah sewa berasingan mengikut jantina. Sewa bulanan: RM270 (Bilik sharing berkipas), RM300 (Bilik sharing aircond), RM300 (Bilik single berkipas). Deposit 2 bulan sewa seorang. Kontrak 1 tahun. Bil elektrik ditanggung sehingga RM250; bil air ditanggung sehingga RM100; internet sepenuhnya ditanggung. Kemudahan: katil double decker, tilam, locker besi setiap seorang, dapur, peti sejuk, WiFi berkelajuan tinggi, mesin basuh, guarded 24 hours, 7 minit berjalan kaki ke kolej, berhampiran kedai makan, supermarket, farmasi, klinik, balai polis, bank, dan LRT Setiawangsa (15 minit berjalan kaki).')">Click Here for Details</button>
                         </div>
                     </div>
 
                     <div class="card">
                         <div style="height:150px; background-image:url('pic 2.JPG'); background-size:cover; background-position:center; border-top-left-radius:0.75rem; border-top-right-radius:0.75rem;"></div>
                         <div class="card-body">
-                            <h4>Hostel A</h4>
-                            <p style="color:#6b7280; margin:0.25rem 0;">Hostel A, No 17-3, Jalan Setiawangsa 8, Taman Setiawangsa, 54200 Kuala Lumpur</p>
-                            <button class="btn btn-primary" onclick="openRentModal('Hostel A','Hostel A, No 17-3, Jalan Setiawangsa 8, Taman Setiawangsa, 54200 Kuala Lumpur','RM 650 / month','Single room with shared bathroom')">Click Here for Details</button>
+                            <h4>Male Student Room for Rent</h4>
+                            <p style="color:#6b7280; margin:0.25rem 0;">Walking distance to Politeknik METrO Kuala Lumpur. RM350 / person including water & electricity.</p>
+                            <button class="btn btn-primary" onclick="openRentModal('Male Student Room for Rent','No.22-3, Jalan Setiawangsa 8, Above 7-Eleven, 2 Minutes Walk to Politeknik (Approx. 200m)','RM 350 / person','Available: 2 Person 1 Room, 3 Person 1 Room. Facilities: Free WiFi, 24 Hours CCTV, Air-Conditioned Room, Table + Chair + Cabinet, Refrigerator, Coway Water Filter, Water Heater, Fully Furnished. Female Only. PM/WhatsApp 0169463923 for more details / room viewing.')">Click Here for Details</button>
                         </div>
                     </div>
 
                     <div class="card">
                         <div style="height:150px; background-image:url('carta.jpg'); background-size:cover; background-position:center; border-top-left-radius:0.75rem; border-top-right-radius:0.75rem;"></div>
                         <div class="card-body">
-                            <h4>Mahsuri Apartment</h4>
-                            <p style="color:#6b7280; margin:0.25rem 0;">Mahsuri Apartment, Jalan Setiawangsa 13, Taman Setiawangsa, 54200 Kuala Lumpur</p>
-                            <button class="btn btn-primary" onclick="openRentModal('Mahsuri Apartment','Mahsuri Apartment, Jalan Setiawangsa 13, Taman Setiawangsa, 54200 Kuala Lumpur','RM 900 / month','3 bedroom, 2 bathroom')">Click Here for Details</button>
+                            <h4>🏠 Peluang Kediaman untuk Pelajar</h4>
+                            <p style="color:#6b7280; margin:0.25rem 0;">Setiawangsa – dekat dengan Politeknik Metro Kuala Lumpur. Sewa berpatutan dan termasuk utiliti.</p>
+                            <button class="btn btn-primary" onclick="openRentModal('Peluang Kediaman untuk Pelajar','Setiawangsa, dekat dengan Politeknik Metro Kuala Lumpur. Jalan kaki/ bas distance.','Dari RMxx / month','Lokasi strategik di Setiawangsa; sangat dekat dengan Politeknik; sesuai untuk pelajar (Lelaki / Perempuan, nyatakan jika ada); sewa berpatutan; termasuk utiliti: WiFi, air, elektrik. Hubungi Enck Zul 012-4662096.')">Click Here for Details</button>
                         </div>
                     </div>
                 </div>
@@ -1231,26 +1231,8 @@
                     <p class="modal-detail" id="rentModalType"></p>
                     <p class="modal-detail" id="rentModalAddress"></p>
                     <p class="modal-detail" id="rentModalPrice"></p>
-                    <form id="rentInquiryForm">
-                        <div class="form-group">
-                            <label for="inquiryName">Your Name</label>
-                            <input type="text" id="inquiryName" placeholder="Enter your name" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="inquiryEmail">Email</label>
-                            <input type="email" id="inquiryEmail" placeholder="Enter your email" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="inquiryDate">Preferred Move-in Date</label>
-                            <input type="date" id="inquiryDate" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="inquiryMessage">Message</label>
-                            <textarea id="inquiryMessage" rows="4" placeholder="Ask any questions"></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Send Inquiry</button>
-                        <button type="button" class="btn btn-secondary" onclick="closeRentModal()">Cancel</button>
-                    </form>
+                    <p class="modal-detail">For more information, please contact the housing office or visit the property listing.</p>
+                    <button type="button" class="btn btn-secondary" onclick="closeRentModal()">Close</button>
                 </div>
             </div>
         </div>
@@ -1315,13 +1297,6 @@
         function closeRentModal() {
             document.getElementById('rentModal').classList.remove('active');
         }
-
-        document.getElementById('rentInquiryForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            alert('Inquiry sent! We will contact you shortly.');
-            this.reset();
-            closeRentModal();
-        });
 
         setInterval(nextSlide, 5000);
 
