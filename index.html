@@ -602,6 +602,82 @@
             transform: translateY(-2px);
         }
 
+        /* Rent Modal */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.65);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            z-index: 1000;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-content {
+            width: 100%;
+            max-width: 560px;
+            background: white;
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 24px 58px rgba(0, 0, 0, 0.25);
+            animation: modalFadeIn 0.25s ease;
+        }
+
+        .modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.25rem 1.5rem;
+            background: var(--primary);
+            color: white;
+        }
+
+        .modal-header h3 {
+            margin: 0;
+            font-size: 1.15rem;
+        }
+
+        .modal-close {
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 1.25rem;
+            cursor: pointer;
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+        }
+
+        .modal-body p {
+            margin: 0 0 1rem;
+            color: var(--dark);
+            line-height: 1.5;
+        }
+
+        .modal-body .modal-detail {
+            margin-bottom: 1.25rem;
+            color: #4b5563;
+        }
+
+        .modal-body .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .modal-body .btn-secondary {
+            margin-right: 0.75rem;
+        }
+
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         /* Footer */
         footer {
             background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
@@ -1047,27 +1123,27 @@
                     <div class="card">
                         <div style="height:150px; background-image:url('pic 1.JPG'); background-size:cover; background-position:center; border-top-left-radius:0.75rem; border-top-right-radius:0.75rem;"></div>
                         <div class="card-body">
-                            <h4>TBD</h4>
-                            <p style="color:#6b7280; margin:0.25rem 0;">TBD</p>
-                            <button class="btn btn-primary" onclick="alert('Contact landlord (demo)')">TBD</button>
+                            <h4>Mahsuri Apartment</h4>
+                            <p style="color:#6b7280; margin:0.25rem 0;">Mahsuri Apartment, Jalan Setiawangsa 13, Taman Setiawangsa, 54200 Kuala Lumpur</p>
+                            <button class="btn btn-primary" onclick="openRentModal('Mahsuri Apartment','Mahsuri Apartment, Jalan Setiawangsa 13, Taman Setiawangsa, 54200 Kuala Lumpur','RM 850 / month','2 bedroom, 1 bathroom')">Click Here for Details</button>
                         </div>
                     </div>
 
                     <div class="card">
                         <div style="height:150px; background-image:url('pic 2.JPG'); background-size:cover; background-position:center; border-top-left-radius:0.75rem; border-top-right-radius:0.75rem;"></div>
                         <div class="card-body">
-                            <h4>TBD</h4>
-                            <p style="color:#6b7280; margin:0.25rem 0;">TBD</p>
-                            <button class="btn btn-primary" onclick="alert('Contact landlord (demo)')">TBD</button>
+                            <h4>Hostel A</h4>
+                            <p style="color:#6b7280; margin:0.25rem 0;">Hostel A, No 17-3, Jalan Setiawangsa 8, Taman Setiawangsa, 54200 Kuala Lumpur</p>
+                            <button class="btn btn-primary" onclick="openRentModal('Hostel A','Hostel A, No 17-3, Jalan Setiawangsa 8, Taman Setiawangsa, 54200 Kuala Lumpur','RM 650 / month','Single room with shared bathroom')">Click Here for Details</button>
                         </div>
                     </div>
 
                     <div class="card">
                         <div style="height:150px; background-image:url('carta.jpg'); background-size:cover; background-position:center; border-top-left-radius:0.75rem; border-top-right-radius:0.75rem;"></div>
                         <div class="card-body">
-                            <h4>TBD</h4>
-                            <p style="color:#6b7280; margin:0.25rem 0;">TBD</p>
-                            <button class="btn btn-primary" onclick="alert('Contact landlord (demo)')">TBD</button>
+                            <h4>Mahsuri Apartment</h4>
+                            <p style="color:#6b7280; margin:0.25rem 0;">Mahsuri Apartment, Jalan Setiawangsa 13, Taman Setiawangsa, 54200 Kuala Lumpur</p>
+                            <button class="btn btn-primary" onclick="openRentModal('Mahsuri Apartment','Mahsuri Apartment, Jalan Setiawangsa 13, Taman Setiawangsa, 54200 Kuala Lumpur','RM 900 / month','3 bedroom, 2 bathroom')">Click Here for Details</button>
                         </div>
                     </div>
                 </div>
@@ -1144,6 +1220,41 @@
             </section>
         </div>
 
+        <!-- Rent Details Modal -->
+        <div id="rentModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="rentModalTitle">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="rentModalTitle">Property Details</h3>
+                    <button class="modal-close" onclick="closeRentModal()" aria-label="Close modal">×</button>
+                </div>
+                <div class="modal-body">
+                    <p class="modal-detail" id="rentModalType"></p>
+                    <p class="modal-detail" id="rentModalAddress"></p>
+                    <p class="modal-detail" id="rentModalPrice"></p>
+                    <form id="rentInquiryForm">
+                        <div class="form-group">
+                            <label for="inquiryName">Your Name</label>
+                            <input type="text" id="inquiryName" placeholder="Enter your name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="inquiryEmail">Email</label>
+                            <input type="email" id="inquiryEmail" placeholder="Enter your email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="inquiryDate">Preferred Move-in Date</label>
+                            <input type="date" id="inquiryDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="inquiryMessage">Message</label>
+                            <textarea id="inquiryMessage" rows="4" placeholder="Ask any questions"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Send Inquiry</button>
+                        <button type="button" class="btn btn-secondary" onclick="closeRentModal()">Cancel</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
         <!-- Footer -->
         <footer>
             <p>&copy; 2026 JPP PMKL Student Portal. All rights reserved.</p>
@@ -1191,6 +1302,25 @@
                 currentSlide = Number(this.getAttribute('data-index'));
                 showSlide(currentSlide);
             });
+        });
+
+        function openRentModal(title, address, price, details) {
+            document.getElementById('rentModalTitle').textContent = title;
+            document.getElementById('rentModalType').textContent = details;
+            document.getElementById('rentModalAddress').textContent = address;
+            document.getElementById('rentModalPrice').textContent = price;
+            document.getElementById('rentModal').classList.add('active');
+        }
+
+        function closeRentModal() {
+            document.getElementById('rentModal').classList.remove('active');
+        }
+
+        document.getElementById('rentInquiryForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            alert('Inquiry sent! We will contact you shortly.');
+            this.reset();
+            closeRentModal();
         });
 
         setInterval(nextSlide, 5000);
