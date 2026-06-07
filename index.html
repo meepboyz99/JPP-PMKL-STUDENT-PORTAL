@@ -14,14 +14,16 @@
         }
 
         :root {
-            --primary: #3b82f6;
-            --primary-dark: #1e40af;
-            --secondary: #10b981;
-            --danger: #ef4444;
-            --warning: #f59e0b;
-            --dark: #1f2937;
-            --light: #f3f4f6;
-            --border: #e5e7eb;
+            --primary: #2c5d8a;
+            --primary-dark: #173d5a;
+            --secondary: #4f7d88;
+            --danger: #b34747;
+            --warning: #b86f24;
+            --dark: #111827;
+            --light: #f8fafc;
+            --border: #d1d5db;
+            --muted: #5f6570;
+            --surface: #ffffff;
         }
 
         body {
@@ -33,7 +35,7 @@
 
         /* Navigation */
         nav {
-            background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.96) 0%, rgba(17, 24, 39, 0.98) 100%);
             color: white;
             padding: 1rem 2rem;
             display: flex;
@@ -182,7 +184,7 @@
             bottom: 2rem;
             color: white;
             font-size: 1.2rem;
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(15, 23, 42, 0.72);
             padding: 1rem 1.5rem;
             border-radius: 0.75rem;
             max-width: calc(100% - 4rem);
@@ -198,7 +200,7 @@
             color: white;
             text-align: center;
             padding: 2rem;
-            background: linear-gradient(180deg, rgba(17, 24, 39, 0.25), rgba(17, 24, 39, 0.65));
+            background: linear-gradient(180deg, rgba(15, 23, 42, 0.28), rgba(15, 23, 42, 0.72));
             z-index: 2;
         }
 
@@ -311,16 +313,16 @@
         }
 
         .stat-label {
-            color: #6b7280;
+            color: var(--muted);
             font-weight: 500;
         }
 
         /* Cards */
         .card {
-            background: white;
+            background: var(--surface);
             border-radius: 1rem;
             overflow: hidden;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 15px rgba(15, 23, 42, 0.08);
             transition: all 0.3s ease;
             margin-bottom: 1.5rem;
         }
@@ -331,7 +333,7 @@
         }
 
         .card-header {
-            background: linear-gradient(135deg, var(--primary), #1e40af);
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             color: white;
             padding: 1.5rem;
             display: flex;
@@ -378,7 +380,7 @@
         }
 
         .announcement-content {
-            color: #6b7280;
+            color: var(--muted);
             margin-bottom: 0.5rem;
             font-size: 0.95rem;
         }
@@ -411,7 +413,7 @@
 
         .event-image {
             height: 150px;
-            background: linear-gradient(135deg, var(--primary), #ec4899);
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
             display: flex;
             align-items: center;
             justify-content: center;
@@ -434,7 +436,7 @@
             align-items: center;
             gap: 0.5rem;
             margin-bottom: 0.5rem;
-            color: #6b7280;
+            color: var(--muted);
             font-size: 0.95rem;
         }
 
@@ -481,7 +483,7 @@
             width: 80px;
             height: 80px;
             border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary), #10b981);
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
             margin: 0 auto 1rem;
             display: flex;
             align-items: center;
@@ -499,7 +501,7 @@
         }
 
         .member-role {
-            color: #6b7280;
+            color: var(--muted);
             font-size: 0.9rem;
             margin-bottom: 1rem;
         }
@@ -543,7 +545,7 @@
         }
 
         .document-meta {
-            color: #6b7280;
+            color: var(--muted);
             font-size: 0.85rem;
         }
 
@@ -623,7 +625,7 @@
         }
 
         .btn-secondary:hover {
-            background: #059669;
+            background: #3f676f;
             transform: translateY(-2px);
         }
 
@@ -1219,7 +1221,7 @@
                         <div style="height:150px; background-image:url('pic 1.JPG'); background-size:cover; background-position:center; border-top-left-radius:0.75rem; border-top-right-radius:0.75rem;"></div>
                         <div class="card-body">
                             <h4>Mahsuri Apartment</h4>
-                            <p style="color:#6b7280; margin:0.25rem 0;">Rented to Muslim students only, gender-segregated houses for male and female students.</p>
+                            <p style="color: var(--muted); margin:0.25rem 0;">Rented to Muslim students only, gender-segregated houses for male and female students.</p>
                             <button class="btn btn-primary" onclick="openRentModal('Mahsuri Apartment','Mahsuri Apartment, Jalan Setiawangsa 13, Taman Setiawangsa, 54200 Kuala Lumpur','RM 270 / RM 300 / RM 300','Terbuka kepada pelajar LELAKI dan PEREMPUAN; Pelajar Muslim sahaja; Rumah sewa berasingan mengikut jantina. Sewa bulanan: RM270 (Bilik sharing berkipas), RM300 (Bilik sharing aircond), RM300 (Bilik single berkipas). Deposit 2 bulan sewa seorang. Kontrak 1 tahun. Bil elektrik ditanggung sehingga RM250; bil air ditanggung sehingga RM100; internet sepenuhnya ditanggung. Kemudahan: katil double decker, tilam, locker besi setiap seorang, dapur, peti sejuk, WiFi berkelajuan tinggi, mesin basuh, guarded 24 hours, 7 minit berjalan kaki ke kolej, berhampiran kedai makan, supermarket, farmasi, klinik, balai polis, bank, dan LRT Setiawangsa (15 minit berjalan kaki). Contact no : 012-328 0168')">Click Here for Details</button>
                         </div>
                     </div>
@@ -1228,7 +1230,7 @@
                         <div style="height:150px; background-image:url('pic 2.JPG'); background-size:cover; background-position:center; border-top-left-radius:0.75rem; border-top-right-radius:0.75rem;"></div>
                         <div class="card-body">
                             <h4>Hostel A</h4>
-                            <p style="color:#6b7280; margin:0.25rem 0;">Hostel A, No 17-3, Jalan Setiawangsa 8, Taman Setiawangsa, 54200 Kuala Lumpur</p>
+                            <p style="color: var(--muted); margin:0.25rem 0;">Hostel A, No 17-3, Jalan Setiawangsa 8, Taman Setiawangsa, 54200 Kuala Lumpur</p>
                             <button class="btn btn-primary" onclick="openRentModal('Hostel A','Hostel A, No 17-3, Jalan Setiawangsa 8, Taman Setiawangsa, 54200 Kuala Lumpur','RM 350 / month','Single room with shared bathroom, Contact no : 016-946 3923')">Click Here for Details</button>
                         </div>
                     </div>
@@ -1237,7 +1239,7 @@
                         <div style="height:150px; background-image:url('carta.jpg'); background-size:cover; background-position:center; border-top-left-radius:0.75rem; border-top-right-radius:0.75rem;"></div>
                         <div class="card-body">
                             <h4>🏠 Intan Apartment</h4>
-                            <p style="color:#6b7280; margin:0.25rem 0;">Setiawangsa – dekat dengan Politeknik Metro Kuala Lumpur. Sewa berpatutan dan termasuk utiliti.</p>
+                            <p style="color: var(--muted); margin:0.25rem 0;">Setiawangsa – dekat dengan Politeknik Metro Kuala Lumpur. Sewa berpatutan dan termasuk utiliti.</p>
                             <button class="btn btn-primary" onclick="openRentModal('Intan Apartment','Setiawangsa, dekat dengan Politeknik Metro Kuala Lumpur. Jalan kaki/ bas distance.','Dari RMxxx / month','Lokasi strategik di Setiawangsa; sangat dekat dengan Politeknik; sesuai untuk pelajar (Lelaki / Perempuan, nyatakan jika ada); sewa berpatutan; termasuk utiliti: WiFi, air, elektrik. Hubungi Enck Zul 012-4662096.')">Click Here for Details</button>
                         </div>
                     </div>
