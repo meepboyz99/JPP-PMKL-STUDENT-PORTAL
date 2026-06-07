@@ -350,6 +350,13 @@
             padding: 2rem;
         }
 
+        .contact-card-image {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 0.75rem;
+        }
+
         /* Announcement Items */
         .announcement-item {
             padding-bottom: 1.5rem;
@@ -1287,31 +1294,13 @@
                     </div>
                 </div>
 
-                <div class="card" style="margin-top: 2rem;">
+                <div class="card contact-image" style="margin-top: 2rem;">
                     <div class="card-header">
-                        <i class="fas fa-comments"></i>
-                        <h3>Send us a Message</h3>
+                        <i class="fas fa-image"></i>
+                        <h3>Contact Visual</h3>
                     </div>
                     <div class="card-body">
-                        <form>
-                            <div class="form-group">
-                                <label for="contactName">Name</label>
-                                <input type="text" id="contactName" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="contactEmail">Email</label>
-                                <input type="email" id="contactEmail" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="contactSubject">Subject</label>
-                                <input type="text" id="contactSubject" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="contactMessage">Message</label>
-                                <textarea id="contactMessage" rows="5" required></textarea>
-                            </div>
-                            <button type="submit" class="btn btn-primary">Send Message</button>
-                        </form>
+                        <img src="carta.jpg" alt="Carta image" class="contact-card-image">
                     </div>
                 </div>
             </section>
