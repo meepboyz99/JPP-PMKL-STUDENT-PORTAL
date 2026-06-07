@@ -689,30 +689,92 @@
 
         /* Responsive */
         @media (max-width: 768px) {
+            nav {
+                padding: 1rem;
+            }
+
+            .logo {
+                font-size: 1.4rem;
+            }
+
             .nav-center {
                 display: none;
+            }
+
+            .hero {
+                min-height: 280px;
+            }
+
+            .hero-overlay {
+                padding: 1.25rem;
             }
 
             .hero h1 {
                 font-size: 2rem;
             }
 
-            .stats-grid {
-                grid-template-columns: 1fr;
+            .hero p,
+            .slide-caption {
+                font-size: 1rem;
             }
 
-            .events-grid {
-                grid-template-columns: 1fr;
+            .slide-caption {
+                left: 1rem;
+                right: 1rem;
+                bottom: 1rem;
+                padding: 0.9rem 1rem;
             }
 
+            .stats-grid,
+            .events-grid,
             .members-grid {
-                grid-template-columns: repeat(2, 1fr);
+                grid-template-columns: 1fr;
+            }
+
+            .member-card {
+                padding: 1rem;
+            }
+
+            .card-body {
+                padding: 1.25rem;
             }
 
             .document-item {
                 flex-direction: column;
                 text-align: center;
                 gap: 1rem;
+            }
+
+            .modal-content {
+                max-width: 95vw;
+                margin: 0 0.5rem;
+            }
+
+            .modal-header,
+            .modal-body {
+                padding: 1rem;
+            }
+
+            .modal-header h3 {
+                font-size: 1rem;
+            }
+
+            #rent > div:first-child {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 1rem;
+                align-items: stretch;
+            }
+
+            #rent > div:first-child input,
+            #rent > div:first-child select,
+            #rent > div:first-child .btn {
+                width: 100%;
+                min-width: 0;
+            }
+
+            #rent > div:first-child .btn {
+                max-width: 100%;
             }
         }
 
