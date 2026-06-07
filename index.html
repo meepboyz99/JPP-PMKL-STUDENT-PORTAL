@@ -71,6 +71,16 @@
             justify-content: center;
         }
 
+        .nav-toggle {
+            display: none;
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 1.4rem;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
         .nav-center a {
             color: #d1d5db;
             text-decoration: none;
@@ -90,6 +100,21 @@
             display: flex;
             gap: 1.5rem;
             align-items: center;
+        }
+
+        nav.mobile-open .nav-center {
+            display: flex;
+            flex-direction: column;
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 100%;
+            background: #111827;
+            padding: 1rem 1.5rem 1.5rem;
+            gap: 1rem;
+            border-bottom-left-radius: 1rem;
+            border-bottom-right-radius: 1rem;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
         }
 
         .nav-right button {
@@ -697,6 +722,10 @@
                 font-size: 1.4rem;
             }
 
+            .nav-toggle {
+                display: block;
+            }
+
             .nav-center {
                 display: none;
             }
@@ -826,6 +855,10 @@
                 <img src="JPP LOGO.png" alt="JPP Logo">
                 JPP PMKL STUDENT PORTAL
             </div>
+
+            <button class="nav-toggle" aria-label="Toggle navigation">
+                <i class="fas fa-bars"></i>
+            </button>
 
             <div class="nav-center">
                 <a class="nav-link active" data-section="dashboard">Dashboard</a>
@@ -1308,6 +1341,13 @@
 
     <script>
         // Navigation
+        const nav = document.querySelector('nav');
+        const navToggle = document.querySelector('.nav-toggle');
+
+        if (navToggle) {
+            navToggle.addEventListener('click', () => nav.classList.toggle('mobile-open'));
+        }
+
         document.querySelectorAll('.nav-link').forEach(link => {
             link.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -1315,6 +1355,11 @@
                 // Update active link
                 document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
                 this.classList.add('active');
+                
+                // Close mobile menu if open
+                if (nav.classList.contains('mobile-open')) {
+                    nav.classList.remove('mobile-open');
+                }
                 
                 // Show section
                 const section = this.getAttribute('data-section');
