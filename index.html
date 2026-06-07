@@ -150,13 +150,16 @@
             margin-bottom: 3rem;
             box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3);
             min-height: 400px;
+            height: auto;
             background: #111827;
+            display: block;
         }
 
         .banner-slider {
             position: relative;
             width: 100%;
-            height: 100%;
+            height: 400px;
+            min-height: 400px;
         }
 
         .slide {
@@ -164,6 +167,8 @@
             inset: 0;
             opacity: 0;
             transition: opacity 0.8s ease;
+            width: 100%;
+            height: 100%;
         }
 
         .slide.active {
@@ -174,7 +179,7 @@
         .slide img {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: contain;
             display: block;
         }
 
@@ -751,6 +756,10 @@
                 min-height: 280px;
             }
 
+            .banner-slider {
+                height: 280px;
+            }
+
             .hero-overlay {
                 padding: 1.25rem;
             }
@@ -894,13 +903,16 @@
             <section id="dashboard" class="section active">
                 <div class="hero">
                     <div class="banner-slider">
-                        <div class="slide active" style="background-image: url('pic 1.JPG'); background-size: cover; background-position: center;">
+                        <div class="slide active">
+                            <img src="banners/banner1.jpg" alt="Banner 1" class="slide-image">
                             <div class="slide-caption">Welcome to the JPP PMKL Student Portal — events, announcements, and community updates.</div>
                         </div>
-                        <div class="slide" style="background-image: url('pic 2.JPG'); background-size: cover; background-position: center;">
+                        <div class="slide">
+                            <img src="banners/banner2.JPG" alt="Banner 2" class="slide-image">
                             <div class="slide-caption">Discover the latest campus activities and student organization events.</div>
                         </div>
-                        <div class="slide" style="background-image: url('carta.jpg'); background-size: cover; background-position: center;">
+                        <div class="slide">
+                            <img src="banners/banner3.JPG" alt="Banner 3" class="slide-image">
                             <div class="slide-caption">Connect with peers, explore committees, and take part in student life.</div>
                         </div>
                     </div>
