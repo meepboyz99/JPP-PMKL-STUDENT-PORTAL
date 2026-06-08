@@ -1,1683 +1,2241 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JPP PMKL Student Portal</title>
-    <link rel="icon" type="image/png" href="JPP LOGO.png">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --primary: #2c5d8a;
-            --primary-dark: #173d5a;
-            --secondary: #4f7d88;
-            --danger: #b34747;
-            --warning: #b86f24;
-            --dark: #111827;
-            --light: #f8fafc;
-            --border: #d1d5db;
-            --muted: #5f6570;
-            --surface: #ffffff;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: url('Background Pmkl.jpg') center/cover fixed no-repeat;
-            color: var(--dark);
-            line-height: 1.6;
-        }
-
-        /* Navigation */
-        nav {
-            background: linear-gradient(135deg, rgba(15, 23, 42, 0.96) 0%, rgba(17, 24, 39, 0.98) 100%);
-            color: white;
-            padding: 1rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        .logo {
-            font-size: 1.8rem;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        .logo img {
-            height: 40px;
-            width: auto;
-            display: block;
-            border-radius: 8px;
-        }
-
-        .logo i {
-            color: var(--primary);
-        }
-
-        .nav-center {
-            display: flex;
-            gap: 2rem;
-            flex: 1;
-            justify-content: center;
-        }
-
-        .nav-toggle {
-            display: none;
-            background: transparent;
-            border: none;
-            color: white;
-            font-size: 1.4rem;
-            cursor: pointer;
-            padding: 0.5rem;
-        }
-
-        .nav-center a {
-            color: #d1d5db;
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-
-        .nav-center a:hover,
-        .nav-center a.active {
-            color: var(--primary);
-            border-bottom: 2px solid var(--primary);
-            padding-bottom: 0.25rem;
-        }
-
-        .nav-right {
-            display: flex;
-            gap: 1.5rem;
-            align-items: center;
-        }
-
-        nav.mobile-open .nav-center {
-            display: flex;
-            flex-direction: column;
-            position: absolute;
-            left: 0;
-            right: 0;
-            top: 100%;
-            background: #111827;
-            padding: 1rem 1.5rem 1.5rem;
-            gap: 1rem;
-            border-bottom-left-radius: 1rem;
-            border-bottom-right-radius: 1rem;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-        }
-
-        .nav-right button {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 0.5rem 1.5rem;
-            border-radius: 0.5rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .nav-right button:hover {
-            background: var(--primary-dark);
-            transform: translateY(-2px);
-        }
-
-        /* Announcement Ticker */
-        #announcementTicker {
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
-            color: white;
-            padding: 0.5rem 1rem;
-            text-align: center;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 1rem;
-        }
-
-        #announcementTicker .ticker-text {
-            transition: opacity 0.35s ease;
-            opacity: 1;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        #announcementTicker .ticker-close {
-            background: transparent;
-            border: none;
-            color: rgba(255,255,255,0.95);
-            cursor: pointer;
-            font-size: 1rem;
-            margin-left: 0.75rem;
-        }
-
-        /* Container */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 1rem;
-        }
-
-        /* Hero Section */
-        .hero {
-            position: relative;
-            overflow: hidden;
-            border-radius: 1rem;
-            margin-bottom: 3rem;
-            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3);
-            min-height: 400px;
-            height: auto;
-            background: #111827;
-            display: block;
-        }
-
-        .banner-slider {
-            position: relative;
-            width: 100%;
-            height: 400px;
-            min-height: 400px;
-        }
-
-        .slide {
-            position: absolute;
-            inset: 0;
-            opacity: 0;
-            transition: opacity 0.8s ease;
-            width: 100%;
-            height: 100%;
-        }
-
-        .slide.active {
-            opacity: 1;
-            z-index: 1;
-        }
-
-        .slide img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            display: block;
-        }
-
-        .dashboard-widgets {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .dashboard-widget {
-            background: rgba(255, 255, 255, 0.92);
-            border: 1px solid rgba(209, 213, 219, 0.8);
-            box-shadow: none;
-        }
-
-        .dashboard-widget-body {
-            display: flex;
-            flex-direction: column;
-            gap: 0.75rem;
-            padding: 1rem;
-        }
-
-        .clock-time {
-            font-size: 1.6rem;
-            font-weight: 700;
-            color: var(--primary-dark);
-        }
-
-        .clock-date {
-            font-size: 0.95rem;
-            color: var(--muted);
-        }
-
-        .calendar-header {
-            font-size: 1rem;
-            font-weight: 600;
-            margin-bottom: 0.75rem;
-            color: var(--dark);
-        }
-
-        .calendar-grid {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 0.35rem;
-        }
-
-        .calendar-grid span {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 30px;
-            border-radius: 0.4rem;
-            background: #f8fafc;
-            color: var(--dark);
-            font-weight: 500;
-            font-size: 0.85rem;
-        }
-
-        .calendar-grid span.calendar-day {
-            background: rgba(44, 93, 138, 0.08);
-        }
-
-        .calendar-grid span.calendar-today {
-            background: var(--primary);
-            color: white;
-        }
-
-        .hero-overlay {
-            position: absolute;
-            inset: 0;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            color: white;
-            text-align: center;
-            padding: 2rem;
-            background: linear-gradient(180deg, rgba(15, 23, 42, 0.28), rgba(15, 23, 42, 0.72));
-            z-index: 2;
-        }
-
-        .slider-dots {
-            display: flex;
-            gap: 0.75rem;
-            margin-top: 1.5rem;
-        }
-
-        .slider-dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.5);
-            cursor: pointer;
-            transition: background 0.3s ease;
-        }
-
-        .slider-dot.active {
-            background: white;
-        }
-
-        .hero h1 {
-            font-size: 3rem;
-            margin-bottom: 0.5rem;
-            animation: slideDown 0.6s ease-out;
-        }
-
-        .hero p {
-            font-size: 1.2rem;
-            opacity: 0.9;
-            animation: slideUp 0.6s ease-out;
-        }
-
-        @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* Sections */
-        .section {
-            display: none;
-            animation: fadeIn 0.3s ease-in;
-        }
-
-        .section.active {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
-
-        /* Stats Grid */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-bottom: 3rem;
-        }
-
-        .stat-card {
-            background: white;
-            padding: 2rem;
-            border-radius: 1rem;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
-        }
-
-        .stat-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
-            border-color: var(--primary);
-        }
-
-        .stat-icon {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .stat-number {
-            font-size: 2rem;
-            font-weight: bold;
-            color: var(--primary);
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-label {
-            color: var(--muted);
-            font-weight: 500;
-        }
-
-        /* Cards */
-        .card {
-            background: var(--surface);
-            border-radius: 1rem;
-            overflow: hidden;
-            box-shadow: 0 4px 15px rgba(15, 23, 42, 0.08);
-            transition: all 0.3s ease;
-            margin-bottom: 1.5rem;
-        }
-
-        .card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
-        }
-
-        .card-header {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            color: white;
-            padding: 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .card-header h3 {
-            font-size: 1.3rem;
-            margin: 0;
-        }
-
-        .card-body {
-            padding: 2rem;
-        }
-
-        .contact-card-image {
-            width: 100%;
-            height: auto;
-            display: block;
-            border-radius: 0.75rem;
-        }
-
-        /* Announcement Items */
-        .announcement-item {
-            padding-bottom: 1.5rem;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .announcement-item:last-child {
-            border-bottom: none;
-            padding-bottom: 0;
-        }
-
-        .announcement-title {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--dark);
-            margin-bottom: 0.5rem;
-        }
-
-        .announcement-category {
-            display: inline-block;
-            background: var(--primary);
-            color: white;
-            padding: 0.25rem 0.75rem;
-            border-radius: 0.25rem;
-            font-size: 0.75rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-        }
-
-        .announcement-content {
-            color: var(--muted);
-            margin-bottom: 0.5rem;
-            font-size: 0.95rem;
-        }
-
-        .announcement-date {
-            color: #9ca3af;
-            font-size: 0.85rem;
-        }
-
-        /* Event Cards */
-        .events-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        .event-card {
-            background: white;
-            border-radius: 1rem;
-            overflow: hidden;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-        }
-
-        .event-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
-        }
-
-        .event-image {
-            height: 150px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3rem;
-        }
-
-        .event-content {
-            padding: 1.5rem;
-        }
-
-        .event-title {
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            color: var(--dark);
-        }
-
-        .event-info {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-bottom: 0.5rem;
-            color: var(--muted);
-            font-size: 0.95rem;
-        }
-
-        .event-button {
-            width: 100%;
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 0.75rem;
-            border-radius: 0.5rem;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            margin-top: 1rem;
-        }
-
-        .event-button:hover {
-            background: var(--primary-dark);
-            transform: translateY(-2px);
-        }
-
-        /* Members Grid */
-        .members-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 2rem;
-        }
-
-        .member-card {
-            background: white;
-            border-radius: 1rem;
-            padding: 1.5rem;
-            text-align: center;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-        }
-
-        .member-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
-        }
-
-        .member-avatar {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            margin: 0 auto 1rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            font-weight: bold;
-            color: white;
-            overflow: hidden;
-        }
-
-        .member-avatar img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-        }
-
-        .member-name {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--dark);
-            margin-bottom: 0.25rem;
-        }
-
-        .member-role {
-            color: var(--muted);
-            font-size: 0.9rem;
-            margin-bottom: 1rem;
-        }
-
-        /* Documents List */
-        .document-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 1.5rem;
-            background: white;
-            border-radius: 0.5rem;
-            margin-bottom: 1rem;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-            transition: all 0.3s ease;
-        }
-
-        .document-item:hover {
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
-
-        .document-info {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            flex: 1;
-        }
-
-        .document-icon {
-            font-size: 2rem;
-        }
-
-        .document-details {
-            flex: 1;
-        }
-
-        .document-name {
-            font-weight: 600;
-            color: var(--dark);
-            margin-bottom: 0.25rem;
-        }
-
-        .document-meta {
-            color: var(--muted);
-            font-size: 0.85rem;
-        }
-
-        .download-button {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 0.5rem 1.5rem;
-            border-radius: 0.5rem;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-
-        .download-button:hover {
-            background: var(--primary-dark);
-            transform: translateY(-2px);
-        }
-
-        /* Forms */
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-            color: var(--dark);
-        }
-
-        .form-group input,
-        .form-group textarea,
-        .form-group select {
-            width: 100%;
-            padding: 0.75rem;
-            border: 1px solid var(--border);
-            border-radius: 0.5rem;
-            font-family: inherit;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-        }
-
-        .form-group input:focus,
-        .form-group textarea:focus,
-        .form-group select:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
-        }
-
-        .btn {
-            padding: 0.75rem 1.5rem;
-            border: none;
-            border-radius: 0.5rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .btn-primary {
-            background: var(--primary);
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background: var(--primary-dark);
-            transform: translateY(-2px);
-        }
-
-        .btn-secondary {
-            background: var(--secondary);
-            color: white;
-        }
-
-        .btn-secondary:hover {
-            background: #3f676f;
-            transform: translateY(-2px);
-        }
-
-        /* Rent Modal */
-        .modal-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.65);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            padding: 1rem;
-            z-index: 1000;
-        }
-
-        .modal-overlay.active {
-            display: flex;
-        }
-
-        .modal-content {
-            width: 100%;
-            max-width: 560px;
-            background: white;
-            border-radius: 1rem;
-            overflow: hidden;
-            box-shadow: 0 24px 58px rgba(0, 0, 0, 0.25);
-            animation: modalFadeIn 0.25s ease;
-        }
-
-        .modal-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 1.25rem 1.5rem;
-            background: var(--primary);
-            color: white;
-        }
-
-        .modal-header h3 {
-            margin: 0;
-            font-size: 1.15rem;
-        }
-
-        .modal-close {
-            background: transparent;
-            border: none;
-            color: white;
-            font-size: 1.25rem;
-            cursor: pointer;
-        }
-
-        .modal-body {
-            padding: 1.5rem;
-        }
-
-        .modal-body p {
-            margin: 0 0 1rem;
-            color: var(--dark);
-            line-height: 1.5;
-        }
-
-        .modal-body .modal-detail {
-            margin-bottom: 1.25rem;
-            color: #4b5563;
-        }
-
-        .modal-body .form-group {
-            margin-bottom: 1rem;
-        }
-
-        .modal-body .btn-secondary {
-            margin-right: 0.75rem;
-        }
-
-        @keyframes modalFadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Footer */
-        footer {
-            background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
-            color: white;
-            text-align: center;
-            padding: 2rem;
-            margin-top: 4rem;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            nav {
-                padding: 1rem;
-            }
-
-            .logo {
-                font-size: 1.4rem;
-            }
-
-            .nav-toggle {
-                display: block;
-            }
-
-            .nav-center {
-                display: none;
-            }
-
-            .hero {
-                min-height: 280px;
-            }
-
-            .banner-slider {
-                height: 280px;
-            }
-
-            .hero-overlay {
-                padding: 1.25rem;
-            }
-
-            .hero h1 {
-                font-size: 2rem;
-            }
-
-            .hero p,
-            .slide-caption {
-                font-size: 1rem;
-            }
-
-            .slide-caption {
-                left: 1rem;
-                right: 1rem;
-                bottom: 1rem;
-                padding: 0.9rem 1rem;
-            }
-
-            .dashboard-widgets {
-                grid-template-columns: 1fr;
-                gap: 1rem;
-            }
-
-            .dashboard-widget-body {
-                padding: 0.9rem;
-            }
-
-            .clock-time {
-                font-size: 1.4rem;
-            }
-
-            .calendar-header {
-                font-size: 0.95rem;
-            }
-
-            .calendar-grid span {
-                min-height: 28px;
-                font-size: 0.75rem;
-            }
-
-            .stats-grid,
-            .events-grid,
-            .members-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .member-card {
-                padding: 1rem;
-            }
-
-            .card-body {
-                padding: 1.25rem;
-            }
-
-            .document-item {
-                flex-direction: column;
-                text-align: center;
-                gap: 1rem;
-            }
-
-            .modal-content {
-                max-width: 95vw;
-                margin: 0 0.5rem;
-            }
-
-            .modal-header,
-            .modal-body {
-                padding: 1rem;
-            }
-
-            .modal-header h3 {
-                font-size: 1rem;
-            }
-
-            #rent > div:first-child {
-                display: flex;
-                flex-wrap: wrap;
-                gap: 1rem;
-                align-items: stretch;
-            }
-
-            #rent > div:first-child input,
-            #rent > div:first-child select,
-            #rent > div:first-child .btn {
-                width: 100%;
-                min-width: 0;
-            }
-
-            #rent > div:first-child .btn {
-                max-width: 100%;
-            }
-        }
-
-
-
-        /* Notifications */
-        .notification {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: white;
-            padding: 1.5rem;
-            border-radius: 0.5rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            z-index: 1000;
-            animation: slideInRight 0.3s ease-out;
-        }
-
-        @keyframes slideInRight {
-            from {
-                opacity: 0;
-                transform: translateX(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        .notification.success {
-            border-left: 4px solid var(--secondary);
-        }
-
-        .notification.error {
-            border-left: 4px solid var(--danger);
-        }
-
-        .notification.info {
-            border-left: 4px solid var(--primary);
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JPP PMKL — Student Portal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+  :root {
+    --bg: #07090f;
+    --bg2: #0d1118;
+    --bg3: #121824;
+    --surface: #161d2b;
+    --surface2: #1c2538;
+    --border: rgba(255,255,255,0.07);
+    --border2: rgba(255,255,255,0.12);
+    --text: #f0f4ff;
+    --text2: #8b9cbf;
+    --text3: #5a6b8a;
+    --primary: #1a4bff;
+    --primary-glow: rgba(26,75,255,0.3);
+    --gold: #f5c842;
+    --gold-dim: rgba(245,200,66,0.15);
+    --gold-glow: rgba(245,200,66,0.25);
+    --navy: #0a1628;
+    --radius: 16px;
+    --radius-sm: 10px;
+    --font-head: 'Syne', sans-serif;
+    --font-body: 'DM Sans', sans-serif;
+    --nav-h: 68px;
+    --transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  [data-theme="light"] {
+    --bg: #f2f5fc;
+    --bg2: #e8edf8;
+    --bg3: #dde4f5;
+    --surface: #ffffff;
+    --surface2: #f0f4ff;
+    --border: rgba(0,0,0,0.07);
+    --border2: rgba(0,0,0,0.12);
+    --text: #0d1118;
+    --text2: #4a5878;
+    --text3: #8090aa;
+    --primary-glow: rgba(26,75,255,0.12);
+    --gold-dim: rgba(180,130,10,0.1);
+    --navy: #e0e8f8;
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* ── Noise texture overlay ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.4;
+  }
+
+  /* ══ SCROLLBAR ══ */
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--surface2); border-radius: 4px; }
+
+  /* ══ NAV ══ */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: var(--nav-h);
+    z-index: 500;
+    display: flex;
+    align-items: center;
+    padding: 0 2rem;
+    gap: 1rem;
+    background: rgba(7,9,15,0.75);
+    backdrop-filter: blur(24px) saturate(1.4);
+    border-bottom: 1px solid var(--border);
+    transition: background var(--transition);
+  }
+  [data-theme="light"] nav {
+    background: rgba(242,245,252,0.82);
+  }
+
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    font-family: var(--font-head);
+    font-weight: 800;
+    font-size: 1.1rem;
+    letter-spacing: -0.01em;
+    color: var(--text);
+    flex-shrink: 0;
+    text-decoration: none;
+  }
+  .nav-logo-icon {
+    width: 36px; height: 36px;
+    background: linear-gradient(135deg, var(--primary), #4f7dff);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem;
+    color: white;
+    flex-shrink: 0;
+  }
+  .nav-logo span { color: var(--gold); }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    flex: 1;
+    justify-content: center;
+  }
+  .nav-links a {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text2);
+    text-decoration: none;
+    padding: 0.45rem 0.85rem;
+    border-radius: 8px;
+    transition: all 0.2s;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .nav-links a:hover { color: var(--text); background: var(--surface); }
+  .nav-links a.active { color: var(--gold); background: var(--gold-dim); }
+
+  .nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-shrink: 0;
+  }
+  .btn-icon {
+    width: 38px; height: 38px;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 10px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text2);
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+  }
+  .btn-icon:hover { color: var(--text); border-color: var(--border2); }
+  .btn-primary-sm {
+    padding: 0.45rem 1.1rem;
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 9px;
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .btn-primary-sm:hover { background: #2d5bff; transform: translateY(-1px); box-shadow: 0 6px 20px var(--primary-glow); }
+
+  .nav-hamburger {
+    display: none;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text);
+    width: 38px; height: 38px;
+    border-radius: 9px;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 1rem;
+  }
+
+  /* ══ MOBILE NAV ══ */
+  @media (max-width: 900px) {
+    .nav-links { display: none; }
+    .nav-hamburger { display: flex; }
+    .nav-links.open {
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      top: var(--nav-h); left: 0; right: 0;
+      background: var(--bg2);
+      border-bottom: 1px solid var(--border);
+      padding: 1rem;
+      gap: 0.25rem;
+    }
+    .nav-links.open a { width: 100%; }
+  }
+
+  /* ══ SECTIONS ══ */
+  .section { display: none; animation: fadeUp 0.4s ease; }
+  .section.active { display: block; }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .page-wrap {
+    padding-top: var(--nav-h);
+    min-height: 100vh;
+  }
+
+  /* ══ HERO ══ */
+  .hero {
+    position: relative;
+    min-height: 92vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 4rem 2rem 6rem;
+    overflow: hidden;
+  }
+
+  /* Animated background mesh */
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    overflow: hidden;
+  }
+  .hero-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.18;
+    animation: orb-float 12s ease-in-out infinite alternate;
+  }
+  .hero-orb:nth-child(1) { width: 700px; height: 700px; background: var(--primary); top: -200px; left: -200px; animation-delay: 0s; }
+  .hero-orb:nth-child(2) { width: 500px; height: 500px; background: var(--gold); top: 100px; right: -100px; animation-delay: -4s; }
+  .hero-orb:nth-child(3) { width: 400px; height: 400px; background: #1affb2; bottom: -100px; left: 30%; animation-delay: -8s; }
+  @keyframes orb-float {
+    0% { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(30px, 40px) scale(1.08); }
+  }
+
+  /* Grid pattern */
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%);
+    z-index: 0;
+  }
+  [data-theme="light"] .hero-grid {
+    background-image:
+      linear-gradient(rgba(0,0,0,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,0,0,0.04) 1px, transparent 1px);
+  }
+
+  .hero-content { position: relative; z-index: 2; max-width: 820px; }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--gold-dim);
+    border: 1px solid rgba(245,200,66,0.25);
+    color: var(--gold);
+    padding: 0.35rem 1rem;
+    border-radius: 99px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-bottom: 1.75rem;
+    animation: fadeUp 0.5s ease 0.1s both;
+  }
+  .hero-badge i { font-size: 0.7rem; }
+
+  .hero h1 {
+    font-family: var(--font-head);
+    font-size: clamp(2.8rem, 7vw, 5.5rem);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    margin-bottom: 1.5rem;
+    animation: fadeUp 0.5s ease 0.2s both;
+  }
+  .hero h1 em { font-style: normal; color: var(--gold); }
+  .hero h1 .line-blue { color: var(--primary); }
+
+  .hero-sub {
+    font-size: 1.15rem;
+    color: var(--text2);
+    max-width: 560px;
+    margin: 0 auto 2.5rem;
+    font-weight: 300;
+    animation: fadeUp 0.5s ease 0.3s both;
+  }
+
+  .hero-ctas {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 4rem;
+    animation: fadeUp 0.5s ease 0.4s both;
+  }
+  .btn-hero {
+    padding: 0.85rem 2rem;
+    border-radius: 12px;
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s;
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+  .btn-hero-primary {
+    background: var(--primary);
+    color: white;
+    border: none;
+    box-shadow: 0 0 0 0 var(--primary-glow);
+  }
+  .btn-hero-primary:hover { background: #2d5bff; transform: translateY(-2px); box-shadow: 0 8px 30px var(--primary-glow); }
+  .btn-hero-outline {
+    background: transparent;
+    color: var(--text);
+    border: 1.5px solid var(--border2);
+  }
+  .btn-hero-outline:hover { background: var(--surface); transform: translateY(-2px); }
+
+  /* Quick access cards row */
+  .quick-access {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    animation: fadeUp 0.5s ease 0.5s both;
+  }
+  .qa-chip {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.55rem 1.1rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 99px;
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--text2);
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+  }
+  .qa-chip:hover { background: var(--surface2); color: var(--text); border-color: var(--border2); transform: translateY(-2px); }
+  .qa-chip i { color: var(--gold); font-size: 0.75rem; }
+
+  /* ══ SECTION LAYOUT ══ */
+  .sec-wrap {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 2rem 5rem;
+  }
+  .sec-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.75rem;
+  }
+  .sec-title {
+    font-family: var(--font-head);
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 800;
+    letter-spacing: -0.025em;
+    color: var(--text);
+    line-height: 1.1;
+    margin-bottom: 0.75rem;
+  }
+  .sec-sub {
+    font-size: 1rem;
+    color: var(--text2);
+    max-width: 540px;
+    font-weight: 300;
+    margin-bottom: 2.5rem;
+  }
+
+  /* ══ TICKER ══ */
+  .ticker-bar {
+    background: linear-gradient(90deg, var(--primary) 0%, #2f6bff 50%, var(--primary) 100%);
+    background-size: 200%;
+    animation: ticker-gradient 4s ease infinite;
+    padding: 0.6rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    overflow: hidden;
+  }
+  @keyframes ticker-gradient { 0%,100% { background-position: 0% } 50% { background-position: 100% } }
+  .ticker-label {
+    background: rgba(255,255,255,0.2);
+    color: white;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+  .ticker-track {
+    overflow: hidden;
+    flex: 1;
+  }
+  .ticker-text {
+    color: rgba(255,255,255,0.92);
+    font-size: 0.875rem;
+    font-weight: 500;
+    white-space: nowrap;
+    animation: ticker-scroll 30s linear infinite;
+  }
+  @keyframes ticker-scroll {
+    0% { transform: translateX(100vw); }
+    100% { transform: translateX(-100%); }
+  }
+
+  /* ══ DASHBOARD CARDS ══ */
+  .dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+  }
+  @media (max-width: 1100px) { .dashboard-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 600px) { .dashboard-grid { grid-template-columns: 1fr; } }
+
+  .dash-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    cursor: pointer;
+    transition: all 0.25s;
+    position: relative;
+    overflow: hidden;
+    text-decoration: none;
+    display: block;
+  }
+  .dash-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, var(--card-color, var(--primary)), transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s;
+    border-radius: inherit;
+  }
+  .dash-card:hover { transform: translateY(-4px); border-color: var(--border2); box-shadow: 0 16px 40px rgba(0,0,0,0.2); }
+  .dash-card:hover::before { opacity: 0.07; }
+  .dash-card-icon {
+    width: 44px; height: 44px;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    background: var(--card-color-bg, var(--primary-glow));
+    color: var(--card-color, var(--gold));
+  }
+  .dash-card h4 {
+    font-family: var(--font-head);
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 0.3rem;
+  }
+  .dash-card p {
+    font-size: 0.78rem;
+    color: var(--text3);
+    line-height: 1.4;
+  }
+  .dash-card-arrow {
+    position: absolute;
+    top: 1.25rem; right: 1.25rem;
+    width: 28px; height: 28px;
+    background: var(--surface2);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.75rem;
+    color: var(--text3);
+    transition: all 0.2s;
+  }
+  .dash-card:hover .dash-card-arrow { background: var(--card-color, var(--primary)); color: white; transform: rotate(45deg); }
+
+  /* ══ STATS ══ */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.25rem;
+    margin-bottom: 3rem;
+  }
+  @media (max-width: 900px) { .stats-row { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 500px) { .stats-row { grid-template-columns: 1fr 1fr; } }
+
+  .stat-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.75rem 1.5rem;
+    text-align: center;
+    transition: all 0.25s;
+  }
+  .stat-item:hover { border-color: var(--gold); transform: translateY(-3px); box-shadow: 0 8px 30px var(--gold-glow); }
+  .stat-num {
+    font-family: var(--font-head);
+    font-size: 2.4rem;
+    font-weight: 800;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 0.35rem;
+    letter-spacing: -0.02em;
+  }
+  .stat-label {
+    font-size: 0.8rem;
+    color: var(--text3);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  /* ══ TWIN CARDS ══ */
+  .twin-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+  }
+  @media (max-width: 768px) { .twin-grid { grid-template-columns: 1fr; } }
+
+  .panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  .panel-head {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface2);
+  }
+  .panel-head-icon {
+    width: 32px; height: 32px;
+    background: var(--gold-dim);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--gold);
+    font-size: 0.85rem;
+  }
+  .panel-head h3 {
+    font-family: var(--font-head);
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--text);
+    flex: 1;
+  }
+  .panel-head a {
+    font-size: 0.75rem;
+    color: var(--text3);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .panel-head a:hover { color: var(--gold); }
+  .panel-body { padding: 1.25rem 1.5rem; }
+
+  /* Announcement items */
+  .ann-item {
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    gap: 1rem;
+  }
+  .ann-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .ann-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--gold);
+    flex-shrink: 0;
+    margin-top: 0.45rem;
+  }
+  .ann-dot.blue { background: var(--primary); }
+  .ann-dot.green { background: #22d3a0; }
+  .ann-content h5 {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 0.2rem;
+    line-height: 1.3;
+  }
+  .ann-content p {
+    font-size: 0.78rem;
+    color: var(--text3);
+    margin-bottom: 0.3rem;
+  }
+  .tag {
+    display: inline-block;
+    padding: 0.15rem 0.55rem;
+    border-radius: 5px;
+    font-size: 0.68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .tag-gold { background: var(--gold-dim); color: var(--gold); }
+  .tag-blue { background: var(--primary-glow); color: #7aa7ff; }
+  .tag-green { background: rgba(34,211,160,0.1); color: #22d3a0; }
+
+  /* Event items */
+  .event-item {
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+  .event-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .event-date-box {
+    width: 44px; height: 44px;
+    border-radius: 10px;
+    background: var(--primary-glow);
+    border: 1px solid rgba(26,75,255,0.2);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    text-align: center;
+  }
+  .event-date-box .day {
+    font-family: var(--font-head);
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #7aa7ff;
+    line-height: 1;
+  }
+  .event-date-box .mon {
+    font-size: 0.6rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text3);
+  }
+  .event-info-text h5 {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 0.2rem;
+  }
+  .event-info-text p {
+    font-size: 0.76rem;
+    color: var(--text3);
+  }
+
+  /* ══ CLOCK + CALENDAR ══ */
+  .widget-row {
+    display: grid;
+    grid-template-columns: 1fr 1.6fr;
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+  }
+  @media (max-width: 640px) { .widget-row { grid-template-columns: 1fr; } }
+
+  .clock-panel {
+    background: linear-gradient(135deg, var(--navy), var(--surface));
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    gap: 0.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .clock-panel::before {
+    content: '';
+    position: absolute;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    background: var(--primary);
+    opacity: 0.06;
+    top: -80px; left: -60px;
+    filter: blur(40px);
+  }
+  .clock-time {
+    font-family: var(--font-head);
+    font-size: 3rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    line-height: 1;
+  }
+  .clock-date-str {
+    font-size: 0.82rem;
+    color: var(--text3);
+    font-weight: 400;
+  }
+  .clock-day {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  /* Mini Calendar */
+  .cal-panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+  }
+  .cal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.25rem;
+  }
+  .cal-header h4 {
+    font-family: var(--font-head);
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text);
+  }
+  .cal-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 0.2rem;
+  }
+  .cal-grid .cal-wd {
+    text-align: center;
+    font-size: 0.65rem;
+    font-weight: 700;
+    color: var(--text3);
+    text-transform: uppercase;
+    padding: 0.3rem 0;
+    letter-spacing: 0.05em;
+  }
+  .cal-grid .cal-day {
+    text-align: center;
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--text2);
+    padding: 0.35rem 0.2rem;
+    border-radius: 7px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .cal-grid .cal-day:hover { background: var(--surface2); color: var(--text); }
+  .cal-grid .cal-day.today {
+    background: var(--gold);
+    color: var(--bg);
+    font-weight: 700;
+  }
+  .cal-grid .cal-day.empty { pointer-events: none; }
+
+  /* ══ ANNOUNCEMENTS PAGE ══ */
+  .ann-page-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 2rem;
+  }
+  @media (max-width: 900px) { .ann-page-grid { grid-template-columns: 1fr; } }
+
+  .ann-card-big {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    transition: all 0.2s;
+    cursor: pointer;
+  }
+  .ann-card-big:hover { border-color: var(--border2); transform: translateX(4px); }
+  .ann-card-big h4 {
+    font-family: var(--font-head);
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text);
+    margin: 0.5rem 0 0.4rem;
+  }
+  .ann-card-big p {
+    font-size: 0.86rem;
+    color: var(--text2);
+    line-height: 1.55;
+    margin-bottom: 0.75rem;
+  }
+  .ann-meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 0.76rem;
+    color: var(--text3);
+  }
+  .ann-meta i { font-size: 0.7rem; }
+
+  .sticky-panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    position: sticky;
+    top: calc(var(--nav-h) + 1rem);
+  }
+  .sticky-panel h4 {
+    font-family: var(--font-head);
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* ══ EVENTS PAGE ══ */
+  .events-masonry {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+  }
+  @media (max-width: 900px) { .events-masonry { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 560px) { .events-masonry { grid-template-columns: 1fr; } }
+
+  .event-card-full {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: all 0.25s;
+    cursor: pointer;
+  }
+  .event-card-full:hover { transform: translateY(-5px); box-shadow: 0 20px 50px rgba(0,0,0,0.25); border-color: var(--border2); }
+  .event-thumb {
+    height: 160px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 3rem;
+    position: relative;
+  }
+  .event-thumb-grad1 { background: linear-gradient(135deg, #0a1628, #1a4bff); }
+  .event-thumb-grad2 { background: linear-gradient(135deg, #1a1a0a, #f5c842); }
+  .event-thumb-grad3 { background: linear-gradient(135deg, #0a1a14, #22d3a0); }
+  .event-card-body { padding: 1.25rem; }
+  .event-card-body h4 {
+    font-family: var(--font-head);
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 0.75rem;
+  }
+  .event-meta-row {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.4rem;
+  }
+  .event-meta-item {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.76rem;
+    color: var(--text3);
+  }
+  .event-meta-item i { color: var(--gold); font-size: 0.7rem; }
+  .btn-event {
+    width: 100%;
+    margin-top: 1rem;
+    padding: 0.65rem;
+    background: var(--primary-glow);
+    color: #7aa7ff;
+    border: 1px solid rgba(26,75,255,0.25);
+    border-radius: 9px;
+    font-family: var(--font-body);
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-event:hover { background: var(--primary); color: white; }
+
+  /* ══ MEMBERS PAGE ══ */
+  .members-header-card {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--surface) 100%);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 2.5rem;
+    margin-bottom: 2rem;
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .members-header-card h2 {
+    font-family: var(--font-head);
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+  }
+  .members-header-card p { font-size: 0.9rem; color: var(--text2); }
+
+  .members-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+    gap: 1.25rem;
+  }
+  .member-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem 1rem;
+    text-align: center;
+    transition: all 0.25s;
+    cursor: default;
+  }
+  .member-card:hover { border-color: var(--gold); transform: translateY(-4px); box-shadow: 0 10px 30px var(--gold-glow); }
+  .member-ava {
+    width: 72px; height: 72px;
+    border-radius: 50%;
+    margin: 0 auto 1rem;
+    background: linear-gradient(135deg, var(--primary), #4f7dff);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-head);
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: white;
+    overflow: hidden;
+    border: 2px solid var(--border);
+  }
+  .member-ava img { width: 100%; height: 100%; object-fit: cover; }
+  .member-name {
+    font-family: var(--font-head);
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 0.3rem;
+    line-height: 1.3;
+  }
+  .member-role {
+    font-size: 0.7rem;
+    color: var(--gold);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    line-height: 1.3;
+  }
+
+  /* ══ RENT PAGE ══ */
+  .rent-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+  @media (max-width: 900px) { .rent-grid { grid-template-columns: 1fr; } }
+
+  .rent-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: all 0.25s;
+  }
+  .rent-card:hover { transform: translateY(-5px); border-color: var(--border2); box-shadow: 0 20px 50px rgba(0,0,0,0.25); }
+  .rent-thumb {
+    height: 170px;
+    background: var(--surface2);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--text3);
+    font-size: 0.85rem;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+  }
+  .rent-price-badge {
+    position: absolute;
+    top: 1rem; right: 1rem;
+    background: var(--gold);
+    color: var(--bg);
+    font-family: var(--font-head);
+    font-size: 0.8rem;
+    font-weight: 800;
+    padding: 0.3rem 0.75rem;
+    border-radius: 8px;
+  }
+  .rent-card-body { padding: 1.25rem; }
+  .rent-card-body h4 {
+    font-family: var(--font-head);
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 0.4rem;
+  }
+  .rent-card-body p { font-size: 0.82rem; color: var(--text2); margin-bottom: 1rem; line-height: 1.5; }
+  .rent-features {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 1rem;
+  }
+  .feat-chip {
+    display: flex; align-items: center; gap: 0.3rem;
+    font-size: 0.7rem;
+    color: var(--text3);
+    background: var(--bg3);
+    padding: 0.25rem 0.6rem;
+    border-radius: 6px;
+  }
+  .feat-chip i { color: var(--gold); font-size: 0.6rem; }
+  .btn-rent {
+    width: 100%;
+    padding: 0.7rem;
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-rent:hover { background: #2d5bff; transform: translateY(-1px); box-shadow: 0 6px 20px var(--primary-glow); }
+
+  /* ══ CONTACT PAGE ══ */
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 2rem;
+  }
+  @media (max-width: 900px) { .contact-grid { grid-template-columns: 1fr; } }
+
+  .contact-cards { display: flex; flex-direction: column; gap: 1rem; }
+  .contact-info-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    display: flex; gap: 1rem; align-items: flex-start;
+    transition: all 0.2s;
+  }
+  .contact-info-card:hover { border-color: var(--gold); }
+  .ci-icon {
+    width: 44px; height: 44px;
+    border-radius: 12px;
+    background: var(--gold-dim);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--gold);
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+  .ci-text h4 {
+    font-family: var(--font-head);
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 0.3rem;
+  }
+  .ci-text p {
+    font-size: 0.82rem;
+    color: var(--text2);
+    line-height: 1.6;
+  }
+
+  .contact-org-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  .contact-org-card img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  /* ══ ALBUM PAGE ══ */
+  .album-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+  }
+  @media (max-width: 900px) { .album-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 500px) { .album-grid { grid-template-columns: 1fr 1fr; } }
+
+  .album-item {
+    border-radius: 12px;
+    overflow: hidden;
+    aspect-ratio: 1;
+    cursor: pointer;
+    transition: all 0.25s;
+    position: relative;
+  }
+  .album-item:nth-child(1), .album-item:nth-child(5) { grid-column: span 2; aspect-ratio: 2; }
+  .album-item:hover { transform: scale(1.02); box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+  .album-item-inner {
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2.5rem;
+    color: rgba(255,255,255,0.7);
+    transition: all 0.25s;
+  }
+  .album-item:hover .album-item-inner { transform: scale(1.05); }
+  .album-item-label {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    background: linear-gradient(transparent, rgba(0,0,0,0.7));
+    padding: 2rem 1rem 0.75rem;
+    color: white;
+    font-size: 0.78rem;
+    font-weight: 600;
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .album-item:hover .album-item-label { opacity: 1; }
+
+  /* ══ MODAL ══ */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    backdrop-filter: blur(6px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    z-index: 600;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal-box {
+    background: var(--surface);
+    border: 1px solid var(--border2);
+    border-radius: 20px;
+    width: 100%;
+    max-width: 520px;
+    overflow: hidden;
+    animation: modalIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 0 40px 80px rgba(0,0,0,0.4);
+  }
+  @keyframes modalIn {
+    from { opacity: 0; transform: scale(0.92) translateY(16px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+  }
+  .modal-top {
+    padding: 1.75rem 1.75rem 1.25rem;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: flex-start; gap: 1rem;
+  }
+  .modal-top-icon {
+    width: 48px; height: 48px;
+    border-radius: 12px;
+    background: var(--primary-glow);
+    display: flex; align-items: center; justify-content: center;
+    color: #7aa7ff;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+  }
+  .modal-top-text h3 {
+    font-family: var(--font-head);
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: var(--text);
+    margin-bottom: 0.2rem;
+  }
+  .modal-top-text p { font-size: 0.8rem; color: var(--text3); }
+  .modal-top-close {
+    margin-left: auto;
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--text2);
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.85rem;
+    transition: all 0.2s;
+    flex-shrink: 0;
+  }
+  .modal-top-close:hover { background: var(--danger, #ff4444); color: white; }
+  .modal-content-body { padding: 1.5rem 1.75rem; }
+  .modal-detail-row {
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+    padding: 0.75rem;
+    background: var(--bg3);
+    border-radius: 10px;
+  }
+  .modal-detail-row i { color: var(--gold); font-size: 0.85rem; margin-top: 0.2rem; }
+  .modal-detail-row div { flex: 1; }
+  .modal-detail-row .mdr-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text3); font-weight: 700; margin-bottom: 0.15rem; }
+  .modal-detail-row .mdr-val { font-size: 0.85rem; color: var(--text2); line-height: 1.5; }
+  .modal-actions { display: flex; gap: 0.75rem; padding: 1.25rem 1.75rem; border-top: 1px solid var(--border); }
+  .btn-modal-close {
+    flex: 1;
+    padding: 0.7rem;
+    background: var(--surface2);
+    color: var(--text2);
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-modal-close:hover { background: var(--surface); color: var(--text); }
+  .btn-modal-primary {
+    flex: 2;
+    padding: 0.7rem;
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 9px;
+    font-family: var(--font-body);
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-modal-primary:hover { background: #2d5bff; }
+
+  /* ══ FOOTER ══ */
+  footer {
+    background: var(--bg2);
+    border-top: 1px solid var(--border);
+    padding: 3rem 2rem 2rem;
+    margin-top: 2rem;
+  }
+  .footer-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr;
+    gap: 2.5rem;
+  }
+  @media (max-width: 900px) { .footer-inner { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 560px) { .footer-inner { grid-template-columns: 1fr; } }
+  .footer-brand h3 {
+    font-family: var(--font-head);
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+  }
+  .footer-brand p { font-size: 0.82rem; color: var(--text3); line-height: 1.6; max-width: 260px; margin-bottom: 1.25rem; }
+  .social-row { display: flex; gap: 0.5rem; }
+  .social-btn {
+    width: 36px; height: 36px;
+    border-radius: 9px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text3);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+  }
+  .social-btn:hover { background: var(--primary); color: white; border-color: var(--primary); }
+  .footer-col h4 {
+    font-family: var(--font-head);
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--text);
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    margin-bottom: 1rem;
+  }
+  .footer-col a {
+    display: block;
+    font-size: 0.82rem;
+    color: var(--text3);
+    text-decoration: none;
+    padding: 0.25rem 0;
+    cursor: pointer;
+    transition: color 0.2s;
+  }
+  .footer-col a:hover { color: var(--gold); }
+  .footer-bottom {
+    max-width: 1280px;
+    margin: 2rem auto 0;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    font-size: 0.78rem;
+    color: var(--text3);
+  }
+
+  /* ══ TOAST ══ */
+  .toast {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background: var(--surface);
+    border: 1px solid var(--border2);
+    border-radius: 12px;
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+    z-index: 700;
+    transform: translateY(100px);
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    pointer-events: none;
+  }
+  .toast.show { transform: translateY(0); opacity: 1; }
+  .toast i { color: var(--gold); font-size: 1rem; }
+  .toast span { font-size: 0.875rem; color: var(--text); font-weight: 500; }
+
+  /* Separator line */
+  .divider {
+    height: 1px;
+    background: var(--border);
+    margin: 2rem 0;
+  }
+</style>
 </head>
 <body>
-    <!-- Main Portal -->
-    <div id="mainPortal" style="display: block;">
-        <!-- Navigation -->
-        <nav>
-            <div class="logo">
-                <img src="JPP LOGO.png" alt="JPP Logo">
-                JPP PMKL STUDENT PORTAL
-            </div>
 
-            <button class="nav-toggle" aria-label="Toggle navigation">
-                <i class="fas fa-bars"></i>
-            </button>
+<!-- ════ TICKER ════ -->
+<div class="ticker-bar">
+  <span class="ticker-label"><i class="fas fa-bell"></i> Live</span>
+  <div class="ticker-track">
+    <div class="ticker-text">
+      🎉 Tahniah kepada semua pelajar PMKL — Keputusan Cemerlang Peperiksaan Sesi II: 2025/2026 &nbsp;&nbsp;•&nbsp;&nbsp; 📋 Pendaftaran Pelajar Baharu Sesi I: 2026/2027 bermula 22 Jun &nbsp;&nbsp;•&nbsp;&nbsp; 🎮 SuperStar Esport Championship — Coming Soon! &nbsp;&nbsp;•&nbsp;&nbsp; 📞 Hubungi: jpppmklofficial@gmail.com
+    </div>
+  </div>
+</div>
 
-            <div class="nav-center">
-                <a class="nav-link active" data-section="dashboard">Dashboard</a>
-                <a class="nav-link" data-section="announcements">Announcements</a>
-                <a class="nav-link" data-section="events">Events</a>
-                <a class="nav-link" data-section="members">Members</a>
-                <a class="nav-link" data-section="album">Album</a>
-                <a class="nav-link" data-section="rent">Rent House</a>
-                <a class="nav-link" data-section="contact">Contact</a>
-            </div>
+<!-- ════ NAV ════ -->
+<nav id="mainNav">
+  <a class="nav-logo" href="#">
+    <div class="nav-logo-icon"><i class="fas fa-graduation-cap"></i></div>
+    JPP&nbsp;<span>PMKL</span>
+  </a>
 
-        </nav>
+  <div class="nav-links" id="navLinks">
+    <a class="nav-link active" data-section="dashboard">Dashboard</a>
+    <a class="nav-link" data-section="announcements">Announcements</a>
+    <a class="nav-link" data-section="events">Events</a>
+    <a class="nav-link" data-section="members">Members</a>
+    <a class="nav-link" data-section="album">Album</a>
+    <a class="nav-link" data-section="rent">Rent</a>
+    <a class="nav-link" data-section="contact">Contact</a>
+  </div>
 
-        <!-- Announcement Ticker -->
-        <div id="announcementTicker" role="region" aria-label="Announcements">
-            <div class="ticker-text">Tahniah Kepada Semua Pelajar PMKL Yang Memperoleh Keputusan Yang Cemerlang Pada Peperiksaan Sesi II: 2025/2026 — Pendaftaran Pelajar Baharu Sesi I: 2026 / 2027 — SuperStar Esport Championship — Check events for updates</div>
-            <button class="ticker-close" aria-label="Close announcements" title="Hide announcements" onclick="document.getElementById('announcementTicker').style.display='none'">×</button>
+  <div class="nav-actions">
+    <button class="btn-icon" id="themeToggle" title="Toggle theme"><i class="fas fa-moon"></i></button>
+    <button class="nav-hamburger" id="navHamburger"><i class="fas fa-bars"></i></button>
+  </div>
+</nav>
+
+<!-- ════ PAGE WRAP ════ -->
+<div class="page-wrap">
+
+  <!-- ══ DASHBOARD ══ -->
+  <section class="section active" id="dashboard">
+
+    <!-- HERO -->
+    <div class="hero" style="padding-top: 4rem;">
+      <div class="hero-bg">
+        <div class="hero-orb"></div>
+        <div class="hero-orb"></div>
+        <div class="hero-orb"></div>
+      </div>
+      <div class="hero-grid"></div>
+
+      <div class="hero-content">
+        <div class="hero-badge"><i class="fas fa-star"></i> Official Student Portal 2026/2027</div>
+        <h1>Selamat Datang ke<br><em>JPP PMKL STUDENT PORTAL</em></h1>
+        <p class="hero-sub">Jawatankuasa Perwakilan Pelajar — Politeknik METrO Kuala Lumpur. Your central hub for announcements, events, and student life.</p>
+        <div class="hero-ctas">
+          <button class="btn-hero btn-hero-primary" onclick="navigate('events')"><i class="fas fa-calendar-alt"></i> Upcoming Events</button>
+          <button class="btn-hero btn-hero-outline" onclick="navigate('announcements')"><i class="fas fa-bell"></i> Announcements</button>
         </div>
-
-        <div class="container">
-            <!-- Dashboard Section -->
-            <section id="dashboard" class="section active">
-                <div class="hero">
-                    <div class="banner-slider">
-                        <div class="slide active">
-                            <img src="banners/banner1.jpg" alt="Banner 1" class="slide-image">
-                        </div>
-                        <div class="slide">
-                            <img src="banners/banner2.JPG" alt="Banner 2" class="slide-image">
-                        </div>
-                        <div class="slide">
-                            <img src="banners/banner3.JPG" alt="Banner 3" class="slide-image">
-                        </div>
-                    </div>
-                    <div class="hero-overlay">
-                        <h1><i class="fas fa-home"></i> Selamat Datang!</h1>
-                        <p>Website Rasmi JPP PMKL OFFICIAL</p>
-                        <div class="slider-dots">
-                            <span class="slider-dot active" data-index="0"></span>
-                            <span class="slider-dot" data-index="1"></span>
-                            <span class="slider-dot" data-index="2"></span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="dashboard-widgets">
-                    <div class="dashboard-widget card">
-                        <div class="card-header">
-                            <i class="fas fa-clock"></i>
-                            <h3>Live Clock</h3>
-                        </div>
-                        <div class="card-body dashboard-widget-body">
-                            <div class="clock-time" id="dashboardClock">00:00:00</div>
-                            <div class="clock-date" id="dashboardDate">Loading date...</div>
-                        </div>
-                    </div>
-                    <div class="dashboard-widget card">
-                        <div class="card-header">
-                            <i class="fas fa-calendar-alt"></i>
-                            <h3>Calendar</h3>
-                        </div>
-                        <div class="card-body dashboard-widget-body">
-                            <div class="calendar-header" id="calendarMonthYear">Loading month...</div>
-                            <div class="calendar-grid" id="dashboardCalendar"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-icon">👥</div>
-                        <div class="stat-number">6++</div>
-                        <div class="stat-label">Pelajar</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon">📋</div>
-                        <div class="stat-number">20</div>
-                        <div class="stat-label">Ahli</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon">📅</div>
-                        <div class="stat-number">2</div>
-                        <div class="stat-label">Acara Bulan Ini</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon">📄</div>
-                        <div class="stat-number">3</div>
-                        <div class="stat-label">Rumah Sewa</div>
-                    </div>
-                </div>
-
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-bottom: 2rem;">
-                    <div class="card">
-                        <div class="card-header">
-                            <i class="fas fa-bell"></i>
-                            <h3>Announcements</h3>
-                        </div>
-                        <div class="card-body">
-                            <div class="announcement-item">
-                                <div class="announcement-title">Pendaftaran Pelajar Baharu Sesi I: 2026 / 2027</div>
-                                <span class="announcement-category">Important</span>
-                                <div class="announcement-content">Tahniah kepada semua pelajar yang telah mendaftar untuk sesi baru.</div>
-                                <div class="announcement-date">22 Jun, 2026</div>
-                            </div>
-                            <div class="announcement-item">
-                                <div class="announcement-title">SuperStar Esport Championship</div>
-                                <span class="announcement-category">Events</span>
-                                <div class="announcement-content">Nantikan acara esport yang terhebat tahun ini!</div>
-                                <div class="announcement-date">Coming Soon!</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card">
-                        <div class="card-header">
-                            <i class="fas fa-calendar"></i>
-                            <h3>Upcoming Events</h3>
-                        </div>
-                        <div class="card-body">
-                            <div class="announcement-item">
-                                <div class="announcement-title">Pendaftaran Pelajar Baharu Sesi I: 2026 / 2027</div>
-                                <div class="announcement-content">
-                                    <i class="fas fa-clock"></i> 8:00 AM<br>
-                                    <i class="fas fa-map-marker-alt"></i> PMKL
-                                </div>
-                                <div class="announcement-date">22 Jun, 2026</div>
-                            </div>
-                            <div class="announcement-item">
-                                <div class="announcement-title">SuperStar Esport Championship</div>
-                                <div class="announcement-content">
-                                    <i class="fas fa-clock"></i> TBD<br>
-                                    <i class="fas fa-map-marker-alt"></i> TBD
-                                </div>
-                                <div class="announcement-date">Coming Soon!</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Announcements Section -->
-            <section id="announcements" class="section">
-                <h2 style="margin-bottom: 2rem; color: var(--dark);"><i class="fas fa-bell"></i> All Announcements</h2>
-
-                <div class="card">
-                    <div class="card-body">
-                        <div class="announcement-item">
-                            <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 0.5rem;">
-                                <div class="announcement-title" style="flex: 1; margin: 0;">Pendaftaran Pelajar Baharu Sesi I: 2026 / 2027</div>
-                                <span class="announcement-category">Important</span>
-                            </div>
-                            <div class="announcement-content">Selamat datang kepada pelajar baharu!</div>
-                            <div class="announcement-date">22 Jun, 2026</div>
-                        </div>
-
-                        <div class="announcement-item">
-                            <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 0.5rem;">
-                                <div class="announcement-title" style="flex: 1; margin: 0;">SuperStar Esport Championship</div>
-                                <span class="announcement-category">Events</span>
-                            </div>
-                            <div class="announcement-content">Nantikan acara esport yang terhebat tahun ini!</div>
-                            <div class="announcement-date">Coming Soon!</div>
-                        </div>
-
-                        <div class="announcement-item">
-                            <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 0.5rem;">
-                                <div class="announcement-title" style="flex: 1; margin: 0;">Coming Soon!</div>
-                                <span class="announcement-category">Activities</span>
-                            </div>
-                            <div class="announcement-content">TBD</div>
-                            <div class="announcement-date">TBD</div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Events Section -->
-            <section id="events" class="section">
-                <h2 style="margin-bottom: 2rem; color: var(--dark);"><i class="fas fa-calendar"></i> Upcoming Events</h2>
-
-                <div class="events-grid">
-                    <div class="event-card">
-                        <div class="event-image">📢</div>
-                        <div class="event-content">
-                            <div class="event-title">TBD</div>
-                            <div class="event-info">
-                                <i class="fas fa-calendar-alt"></i> TBD
-                            </div>
-                            <div class="event-info">
-                                <i class="fas fa-clock"></i> TBD
-                            </div>
-                            <div class="event-info">
-                                <i class="fas fa-map-marker-alt"></i> TBD
-                            </div>
-                            <div class="event-info">
-                                <i class="fas fa-users"></i> TBD
-                            </div>
-                            <button class="event-button">Learn More</button>
-                        </div>
-                    </div>
-
-                    <div class="event-card">
-                        <div class="event-image">🏆</div>
-                        <div class="event-content">
-                            <div class="event-title">TBD</div>
-                            <div class="event-info">
-                                <i class="fas fa-calendar-alt"></i> TBD
-                            </div>
-                            <div class="event-info">
-                                <i class="fas fa-clock"></i> TBD
-                            </div>
-                            <div class="event-info">
-                                <i class="fas fa-map-marker-alt"></i> TBD
-                            </div>
-                            <div class="event-info">
-                                <i class="fas fa-users"></i> TBD
-                            </div>
-                            <button class="event-button">Learn More</button>
-                        </div>
-                    </div>
-
-                    <div class="event-card">
-                        <div class="event-image">🎭</div>
-                        <div class="event-content">
-                            <div class="event-title">TBD</div>
-                            <div class="event-info">
-                                <i class="fas fa-calendar-alt"></i> TBD
-                            </div>
-                            <div class="event-info">
-                                <i class="fas fa-clock"></i> TBD
-                            </div>
-                            <div class="event-info">
-                                <i class="fas fa-map-marker-alt"></i> TBD
-                            </div>
-                            <div class="event-info">
-                                <i class="fas fa-users"></i> TBD
-                            </div>
-                            <button class="event-button">Learn More</button>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Members Section -->
-            <section id="members" class="section">
-                <h2 style="margin-bottom: 2rem; color: var(--dark);"><i class="fas fa-users"></i> Active Members</h2>
-
-                <div class="members-grid">
-                    <div class="member-card">
-                        <div class="member-avatar"><img src="members/members_habib.png" alt="Habib"></div>
-                        <div class="member-name">HABIB HIDAYATULLAH KHAIRUNNAS BIN HAMRAN</div>
-                        <div class="member-role">YANG DI-PERTUA</div>
-                    </div>
-
-                    <div class="member-card">
-                        <div class="member-avatar"><img src="members/members_afif.png" alt="Afif"></div>
-                        <div class="member-name">MUHAMAD AFIF BIN AWALUDIN</div>
-                        <div class="member-role">NAIB YANG DI-PERTUA</div>
-                    </div>
-
-                    <div class="member-card">
-                        <div class="member-avatar"><img src="members/members_irfan.png" alt="Irfan"></div>
-                        <div class="member-name">MUHAMMAD IRFAN BIN MOHD ZAMBRI</div>
-                        <div class="member-role">SETIAUSAHA 1</div>
-                    </div>
-
-                    <div class="member-card">
-                        <div class="member-avatar"><img src="members/members_humaira.png" alt="Humaira"></div>
-                        <div class="member-name">NURUL HUMAIRA' BINTI SYAHRIL</div>
-                        <div class="member-role">SETIAUSAHA 2</div>
-                    </div>
-
-                    <div class="member-card">
-                        <div class="member-avatar"><img src="members/members_hussein.png" alt="Hussein"></div>
-                        <div class="member-name">HUSSEIN HIRAWADY BIN REZA HIRAWADY</div>
-                        <div class="member-role">BENDAHARI</div>
-                    </div>
-
-                    <div class="member-card">
-                        <div class="member-avatar"><img src="members/members_aziz.png" alt="Aziz"></div>
-                        <div class="member-name">ABDUL AZIZ BIN SAMSUDIN</div>
-                        <div class="member-role">EXCO DISIPLIN 1</div>
-                    </div>
-
-                    <div class="member-card">
-                        <div class="member-avatar"><img src="members/members_miruthalan.png" alt="Miruthalan"></div>
-                        <div class="member-name">MIRUTHULAN A/L THULASI THARAN </div>
-                        <div class="member-role">EXCO DISIPLIN 2</div>
-                    </div>
-
-                    <div class="member-card">
-                        <div class="member-avatar"><img src="members/members_laili.png" alt="Laili"></div>
-                        <div class="member-name">NURUL LAILI BINTI SAMSURI</div>
-                        <div class="member-role">EXCO DISIPLIN 3</div>
-                    </div>
-
-                    <div class="member-card">
-                        <div class="member-avatar"><img src="members/members_muttaqi.png" alt="Muttaqi"></div>
-                        <div class="member-name">AHMAD MUTTAQI BIN HASLY</div>
-                        <div class="member-role">EXCO MULTIMEDIA, KOMUNIKASI & PENERBITAN</div>
-                    </div>
-
-                    <div class="member-card">
-                        <div class="member-avatar"><img src="members/members_eusoff.png" alt="Eusoff"></div>
-                        <div class="member-name">MUHAMMAD EUSOFF BIN HANIDAN </div>
-                        <div class="member-role">EXCO MULTIMEDIA, KOMUNIKASI & PENERBITAN</div>
-                    </div>
-
-                    <div class="member-card">
-                        <div class="member-avatar"><img src="members/members_aniyah.png" alt="Aniyah"></div>
-                        <div class="member-name">NUR ANIYAH SAFWAH BINTI MOHD NIZAM</div>
-                        <div class="member-role">EXCO MULTIMEDIA, KOMUNIKASI & PENERBITAN</div>
-                    </div>
-
-                    <div class="member-card">
-                        <div class="member-avatar"><img src="members/members_noraliya.png" alt="Noraliya"></div>
-                        <div class="member-name">NORALIYA BINTI NORAZMI</div>
-                        <div class="member-role">EXCO SUKAN, KEBUDAYAAN & PERPADUAN</div>
-                    </div>
-
-                    <div class="member-card">
-                        <div class="member-avatar"><img src="members/members_amirul.png" alt="Amirul"></div>
-                        <div class="member-name">AMIRUL ABDUL ROSHIED BIN ZULKEFLI</div>
-                        <div class="member-role">EXCO SUKAN, KEBUDAYAAN & PERPADUAN</div>
-                    </div>
-
-                    <div class="member-card">
-                        <div class="member-avatar"><img src="members/members_sharifah.png" alt="Sharifah"></div>
-                        <div class="member-name">SHARIFAH NURSHAHIRAH BINTI SYED ABDUL HALIM</div>
-                        <div class="member-role">EXCO SUKAN, KEBUDAYAAN & PERPADUAN</div>
-                    </div>
-
-                    <div class="member-card">
-                        <div class="member-avatar"><img src="members/members_aina.png" alt="Aina"></div>
-                        <div class="member-name">AINA NADIA BINTI MOHD SANUSI</div>
-                        <div class="member-role">EXCO KESUKARELAWAN & KEUSAHAWANAN</div>
-                    </div>
-
-                    <div class="member-card">
-                        <div class="member-avatar"><img src="members/members_akif.png" alt="Akif"></div>
-                        <div class="member-name">MUHAMMAD AKIF ARMAND BIN JOHARI </div>
-                        <div class="member-role">EXCO KESUKARELAWAN & KEUSAHAWANAN</div>
-                    </div>
-
-                    <div class="member-card">
-                        <div class="member-avatar"><img src="members/members_aira.png" alt="Aira"></div>
-                        <div class="member-name">AIRA HANNAN BINTI AZMAN</div>
-                        <div class="member-role">EXCO KESUKARELAWAN & KEUSAHAWANAN</div>
-                    </div>
-
-                    <div class="member-card">
-                        <div class="member-avatar"><img src="members/members_puteri.png" alt="Puteri"></div>
-                        <div class="member-name">PUTERI ZAHRATUL UMMAIRAH BINTI MUHAMMAD FADZIL NOOR</div>
-                        <div class="member-role">EXCO KEROHANIAN & KEBAJIKAN</div>
-                    </div>
-
-                    <div class="member-card">
-                        <div class="member-avatar"><img src="members/members_aqeel.png" alt="Aqeel"></div>
-                        <div class="member-name">MUHAMMAD AQEEL FAKHEEM BIN MOHD YUSOF</div>
-                        <div class="member-role">EXCO KEROHANIAN & KEBAJIKAN</div>
-                    </div>
-
-                    <div class="member-card">
-                        <div class="member-avatar"><img src="members/members_adriena.png" alt="Adriena"></div>
-                        <div class="member-name">NUR ADRIENA BINTI SUKRI</div>
-                        <div class="member-role">EXCO KEROHANIAN & KEBAJIKAN</div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Rent House Section -->
-            <section id="rent" class="section">
-                <h2 style="margin-bottom: 2rem; color: var(--dark);"><i class="fas fa-home"></i> Rent House Listings</h2>
-
-                <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap:1.25rem;">
-                    <div class="card">
-                        <div style="height:150px; background-image:url('pic 1.JPG'); background-size:cover; background-position:center; border-top-left-radius:0.75rem; border-top-right-radius:0.75rem;"></div>
-                        <div class="card-body">
-                            <h4>Mahsuri Apartment</h4>
-                            <p style="color: var(--muted); margin:0.25rem 0;">Rented to Muslim students only, gender-segregated houses for male and female students.</p>
-                            <button class="btn btn-primary" onclick="openRentModal('Mahsuri Apartment','Mahsuri Apartment, Jalan Setiawangsa 13, Taman Setiawangsa, 54200 Kuala Lumpur','RM 270 / RM 300 / RM 300','Terbuka kepada pelajar LELAKI dan PEREMPUAN; Pelajar Muslim sahaja; Rumah sewa berasingan mengikut jantina. Sewa bulanan: RM270 (Bilik sharing berkipas), RM300 (Bilik sharing aircond), RM300 (Bilik single berkipas). Deposit 2 bulan sewa seorang. Kontrak 1 tahun. Bil elektrik ditanggung sehingga RM250; bil air ditanggung sehingga RM100; internet sepenuhnya ditanggung. Kemudahan: katil double decker, tilam, locker besi setiap seorang, dapur, peti sejuk, WiFi berkelajuan tinggi, mesin basuh, guarded 24 hours, 7 minit berjalan kaki ke kolej, berhampiran kedai makan, supermarket, farmasi, klinik, balai polis, bank, dan LRT Setiawangsa (15 minit berjalan kaki). Contact no : 012-328 0168')">Click Here for Details</button>
-                        </div>
-                    </div>
-
-                    <div class="card">
-                        <div style="height:150px; background-image:url('pic 2.JPG'); background-size:cover; background-position:center; border-top-left-radius:0.75rem; border-top-right-radius:0.75rem;"></div>
-                        <div class="card-body">
-                            <h4>Hostel A</h4>
-                            <p style="color: var(--muted); margin:0.25rem 0;">Hostel A, No 17-3, Jalan Setiawangsa 8, Taman Setiawangsa, 54200 Kuala Lumpur</p>
-                            <button class="btn btn-primary" onclick="openRentModal('Hostel A','Hostel A, No 17-3, Jalan Setiawangsa 8, Taman Setiawangsa, 54200 Kuala Lumpur','RM 350 / month','Single room with shared bathroom, Contact no : 016-946 3923')">Click Here for Details</button>
-                        </div>
-                    </div>
-
-                    <div class="card">
-                        <div style="height:150px; background-color:var(--surface); background-size:cover; background-position:center; border-top-left-radius:0.75rem; border-top-right-radius:0.75rem; display:flex; align-items:center; justify-content:center; color:var(--muted); font-weight:600;"></div>
-                        <div class="card-body">
-                            <h4>Intan Apartment</h4>
-                            <p style="color: var(--muted); margin:0.25rem 0;">Setiawangsa – dekat dengan Politeknik Metro Kuala Lumpur. Sewa berpatutan dan termasuk utiliti.</p>
-                            <button class="btn btn-primary" onclick="openRentModal('Intan Apartment','Setiawangsa, dekat dengan Politeknik Metro Kuala Lumpur. Jalan kaki/ bas distance.','Dari RMxxx / month','Lokasi strategik di Setiawangsa; sangat dekat dengan Politeknik; sesuai untuk pelajar (Lelaki / Perempuan, nyatakan jika ada); sewa berpatutan; termasuk utiliti: WiFi, air, elektrik. Hubungi Enck Zul 012-4662096.')">Click Here for Details</button>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Contact Section -->
-            <section id="contact" class="section">
-                <h2 style="margin-bottom: 2rem; color: var(--dark);"><i class="fas fa-envelope"></i> Contact Us</h2>
-
-                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
-                    <div class="card">
-                        <div class="card-header">
-                            <i class="fas fa-map-marker-alt"></i>
-                            <h3>Location</h3>
-                        </div>
-                        <div class="card-body">
-                            <p>POLITEKNIK METrO KUALA LUMPUR</p>
-                            <p>NO. 2-14 JALAN SETIAWANGSA 10, </p>
-                            <p>TAMAN SETIAWANGSA</p>
-                            <p>54200 KUALA LUMPUR</p>
-                        </div>
-                    </div>
-
-                    <div class="card">
-                        <div class="card-header">
-                            <i class="fas fa-phone"></i>
-                            <h3>Phone</h3>
-                        </div>
-                        <div class="card-body">
-                            <p>03-4251 8000</p>
-                            <p>03-4251 7979</p>
-                            <p>Available: Mon-Fri 8AM-5PM</p>
-                        </div>
-                    </div>
-
-                    <div class="card">
-                        <div class="card-header">
-                            <i class="fas fa-envelope"></i>
-                            <h3>Email</h3>
-                        </div>
-                        <div class="card-body">
-                            <p>jpppmklofficial@gmail.com</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="card contact-image" style="margin-top: 2rem;">
-                    <div class="card-header">
-                        <i class="fas fa-image"></i>
-                        <h3>Carta Organisasi Jawatankuasa Perwakilan Pelajar PMKL 2026/2027</h3>
-                    </div>
-                    <div class="card-body">
-                        <img src="carta.jpg" alt="Carta image" class="contact-card-image">
-                    </div>
-                </div>
-            </section>
-
-            <!-- Album Section -->
-            <section id="album" class="section">
-                <h2 style="margin-bottom: 2rem; color: var(--dark);"><i class="fas fa-images"></i> Photo Album</h2>
-                
-                <div class="album-gallery" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1.5rem;">
-                    <div class="album-card card">
-                        <div style="background: linear-gradient(135deg, rgba(44,93,138,0.85), rgba(79,125,136,0.85)); padding: 1.5rem; min-height: 160px; display:flex; align-items:center; justify-content:center; color: white;">
-                            <i class="fas fa-camera-retro" style="font-size: 2.25rem;"></i>
-                        </div>
-                        <div style="padding: 0.9rem;">
-                            <div style="font-weight:700; margin-bottom:0.25rem;">Album 1</div>
-                            <div style="color: var(--muted); font-size:0.95rem;">Event photos — Coming soon</div>
-                        </div>
-                    </div>
-
-                    <div class="album-card card">
-                        <div style="background: linear-gradient(135deg, rgba(39,78,112,0.85), rgba(79,125,136,0.85)); padding: 1.5rem; min-height: 160px; display:flex; align-items:center; justify-content:center; color: white;">
-                            <i class="fas fa-photo-video" style="font-size: 2.25rem;"></i>
-                        </div>
-                        <div style="padding: 0.9rem;">
-                            <div style="font-weight:700; margin-bottom:0.25rem;">Album 2</div>
-                            <div style="color: var(--muted); font-size:0.95rem;">Community highlights</div>
-                        </div>
-                    </div>
-
-                    <div class="album-card card">
-                        <div style="background: linear-gradient(135deg, rgba(44,93,138,0.85), rgba(44,93,138,0.65)); padding: 1.5rem; min-height: 160px; display:flex; align-items:center; justify-content:center; color: white;">
-                            <i class="fas fa-images" style="font-size: 2.25rem;"></i>
-                        </div>
-                        <div style="padding: 0.9rem;">
-                            <div style="font-weight:700; margin-bottom:0.25rem;">Album 3</div>
-                            <div style="color: var(--muted); font-size:0.95rem;">Workshops & sessions</div>
-                        </div>
-                    </div>
-
-                    <div class="album-card card">
-                        <div style="background: linear-gradient(135deg, rgba(79,125,136,0.85), rgba(44,93,138,0.65)); padding: 1.5rem; min-height: 160px; display:flex; align-items:center; justify-content:center; color: white;">
-                            <i class="fas fa-book" style="font-size: 2.25rem;"></i>
-                        </div>
-                        <div style="padding: 0.9rem;">
-                            <div style="font-weight:700; margin-bottom:0.25rem;">Album 4</div>
-                            <div style="color: var(--muted); font-size:0.95rem;">Study trips & excursions</div>
-                        </div>
-                    </div>
-                </div>
-            </section>
+        <div class="quick-access">
+          <a class="qa-chip" onclick="navigate('announcements')"><i class="fas fa-megaphone"></i> Announcements</a>
+          <a class="qa-chip" onclick="navigate('events')"><i class="fas fa-calendar"></i> Events</a>
+          <a class="qa-chip" onclick="navigate('members')"><i class="fas fa-users"></i> Members</a>
+          <a class="qa-chip" onclick="navigate('rent')"><i class="fas fa-home"></i> Rent House</a>
+          <a class="qa-chip" onclick="navigate('contact')"><i class="fas fa-envelope"></i> Contact</a>
+          <a class="qa-chip" onclick="navigate('album')"><i class="fas fa-images"></i> Gallery</a>
         </div>
-
-        <!-- Rent Details Modal -->
-        <div id="rentModal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="rentModalTitle">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h3 id="rentModalTitle">Property Details</h3>
-                    <button class="modal-close" onclick="closeRentModal()" aria-label="Close modal">×</button>
-                </div>
-                <div class="modal-body">
-                    <p class="modal-detail" id="rentModalType"></p>
-                    <p class="modal-detail" id="rentModalAddress"></p>
-                    <p class="modal-detail" id="rentModalPrice"></p>
-                    <p class="modal-detail">For more information, please contact the housing office or visit the property listing.</p>
-                    <button type="button" class="btn btn-secondary" onclick="closeRentModal()">Close</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Footer -->
-        <footer>
-            <p>&copy; 2026 JPP PMKL Student Portal. All rights reserved.</p>
-            <p style="margin-top: 1rem; font-size: 0.9rem;">Empowering Student Leadership & Community Engagement</p>
-        </footer>
+      </div>
     </div>
 
-    <script>
-        // Navigation
-        const nav = document.querySelector('nav');
-        const navToggle = document.querySelector('.nav-toggle');
+    <div class="sec-wrap">
 
-        if (navToggle) {
-            navToggle.addEventListener('click', () => nav.classList.toggle('mobile-open'));
-        }
+      <!-- STATS -->
+      <div class="stats-row">
+        <div class="stat-item">
+          <div class="stat-num" data-count="600">0</div>
+          <div class="stat-label">Students</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num" data-count="20">0</div>
+          <div class="stat-label">JPP Members</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num" data-count="2">0</div>
+          <div class="stat-label">Events This Month</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num" data-count="3">0</div>
+          <div class="stat-label">Rental Listings</div>
+        </div>
+      </div>
 
-        document.querySelectorAll('.nav-link').forEach(link => {
-            link.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                // Update active link
-                document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
-                this.classList.add('active');
-                
-                // Close mobile menu if open
-                if (nav.classList.contains('mobile-open')) {
-                    nav.classList.remove('mobile-open');
-                }
-                
-                // Show section
-                const section = this.getAttribute('data-section');
-                document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-                document.getElementById(section).classList.add('active');
-            });
-        });
+      <!-- QUICK ACCESS CARDS -->
+      <div style="margin-bottom: 0.75rem;">
+        <div class="sec-label"><i class="fas fa-th"></i> Quick Access</div>
+      </div>
+      <div class="dashboard-grid">
+        <a class="dash-card" onclick="navigate('announcements')" style="--card-color: #f5c842; --card-color-bg: rgba(245,200,66,0.1);">
+          <div class="dash-card-arrow"><i class="fas fa-arrow-right"></i></div>
+          <div class="dash-card-icon"><i class="fas fa-bell"></i></div>
+          <h4>Announcements</h4>
+          <p>Important notices and updates from JPP PMKL</p>
+        </a>
+        <a class="dash-card" onclick="navigate('events')" style="--card-color: #1a4bff; --card-color-bg: rgba(26,75,255,0.12);">
+          <div class="dash-card-arrow"><i class="fas fa-arrow-right"></i></div>
+          <div class="dash-card-icon"><i class="fas fa-calendar-alt"></i></div>
+          <h4>Events</h4>
+          <p>Upcoming programs, activities and competitions</p>
+        </a>
+        <a class="dash-card" onclick="navigate('members')" style="--card-color: #22d3a0; --card-color-bg: rgba(34,211,160,0.1);">
+          <div class="dash-card-arrow"><i class="fas fa-arrow-right"></i></div>
+          <div class="dash-card-icon"><i class="fas fa-users"></i></div>
+          <h4>JPP Members</h4>
+          <p>Student representatives and committee roles</p>
+        </a>
+        <a class="dash-card" onclick="navigate('rent')" style="--card-color: #ff7eb3; --card-color-bg: rgba(255,126,179,0.1);">
+          <div class="dash-card-arrow"><i class="fas fa-arrow-right"></i></div>
+          <div class="dash-card-icon"><i class="fas fa-home"></i></div>
+          <h4>Rent House</h4>
+          <p>Affordable student housing near PMKL</p>
+        </a>
+        <a class="dash-card" onclick="showToast('Academic Resources — Coming Soon!')">
+          <div class="dash-card-arrow"><i class="fas fa-arrow-right"></i></div>
+          <div class="dash-card-icon" style="background:rgba(168,85,247,0.1);color:#c084fc;"><i class="fas fa-book"></i></div>
+          <h4>Academic Resources</h4>
+          <p>Study materials and academic support</p>
+        </a>
+        <a class="dash-card" onclick="showToast('Student Welfare — Coming Soon!')">
+          <div class="dash-card-arrow"><i class="fas fa-arrow-right"></i></div>
+          <div class="dash-card-icon" style="background:rgba(251,146,60,0.1);color:#fb923c;"><i class="fas fa-heart"></i></div>
+          <h4>Student Welfare</h4>
+          <p>Counselling, health and support services</p>
+        </a>
+        <a class="dash-card" onclick="showToast('Scholarships — Coming Soon!')">
+          <div class="dash-card-arrow"><i class="fas fa-arrow-right"></i></div>
+          <div class="dash-card-icon" style="background:rgba(20,184,166,0.1);color:#2dd4bf;"><i class="fas fa-award"></i></div>
+          <h4>Scholarships</h4>
+          <p>Financial aid and scholarship listings</p>
+        </a>
+        <a class="dash-card" onclick="showToast('Student Feedback — Coming Soon!')">
+          <div class="dash-card-arrow"><i class="fas fa-arrow-right"></i></div>
+          <div class="dash-card-icon" style="background:rgba(239,68,68,0.1);color:#f87171;"><i class="fas fa-comment-dots"></i></div>
+          <h4>Feedback</h4>
+          <p>Submit complaints and suggestions</p>
+        </a>
+      </div>
 
-        const slides = document.querySelectorAll('.slide');
-        const dots = document.querySelectorAll('.slider-dot');
-        let currentSlide = 0;
+      <!-- CLOCK + CALENDAR -->
+      <div class="widget-row">
+        <div class="clock-panel">
+          <div class="clock-day" id="dashDay">MONDAY</div>
+          <div class="clock-time" id="dashClock">00:00:00</div>
+          <div class="clock-date-str" id="dashDateStr">Loading...</div>
+        </div>
+        <div class="cal-panel">
+          <div class="cal-header">
+            <h4 id="calMonthYear">June 2026</h4>
+          </div>
+          <div class="cal-grid" id="calGrid"></div>
+        </div>
+      </div>
 
-        function showSlide(index) {
-            slides.forEach((slide, i) => {
-                slide.classList.toggle('active', i === index);
-            });
-            dots.forEach((dot, i) => {
-                dot.classList.toggle('active', i === index);
-            });
-        }
+      <!-- TWIN PANELS -->
+      <div class="twin-grid">
+        <div class="panel">
+          <div class="panel-head">
+            <div class="panel-head-icon"><i class="fas fa-bell"></i></div>
+            <h3>Latest Announcements</h3>
+            <a onclick="navigate('announcements')">View all →</a>
+          </div>
+          <div class="panel-body">
+            <div class="ann-item">
+              <div class="ann-dot"></div>
+              <div class="ann-content">
+                <span class="tag tag-gold">Important</span>
+                <h5>Pendaftaran Pelajar Baharu Sesi I: 2026/2027</h5>
+                <p>Tahniah kepada semua pelajar yang telah mendaftar untuk sesi baharu.</p>
+                <div style="font-size:0.74rem; color:var(--text3);">22 Jun 2026</div>
+              </div>
+            </div>
+            <div class="ann-item">
+              <div class="ann-dot blue"></div>
+              <div class="ann-content">
+                <span class="tag tag-blue">Events</span>
+                <h5>SuperStar Esport Championship</h5>
+                <p>Nantikan acara esport terhebat tahun ini!</p>
+                <div style="font-size:0.74rem; color:var(--text3);">Coming Soon</div>
+              </div>
+            </div>
+            <div class="ann-item">
+              <div class="ann-dot green"></div>
+              <div class="ann-content">
+                <span class="tag tag-green">Keputusan</span>
+                <h5>Tahniah Pelajar Cemerlang Sesi II: 2025/2026</h5>
+                <p>Syabas kepada semua pelajar yang mencatat keputusan yang membanggakan.</p>
+                <div style="font-size:0.74rem; color:var(--text3);">Jun 2026</div>
+              </div>
+            </div>
+          </div>
+        </div>
 
-        function nextSlide() {
-            currentSlide = (currentSlide + 1) % slides.length;
-            showSlide(currentSlide);
-        }
+        <div class="panel">
+          <div class="panel-head">
+            <div class="panel-head-icon"><i class="fas fa-calendar"></i></div>
+            <h3>Upcoming Events</h3>
+            <a onclick="navigate('events')">View all →</a>
+          </div>
+          <div class="panel-body">
+            <div class="event-item">
+              <div class="event-date-box"><div class="day">22</div><div class="mon">JUN</div></div>
+              <div class="event-info-text">
+                <h5>Pendaftaran Pelajar Baharu</h5>
+                <p><i class="fas fa-clock" style="color:var(--gold);margin-right:0.25rem;"></i>8:00 AM — PMKL</p>
+              </div>
+            </div>
+            <div class="event-item">
+              <div class="event-date-box" style="background:var(--gold-dim);border-color:rgba(245,200,66,0.2);"><div class="day" style="color:var(--gold);">TBD</div><div class="mon">2026</div></div>
+              <div class="event-info-text">
+                <h5>SuperStar Esport Championship</h5>
+                <p><i class="fas fa-map-marker-alt" style="color:var(--gold);margin-right:0.25rem;"></i>Location TBD</p>
+              </div>
+            </div>
+            <div class="event-item">
+              <div class="event-date-box" style="background:rgba(34,211,160,0.1);border-color:rgba(34,211,160,0.2);"><div class="day" style="color:#22d3a0;">?</div><div class="mon">TBD</div></div>
+              <div class="event-info-text">
+                <h5>More Events Coming</h5>
+                <p><i class="fas fa-star" style="color:var(--gold);margin-right:0.25rem;"></i>Stay tuned!</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
-        dots.forEach(dot => {
-            dot.addEventListener('click', function() {
-                currentSlide = Number(this.getAttribute('data-index'));
-                showSlide(currentSlide);
-            });
-        });
+    </div>
+  </section>
 
-        function openRentModal(title, address, price, details) {
-            document.getElementById('rentModalTitle').textContent = title;
-            document.getElementById('rentModalType').textContent = details;
-            document.getElementById('rentModalAddress').textContent = address;
-            document.getElementById('rentModalPrice').textContent = price;
-            document.getElementById('rentModal').classList.add('active');
-        }
+  <!-- ══ ANNOUNCEMENTS ══ -->
+  <section class="section" id="announcements">
+    <div class="sec-wrap" style="padding-top: 2.5rem;">
+      <div class="sec-label"><i class="fas fa-bell"></i> Notice Board</div>
+      <h2 class="sec-title">Announcements</h2>
+      <p class="sec-sub">Stay updated with the latest news, notices, and important information from JPP PMKL.</p>
 
-        function closeRentModal() {
-            document.getElementById('rentModal').classList.remove('active');
-        }
+      <div class="ann-page-grid">
+        <div>
+          <div class="ann-card-big">
+            <span class="tag tag-gold">Important</span>
+            <h4>Pendaftaran Pelajar Baharu Sesi I: 2026/2027</h4>
+            <p>Selamat datang kepada semua pelajar baharu! Pendaftaran rasmi untuk sesi akademik 2026/2027 akan bermula pada 22 Jun 2026. Sila bawa semua dokumen yang diperlukan.</p>
+            <div class="ann-meta">
+              <span><i class="fas fa-calendar-alt"></i> 22 Jun 2026</span>
+              <span><i class="fas fa-user"></i> JPP PMKL</span>
+            </div>
+          </div>
 
-        function formatTime(date) {
-            return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-        }
+          <div class="ann-card-big">
+            <span class="tag tag-blue">Events</span>
+            <h4>SuperStar Esport Championship</h4>
+            <p>Nantikan acara esport yang terhebat tahun ini! JPP PMKL dengan bangga akan menganjurkan pertandingan esport peringkat kolej. Tarikh dan tempat akan diumumkan tidak lama lagi.</p>
+            <div class="ann-meta">
+              <span><i class="fas fa-calendar-alt"></i> Coming Soon</span>
+              <span><i class="fas fa-user"></i> EXCO Sukan</span>
+            </div>
+          </div>
 
-        function formatDate(date) {
-            return date.toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
-        }
+          <div class="ann-card-big">
+            <span class="tag tag-green">Pencapaian</span>
+            <h4>Tahniah Pelajar Cemerlang Sesi II: 2025/2026</h4>
+            <p>Syabas dan tahniah kepada semua pelajar PMKL yang memperoleh keputusan yang cemerlang pada Peperiksaan Akhir Sesi II: 2025/2026. Kejayaan anda adalah inspirasi kami!</p>
+            <div class="ann-meta">
+              <span><i class="fas fa-calendar-alt"></i> Jun 2026</span>
+              <span><i class="fas fa-user"></i> JPP PMKL</span>
+            </div>
+          </div>
 
-        function buildCalendar(date) {
-            const calendarElement = document.getElementById('dashboardCalendar');
-            const monthYearElement = document.getElementById('calendarMonthYear');
-            const year = date.getFullYear();
-            const month = date.getMonth();
-            const today = date.getDate();
-            const firstDay = new Date(year, month, 1).getDay();
-            const daysInMonth = new Date(year, month + 1, 0).getDate();
-            const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+          <div class="ann-card-big" style="opacity:0.65;">
+            <span class="tag" style="background:var(--surface2);color:var(--text3);">Activities</span>
+            <h4>Aktiviti Baharu — Akan Datang</h4>
+            <p>Pelbagai aktiviti menarik sedang dalam perancangan untuk sesi 2026/2027. Ikuti perkembangan terkini melalui portal ini.</p>
+            <div class="ann-meta">
+              <span><i class="fas fa-calendar-alt"></i> TBD</span>
+              <span><i class="fas fa-user"></i> JPP PMKL</span>
+            </div>
+          </div>
+        </div>
 
-            monthYearElement.textContent = date.toLocaleDateString('en-GB', { month: 'long', year: 'numeric' });
-            calendarElement.innerHTML = '';
+        <div>
+          <div class="sticky-panel">
+            <h4><i class="fas fa-tag" style="color:var(--gold);margin-right:0.5rem;"></i>Categories</h4>
+            <div style="display:flex;flex-direction:column;gap:0.5rem;">
+              <button onclick="showToast('Filtering by category — coming soon!')" style="display:flex;align-items:center;justify-content:space-between;padding:0.6rem 0.8rem;background:var(--gold-dim);border:1px solid rgba(245,200,66,0.2);border-radius:9px;color:var(--gold);cursor:pointer;font-size:0.82rem;font-weight:600;width:100%;">
+                <span><i class="fas fa-exclamation-circle" style="margin-right:0.5rem;"></i>Important</span><span class="tag tag-gold">1</span>
+              </button>
+              <button onclick="showToast('Filtering by category — coming soon!')" style="display:flex;align-items:center;justify-content:space-between;padding:0.6rem 0.8rem;background:var(--primary-glow);border:1px solid rgba(26,75,255,0.2);border-radius:9px;color:#7aa7ff;cursor:pointer;font-size:0.82rem;font-weight:600;width:100%;">
+                <span><i class="fas fa-calendar" style="margin-right:0.5rem;"></i>Events</span><span class="tag tag-blue">1</span>
+              </button>
+              <button onclick="showToast('Filtering by category — coming soon!')" style="display:flex;align-items:center;justify-content:space-between;padding:0.6rem 0.8rem;background:rgba(34,211,160,0.08);border:1px solid rgba(34,211,160,0.2);border-radius:9px;color:#22d3a0;cursor:pointer;font-size:0.82rem;font-weight:600;width:100%;">
+                <span><i class="fas fa-star" style="margin-right:0.5rem;"></i>Pencapaian</span><span class="tag tag-green">1</span>
+              </button>
+            </div>
 
-            dayNames.forEach(dayName => {
-                const header = document.createElement('span');
-                header.textContent = dayName;
-                header.style.fontWeight = '700';
-                calendarElement.appendChild(header);
-            });
+            <div class="divider"></div>
+            <h4><i class="fas fa-fire" style="color:var(--gold);margin-right:0.5rem;"></i>Recent Updates</h4>
+            <div style="font-size:0.78rem;color:var(--text3);line-height:1.8;">
+              <div>• Pendaftaran Baharu — 22 Jun</div>
+              <div>• Esport Championship — TBD</div>
+              <div>• Keputusan Cemerlang — Jun 2026</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-            for (let i = 0; i < firstDay; i++) {
-                const emptyCell = document.createElement('span');
-                emptyCell.textContent = '';
-                calendarElement.appendChild(emptyCell);
-            }
+  <!-- ══ EVENTS ══ -->
+  <section class="section" id="events">
+    <div class="sec-wrap" style="padding-top: 2.5rem;">
+      <div class="sec-label"><i class="fas fa-calendar"></i> Programs & Activities</div>
+      <h2 class="sec-title">Upcoming Events</h2>
+      <p class="sec-sub">Join us for exciting events, competitions, and community programs organized by JPP PMKL.</p>
 
-            for (let day = 1; day <= daysInMonth; day++) {
-                const dayCell = document.createElement('span');
-                dayCell.textContent = day;
-                dayCell.className = 'calendar-day';
-                if (day === today) {
-                    dayCell.classList.add('calendar-today');
-                }
-                calendarElement.appendChild(dayCell);
-            }
-        }
+      <div class="events-masonry">
+        <div class="event-card-full">
+          <div class="event-thumb event-thumb-grad1">📋</div>
+          <div class="event-card-body">
+            <h4>Pendaftaran Pelajar Baharu Sesi I: 2026/2027</h4>
+            <div class="event-meta-row">
+              <div class="event-meta-item"><i class="fas fa-calendar-alt"></i> 22 Jun 2026</div>
+            </div>
+            <div class="event-meta-row">
+              <div class="event-meta-item"><i class="fas fa-clock"></i> 8:00 AM onwards</div>
+            </div>
+            <div class="event-meta-row">
+              <div class="event-meta-item"><i class="fas fa-map-marker-alt"></i> PMKL Campus</div>
+            </div>
+            <button class="btn-event" onclick="showToast('Event registration coming soon!')">Learn More</button>
+          </div>
+        </div>
 
-        function updateDashboardClock() {
-            const now = new Date();
-            document.getElementById('dashboardClock').textContent = formatTime(now);
-            document.getElementById('dashboardDate').textContent = formatDate(now);
-        }
+        <div class="event-card-full">
+          <div class="event-thumb event-thumb-grad2">🎮</div>
+          <div class="event-card-body">
+            <h4>SuperStar Esport Championship</h4>
+            <div class="event-meta-row">
+              <div class="event-meta-item"><i class="fas fa-calendar-alt"></i> TBD</div>
+            </div>
+            <div class="event-meta-row">
+              <div class="event-meta-item"><i class="fas fa-clock"></i> TBD</div>
+            </div>
+            <div class="event-meta-row">
+              <div class="event-meta-item"><i class="fas fa-map-marker-alt"></i> TBD</div>
+            </div>
+            <button class="btn-event" onclick="showToast('Stay tuned for registration!')">Learn More</button>
+          </div>
+        </div>
 
-        updateDashboardClock();
-        buildCalendar(new Date());
-        setInterval(updateDashboardClock, 1000);
-        setInterval(nextSlide, 5000);
+        <div class="event-card-full" style="opacity:0.7;">
+          <div class="event-thumb event-thumb-grad3">🎭</div>
+          <div class="event-card-body">
+            <h4>Aktiviti Kesukarelawan & Keusahawanan</h4>
+            <div class="event-meta-row">
+              <div class="event-meta-item"><i class="fas fa-calendar-alt"></i> TBD</div>
+            </div>
+            <div class="event-meta-row">
+              <div class="event-meta-item"><i class="fas fa-clock"></i> TBD</div>
+            </div>
+            <div class="event-meta-row">
+              <div class="event-meta-item"><i class="fas fa-map-marker-alt"></i> TBD</div>
+            </div>
+            <button class="btn-event" onclick="showToast('More details soon!')">Learn More</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-        // Announcement ticker rotation
-        (function() {
-            const announcements = [
-                'Pendaftaran Pelajar Baharu Sesi I: 2026 / 2027',
-                'SuperStar Esport Championship — Coming Soon!',
-                'Check out the Photo Album and Events for updates',
-                'Office Hours: Mon-Fri 8AM-5PM — Contact: jpppmklofficial@gmail.com'
-            ];
+  <!-- ══ MEMBERS ══ -->
+  <section class="section" id="members">
+    <div class="sec-wrap" style="padding-top: 2.5rem;">
+      <div class="sec-label"><i class="fas fa-users"></i> Leadership Team</div>
+      <h2 class="sec-title">JPP Members</h2>
+      <p class="sec-sub">Meet your student representatives for the academic year 2026/2027.</p>
 
-            const ticker = document.getElementById('announcementTicker');
-            if (!ticker) return;
-            const textEl = ticker.querySelector('.ticker-text');
-            let idx = 0;
-            let tickerInterval = null;
+      <div class="members-header-card">
+        <div style="width:70px;height:70px;border-radius:18px;background:linear-gradient(135deg,var(--primary),#4f7dff);display:flex;align-items:center;justify-content:center;font-size:1.8rem;color:white;flex-shrink:0;">🏛️</div>
+        <div>
+          <h2>Jawatankuasa Perwakilan Pelajar</h2>
+          <p>Politeknik METrO Kuala Lumpur — Sesi 2026/2027 — 20 Active Members</p>
+        </div>
+      </div>
 
-            function showNext() {
-                idx = (idx + 1) % announcements.length;
-                textEl.style.opacity = 0;
-                setTimeout(() => {
-                    textEl.textContent = announcements[idx];
-                    textEl.style.opacity = 1;
-                }, 380);
-            }
+      <div class="members-grid">
+        <!-- Leadership -->
+        <div class="member-card" style="border-color: rgba(245,200,66,0.3);">
+          <div class="member-ava"><img src="members/members_habib.png" alt="Habib" onerror="this.style.display='none';this.parentNode.textContent='H'"></div>
+          <div class="member-name">HABIB HIDAYATULLAH KHAIRUNNAS BIN HAMRAN</div>
+          <div class="member-role">Yang Di-Pertua</div>
+        </div>
+        <div class="member-card">
+          <div class="member-ava"><img src="members/members_afif.png" alt="Afif" onerror="this.style.display='none';this.parentNode.textContent='A'"></div>
+          <div class="member-name">MUHAMAD AFIF BIN AWALUDIN</div>
+          <div class="member-role">Naib Yang Di-Pertua</div>
+        </div>
+        <div class="member-card">
+          <div class="member-ava"><img src="members/members_irfan.png" alt="Irfan" onerror="this.style.display='none';this.parentNode.textContent='I'"></div>
+          <div class="member-name">MUHAMMAD IRFAN BIN MOHD ZAMBRI</div>
+          <div class="member-role">Setiausaha 1</div>
+        </div>
+        <div class="member-card">
+          <div class="member-ava"><img src="members/members_humaira.png" alt="Humaira" onerror="this.style.display='none';this.parentNode.textContent='H'"></div>
+          <div class="member-name">NURUL HUMAIRA' BINTI SYAHRIL</div>
+          <div class="member-role">Setiausaha 2</div>
+        </div>
+        <div class="member-card">
+          <div class="member-ava"><img src="members/members_hussein.png" alt="Hussein" onerror="this.style.display='none';this.parentNode.textContent='H'"></div>
+          <div class="member-name">HUSSEIN HIRAWADY BIN REZA HIRAWADY</div>
+          <div class="member-role">Bendahari</div>
+        </div>
+        <div class="member-card">
+          <div class="member-ava"><img src="members/members_aziz.png" alt="Aziz" onerror="this.style.display='none';this.parentNode.textContent='A'"></div>
+          <div class="member-name">ABDUL AZIZ BIN SAMSUDIN</div>
+          <div class="member-role">EXCO Disiplin 1</div>
+        </div>
+        <div class="member-card">
+          <div class="member-ava"><img src="members/members_miruthalan.png" alt="Miruthalan" onerror="this.style.display='none';this.parentNode.textContent='M'"></div>
+          <div class="member-name">MIRUTHULAN A/L THULASI THARAN</div>
+          <div class="member-role">EXCO Disiplin 2</div>
+        </div>
+        <div class="member-card">
+          <div class="member-ava"><img src="members/members_laili.png" alt="Laili" onerror="this.style.display='none';this.parentNode.textContent='L'"></div>
+          <div class="member-name">NURUL LAILI BINTI SAMSURI</div>
+          <div class="member-role">EXCO Disiplin 3</div>
+        </div>
+        <div class="member-card">
+          <div class="member-ava"><img src="members/members_muttaqi.png" alt="Muttaqi" onerror="this.style.display='none';this.parentNode.textContent='M'"></div>
+          <div class="member-name">AHMAD MUTTAQI BIN HASLY</div>
+          <div class="member-role">EXCO Multimedia & Penerbitan</div>
+        </div>
+        <div class="member-card">
+          <div class="member-ava"><img src="members/members_eusoff.png" alt="Eusoff" onerror="this.style.display='none';this.parentNode.textContent='E'"></div>
+          <div class="member-name">MUHAMMAD EUSOFF BIN HANIDAN</div>
+          <div class="member-role">EXCO Multimedia & Penerbitan</div>
+        </div>
+        <div class="member-card">
+          <div class="member-ava"><img src="members/members_aniyah.png" alt="Aniyah" onerror="this.style.display='none';this.parentNode.textContent='A'"></div>
+          <div class="member-name">NUR ANIYAH SAFWAH BINTI MOHD NIZAM</div>
+          <div class="member-role">EXCO Multimedia & Penerbitan</div>
+        </div>
+        <div class="member-card">
+          <div class="member-ava"><img src="members/members_noraliya.png" alt="Noraliya" onerror="this.style.display='none';this.parentNode.textContent='N'"></div>
+          <div class="member-name">NORALIYA BINTI NORAZMI</div>
+          <div class="member-role">EXCO Sukan & Kebudayaan</div>
+        </div>
+        <div class="member-card">
+          <div class="member-ava"><img src="members/members_amirul.png" alt="Amirul" onerror="this.style.display='none';this.parentNode.textContent='A'"></div>
+          <div class="member-name">AMIRUL ABDUL ROSHIED BIN ZULKEFLI</div>
+          <div class="member-role">EXCO Sukan & Kebudayaan</div>
+        </div>
+        <div class="member-card">
+          <div class="member-ava"><img src="members/members_sharifah.png" alt="Sharifah" onerror="this.style.display='none';this.parentNode.textContent='S'"></div>
+          <div class="member-name">SHARIFAH NURSHAHIRAH BINTI SYED ABDUL HALIM</div>
+          <div class="member-role">EXCO Sukan & Kebudayaan</div>
+        </div>
+        <div class="member-card">
+          <div class="member-ava"><img src="members/members_aina.png" alt="Aina" onerror="this.style.display='none';this.parentNode.textContent='A'"></div>
+          <div class="member-name">AINA NADIA BINTI MOHD SANUSI</div>
+          <div class="member-role">EXCO Kesukarelawan & Keusahawanan</div>
+        </div>
+        <div class="member-card">
+          <div class="member-ava"><img src="members/members_akif.png" alt="Akif" onerror="this.style.display='none';this.parentNode.textContent='A'"></div>
+          <div class="member-name">MUHAMMAD AKIF ARMAND BIN JOHARI</div>
+          <div class="member-role">EXCO Kesukarelawan & Keusahawanan</div>
+        </div>
+        <div class="member-card">
+          <div class="member-ava"><img src="members/members_aira.png" alt="Aira" onerror="this.style.display='none';this.parentNode.textContent='A'"></div>
+          <div class="member-name">AIRA HANNAN BINTI AZMAN</div>
+          <div class="member-role">EXCO Kesukarelawan & Keusahawanan</div>
+        </div>
+        <div class="member-card">
+          <div class="member-ava"><img src="members/members_puteri.png" alt="Puteri" onerror="this.style.display='none';this.parentNode.textContent='P'"></div>
+          <div class="member-name">PUTERI ZAHRATUL UMMAIRAH BINTI MUHAMMAD FADZIL NOOR</div>
+          <div class="member-role">EXCO Kerohanian & Kebajikan</div>
+        </div>
+        <div class="member-card">
+          <div class="member-ava"><img src="members/members_aqeel.png" alt="Aqeel" onerror="this.style.display='none';this.parentNode.textContent='A'"></div>
+          <div class="member-name">MUHAMMAD AQEEL FAKHEEM BIN MOHD YUSOF</div>
+          <div class="member-role">EXCO Kerohanian & Kebajikan</div>
+        </div>
+        <div class="member-card">
+          <div class="member-ava"><img src="members/members_adriena.png" alt="Adriena" onerror="this.style.display='none';this.parentNode.textContent='A'"></div>
+          <div class="member-name">NUR ADRIENA BINTI SUKRI</div>
+          <div class="member-role">EXCO Kerohanian & Kebajikan</div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-            function start() {
-                if (tickerInterval) clearInterval(tickerInterval);
-                tickerInterval = setInterval(showNext, 5000);
-            }
+  <!-- ══ ALBUM ══ -->
+  <section class="section" id="album">
+    <div class="sec-wrap" style="padding-top: 2.5rem;">
+      <div class="sec-label"><i class="fas fa-images"></i> Gallery</div>
+      <h2 class="sec-title">Photo Album</h2>
+      <p class="sec-sub">Capturing moments and memories from JPP PMKL events and campus life.</p>
 
-            // Pause on hover
-            ticker.addEventListener('mouseenter', () => { if (tickerInterval) clearInterval(tickerInterval); });
-            ticker.addEventListener('mouseleave', () => start());
+      <div class="album-grid">
+        <div class="album-item" style="grid-column:span 2;">
+          <div class="album-item-inner" style="background:linear-gradient(135deg,#0a1628,#1a4bff,#0d3a8a);">📸</div>
+          <div class="album-item-label">Campus Highlights 2026</div>
+        </div>
+        <div class="album-item">
+          <div class="album-item-inner" style="background:linear-gradient(135deg,#1a1a0a,#f5c842,#a07d10);">🏆</div>
+          <div class="album-item-label">Awards & Recognition</div>
+        </div>
+        <div class="album-item">
+          <div class="album-item-inner" style="background:linear-gradient(135deg,#0a1a14,#22d3a0,#0a6b50);">🌿</div>
+          <div class="album-item-label">Community Events</div>
+        </div>
+        <div class="album-item">
+          <div class="album-item-inner" style="background:linear-gradient(135deg,#1a0a1a,#c084fc,#6b0aab);">🎨</div>
+          <div class="album-item-label">Creative Activities</div>
+        </div>
+        <div class="album-item">
+          <div class="album-item-inner" style="background:linear-gradient(135deg,#1a0a0a,#fb923c,#7a3000);">⚽</div>
+          <div class="album-item-label">Sports & Games</div>
+        </div>
+        <div class="album-item" style="grid-column:span 2;">
+          <div class="album-item-inner" style="background:linear-gradient(135deg,#0a1414,#2dd4bf,#0a7a6b);">🤝</div>
+          <div class="album-item-label">Volunteer & Outreach</div>
+        </div>
+        <div class="album-item">
+          <div class="album-item-inner" style="background:linear-gradient(135deg,#0a0a1a,#60a5fa,#0a2066);">📚</div>
+          <div class="album-item-label">Academic Sessions</div>
+        </div>
+        <div class="album-item">
+          <div class="album-item-inner" style="background:linear-gradient(135deg,#1a1014,#f87171,#6b0a0a);">❤️</div>
+          <div class="album-item-label">Student Welfare</div>
+        </div>
+      </div>
 
-            // initialize
-            textEl.textContent = announcements[0];
-            start();
-        })();
+      <div style="text-align:center;margin-top:2rem;">
+        <button class="btn-hero btn-hero-outline" onclick="showToast('Full gallery coming soon!')"><i class="fas fa-plus"></i> Load More Photos</button>
+      </div>
+    </div>
+  </section>
 
-    </script>
+  <!-- ══ RENT ══ -->
+  <section class="section" id="rent">
+    <div class="sec-wrap" style="padding-top: 2.5rem;">
+      <div class="sec-label"><i class="fas fa-home"></i> Student Housing</div>
+      <h2 class="sec-title">Rent House Listings</h2>
+      <p class="sec-sub">Affordable, verified student accommodations near Politeknik METrO Kuala Lumpur.</p>
+
+      <div class="rent-grid">
+        <div class="rent-card">
+          <div class="rent-thumb" style="background-image:url('pic 1.JPG');">
+            <div class="rent-price-badge">RM 270+/mo</div>
+          </div>
+          <div class="rent-card-body">
+            <h4>Mahsuri Apartment</h4>
+            <p>Muslim students only, gender-segregated housing for male and female. 7 minutes walk to college.</p>
+            <div class="rent-features">
+              <div class="feat-chip"><i class="fas fa-wifi"></i> WiFi</div>
+              <div class="feat-chip"><i class="fas fa-tint"></i> Water incl.</div>
+              <div class="feat-chip"><i class="fas fa-bolt"></i> Electric incl.</div>
+              <div class="feat-chip"><i class="fas fa-shield-alt"></i> 24hr Guard</div>
+              <div class="feat-chip"><i class="fas fa-snowflake"></i> AC Option</div>
+              <div class="feat-chip"><i class="fas fa-subway"></i> Near LRT</div>
+            </div>
+            <button class="btn-rent" onclick="openRentModal('Mahsuri Apartment','Mahsuri Apartment, Jalan Setiawangsa 13, Taman Setiawangsa, 54200 Kuala Lumpur','RM 270 / RM 300 / RM 300 per month','Muslim students only (Male &amp; Female, separate). RM270 (sharing, fan), RM300 (sharing, aircon), RM300 (single, fan). 2-month deposit. 1-year contract. Utilities: Electric ≤RM250, Water ≤RM100, WiFi fully covered. Facilities: Double decker beds, lockers, kitchen, fridge, washing machine, 24hr guarded. 7 min walk to college. Near LRT Setiawangsa (15 min walk), shops, pharmacy, clinic, bank.','012-328 0168')">View Details</button>
+          </div>
+        </div>
+
+        <div class="rent-card">
+          <div class="rent-thumb" style="background-image:url('pic 2.JPG');">
+            <div class="rent-price-badge">RM 350/mo</div>
+          </div>
+          <div class="rent-card-body">
+            <h4>Hostel A</h4>
+            <p>Single room with shared bathroom. Conveniently located near Politeknik METrO Kuala Lumpur.</p>
+            <div class="rent-features">
+              <div class="feat-chip"><i class="fas fa-bed"></i> Single Room</div>
+              <div class="feat-chip"><i class="fas fa-bath"></i> Shared Bath</div>
+            </div>
+            <button class="btn-rent" onclick="openRentModal('Hostel A','No 17-3, Jalan Setiawangsa 8, Taman Setiawangsa, 54200 Kuala Lumpur','RM 350 / month','Single room with shared bathroom. Contact for more details and availability.','016-946 3923')">View Details</button>
+          </div>
+        </div>
+
+        <div class="rent-card">
+          <div class="rent-thumb" style="background:linear-gradient(135deg,#0a1628,#1c2538);display:flex;align-items:center;justify-content:center;font-size:3rem;">🏠</div>
+          <div class="rent-card-body">
+            <h4>Intan Apartment</h4>
+            <p>Setiawangsa area, very close to PMKL. Walking or bus distance. Affordable with utilities included.</p>
+            <div class="rent-features">
+              <div class="feat-chip"><i class="fas fa-wifi"></i> WiFi incl.</div>
+              <div class="feat-chip"><i class="fas fa-tint"></i> Water incl.</div>
+              <div class="feat-chip"><i class="fas fa-bolt"></i> Electric incl.</div>
+              <div class="feat-chip"><i class="fas fa-walking"></i> Walk Distance</div>
+            </div>
+            <button class="btn-rent" onclick="openRentModal('Intan Apartment','Setiawangsa, near Politeknik METrO Kuala Lumpur. Walking/bus distance.','From RM xxx / month (contact for pricing)','Strategic Setiawangsa location, very close to PMKL. Suitable for male/female students. Affordable rent. Utilities (WiFi, water, electric) included.','012-466 2096 (En. Zul)')">View Details</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ CONTACT ══ -->
+  <section class="section" id="contact">
+    <div class="sec-wrap" style="padding-top: 2.5rem;">
+      <div class="sec-label"><i class="fas fa-envelope"></i> Get In Touch</div>
+      <h2 class="sec-title">Contact Us</h2>
+      <p class="sec-sub">Reach out to JPP PMKL for inquiries, feedback, or collaboration.</p>
+
+      <div class="contact-grid">
+        <div>
+          <div class="contact-cards">
+            <div class="contact-info-card">
+              <div class="ci-icon"><i class="fas fa-map-marker-alt"></i></div>
+              <div class="ci-text">
+                <h4>Address</h4>
+                <p>Politeknik METrO Kuala Lumpur<br>No. 2-14 Jalan Setiawangsa 10<br>Taman Setiawangsa, 54200 Kuala Lumpur</p>
+              </div>
+            </div>
+            <div class="contact-info-card">
+              <div class="ci-icon"><i class="fas fa-phone"></i></div>
+              <div class="ci-text">
+                <h4>Phone</h4>
+                <p>03-4251 8000<br>03-4251 7979<br>Available: Mon–Fri, 8AM–5PM</p>
+              </div>
+            </div>
+            <div class="contact-info-card">
+              <div class="ci-icon"><i class="fas fa-envelope"></i></div>
+              <div class="ci-text">
+                <h4>Email</h4>
+                <p>jpppmklofficial@gmail.com</p>
+              </div>
+            </div>
+            <div class="contact-info-card">
+              <div class="ci-icon"><i class="fab fa-instagram"></i></div>
+              <div class="ci-text">
+                <h4>Social Media</h4>
+                <p>Follow us for updates and announcements on our official social media channels.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="contact-org-card">
+            <div class="panel-head">
+              <div class="panel-head-icon"><i class="fas fa-sitemap"></i></div>
+              <h3>Carta Organisasi JPP PMKL 2026/2027</h3>
+            </div>
+            <div style="padding:1.25rem;">
+              <img src="carta.jpg" alt="Carta Organisasi JPP PMKL" style="width:100%;border-radius:8px;display:block;" onerror="this.style.display='none';this.parentNode.innerHTML='<div style=\'padding:3rem;text-align:center;color:var(--text3);font-size:0.85rem;\'><i class=\'fas fa-sitemap\' style=\'font-size:2rem;margin-bottom:0.75rem;display:block;\'></i>Carta Organisasi<br>Coming Soon</div>'">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div><!-- /page-wrap -->
+
+<!-- ════ RENT MODAL ════ -->
+<div class="modal-overlay" id="rentModal">
+  <div class="modal-box">
+    <div class="modal-top">
+      <div class="modal-top-icon"><i class="fas fa-home"></i></div>
+      <div class="modal-top-text">
+        <h3 id="modalTitle">Property Details</h3>
+        <p id="modalAddress">Address loading...</p>
+      </div>
+      <button class="modal-top-close" onclick="closeRentModal()"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="modal-content-body">
+      <div class="modal-detail-row">
+        <i class="fas fa-tag"></i>
+        <div><div class="mdr-label">Monthly Rent</div><div class="mdr-val" id="modalPrice">-</div></div>
+      </div>
+      <div class="modal-detail-row">
+        <i class="fas fa-info-circle"></i>
+        <div><div class="mdr-label">Details</div><div class="mdr-val" id="modalDetails">-</div></div>
+      </div>
+      <div class="modal-detail-row">
+        <i class="fas fa-phone"></i>
+        <div><div class="mdr-label">Contact</div><div class="mdr-val" id="modalContact">-</div></div>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-modal-close" onclick="closeRentModal()">Close</button>
+      <button class="btn-modal-primary" onclick="showToast('Contact details copied!');closeRentModal()"><i class="fas fa-copy"></i> Copy Contact</button>
+    </div>
+  </div>
+</div>
+
+<!-- ════ TOAST ════ -->
+<div class="toast" id="toast">
+  <i class="fas fa-check-circle"></i>
+  <span id="toastMsg">Action completed</span>
+</div>
+
+<!-- ════ FOOTER ════ -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <h3>JPP PMKL Student Portal</h3>
+      <p>Jawatankuasa Perwakilan Pelajar — Politeknik METrO Kuala Lumpur. Empowering student leadership and community engagement.</p>
+      <div class="social-row">
+        <a class="social-btn" href="https://www.instagram.com/jpp.pmklofficial" target="_blank" rel="noopener noreferrer" aria-label="JPP PMKL on Instagram"><i class="fab fa-instagram"></i></a>
+        <a class="social-btn" href="https://www.tiktok.com/@jpp.pmklofficial?is_from_webapp=1&sender_device=pc" target="_blank" rel="noopener noreferrer" aria-label="JPP PMKL on TikTok"><i class="fab fa-tiktok"></i></a>
+        <a class="social-btn" href="mailto:jpppmklofficial@gmail.com" aria-label="Email JPP PMKL"><i class="fas fa-envelope"></i></a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Portal</h4>
+      <a onclick="navigate('dashboard')">Dashboard</a>
+      <a onclick="navigate('announcements')">Announcements</a>
+      <a onclick="navigate('events')">Events</a>
+      <a onclick="navigate('members')">Members</a>
+    </div>
+    <div class="footer-col">
+      <h4>Resources</h4>
+      <a onclick="navigate('album')">Photo Album</a>
+      <a onclick="navigate('rent')">Rent House</a>
+      <a onclick="navigate('contact')">Contact Us</a>
+      <a onclick="showToast('Academic Resources coming soon!')">Academic</a>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <a>jpppmklofficial@gmail.com</a>
+      <a>03-4251 8000</a>
+      <a>Jalan Setiawangsa 10</a>
+      <a>54200 Kuala Lumpur</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 JPP PMKL Student Portal. All rights reserved.</span>
+    <span>Made with ❤️ for PMKL Students</span>
+  </div>
+</footer>
+
+<script>
+// ── Navigation ──
+function navigate(section) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+  const el = document.getElementById(section);
+  if (el) el.classList.add('active');
+  const lnk = document.querySelector(`.nav-link[data-section="${section}"]`);
+  if (lnk) lnk.classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  if (document.getElementById('navLinks').classList.contains('open')) {
+    document.getElementById('navLinks').classList.remove('open');
+  }
+}
+
+document.querySelectorAll('.nav-link').forEach(link => {
+  link.addEventListener('click', function(e) {
+    e.preventDefault();
+    navigate(this.dataset.section);
+  });
+});
+
+document.querySelectorAll('.footer-col a[onclick]').forEach(a => {
+  // Already using onclick inline
+});
+
+// Mobile nav
+document.getElementById('navHamburger').addEventListener('click', () => {
+  document.getElementById('navLinks').classList.toggle('open');
+});
+
+// ── Theme toggle ──
+const themeBtn = document.getElementById('themeToggle');
+themeBtn.addEventListener('click', () => {
+  const html = document.documentElement;
+  const isDark = html.getAttribute('data-theme') === 'dark';
+  html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+  themeBtn.innerHTML = isDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+});
+
+// ── Clock ──
+function updateClock() {
+  const now = new Date();
+  const h = String(now.getHours()).padStart(2,'0');
+  const m = String(now.getMinutes()).padStart(2,'0');
+  const s = String(now.getSeconds()).padStart(2,'0');
+  document.getElementById('dashClock').textContent = `${h}:${m}:${s}`;
+  const days = ['SUNDAY','MONDAY','TUESDAY','WEDNESDAY','THURSDAY','FRIDAY','SATURDAY'];
+  document.getElementById('dashDay').textContent = days[now.getDay()];
+  document.getElementById('dashDateStr').textContent = now.toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'});
+}
+updateClock();
+setInterval(updateClock, 1000);
+
+// ── Calendar ──
+function buildCalendar() {
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = now.getMonth();
+  const today = now.getDate();
+  const firstDay = new Date(year, month, 1).getDay();
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  const wd = ['Su','Mo','Tu','We','Th','Fr','Sa'];
+  const monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  document.getElementById('calMonthYear').textContent = `${monthNames[month]} ${year}`;
+  const grid = document.getElementById('calGrid');
+  grid.innerHTML = '';
+  wd.forEach(d => {
+    const el = document.createElement('div');
+    el.className = 'cal-wd';
+    el.textContent = d;
+    grid.appendChild(el);
+  });
+  for (let i = 0; i < firstDay; i++) {
+    const el = document.createElement('div');
+    el.className = 'cal-day empty';
+    grid.appendChild(el);
+  }
+  for (let d = 1; d <= daysInMonth; d++) {
+    const el = document.createElement('div');
+    el.className = 'cal-day' + (d === today ? ' today' : '');
+    el.textContent = d;
+    grid.appendChild(el);
+  }
+}
+buildCalendar();
+
+// ── Stats counter animation ──
+function animateCount(el, target) {
+  const duration = 1800;
+  const step = target / (duration / 16);
+  let current = 0;
+  const interval = setInterval(() => {
+    current = Math.min(current + step, target);
+    if (target >= 1000) {
+      el.textContent = Math.floor(current / 1000) + 'K+';
+    } else {
+      el.textContent = Math.floor(current) + (target > 10 ? '+' : '');
+    }
+    if (current >= target) clearInterval(interval);
+  }, 16);
+}
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const el = entry.target;
+      animateCount(el, parseInt(el.dataset.count));
+      observer.unobserve(el);
+    }
+  });
+}, { threshold: 0.5 });
+
+document.querySelectorAll('[data-count]').forEach(el => observer.observe(el));
+
+// ── Rent Modal ──
+function openRentModal(title, address, price, details, contact) {
+  document.getElementById('modalTitle').textContent = title;
+  document.getElementById('modalAddress').textContent = address;
+  document.getElementById('modalPrice').textContent = price;
+  document.getElementById('modalDetails').textContent = details;
+  document.getElementById('modalContact').textContent = contact || 'See details above';
+  document.getElementById('rentModal').classList.add('open');
+}
+function closeRentModal() {
+  document.getElementById('rentModal').classList.remove('open');
+}
+document.getElementById('rentModal').addEventListener('click', function(e) {
+  if (e.target === this) closeRentModal();
+});
+
+// ── Toast ──
+let toastTimeout;
+function showToast(msg) {
+  const toast = document.getElementById('toast');
+  document.getElementById('toastMsg').textContent = msg;
+  toast.classList.add('show');
+  clearTimeout(toastTimeout);
+  toastTimeout = setTimeout(() => toast.classList.remove('show'), 3000);
+}
+
+// ── Nav shadow on scroll ──
+window.addEventListener('scroll', () => {
+  const nav = document.getElementById('mainNav');
+  nav.style.background = window.scrollY > 20
+    ? (document.documentElement.getAttribute('data-theme') === 'light'
+        ? 'rgba(242,245,252,0.95)' : 'rgba(7,9,15,0.92)')
+    : '';
+});
+</script>
 </body>
 </html>
