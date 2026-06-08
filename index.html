@@ -135,6 +135,36 @@
             transform: translateY(-2px);
         }
 
+        /* Announcement Ticker */
+        #announcementTicker {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 0.5rem 1rem;
+            text-align: center;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        #announcementTicker .ticker-text {
+            transition: opacity 0.35s ease;
+            opacity: 1;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        #announcementTicker .ticker-close {
+            background: transparent;
+            border: none;
+            color: rgba(255,255,255,0.95);
+            cursor: pointer;
+            font-size: 1rem;
+            margin-left: 0.75rem;
+        }
+
         /* Container */
         .container {
             max-width: 1200px;
@@ -987,6 +1017,12 @@
 
         </nav>
 
+        <!-- Announcement Ticker -->
+        <div id="announcementTicker" role="region" aria-label="Announcements">
+            <div class="ticker-text">Tahniah Kepada Semua Pelajar PMKL Yang Memperoleh Keputusan Yang Cemerlang Pada Peperiksaan Sesi II: 2025/2026 — Pendaftaran Pelajar Baharu Sesi I: 2026 / 2027 — SuperStar Esport Championship — Check events for updates</div>
+            <button class="ticker-close" aria-label="Close announcements" title="Hide announcements" onclick="document.getElementById('announcementTicker').style.display='none'">×</button>
+        </div>
+
         <div class="container">
             <!-- Dashboard Section -->
             <section id="dashboard" class="section active">
@@ -1432,11 +1468,43 @@
                 <h2 style="margin-bottom: 2rem; color: var(--dark);"><i class="fas fa-images"></i> Photo Album</h2>
                 
                 <div class="album-gallery" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1.5rem;">
-                    <div class="album-placeholder" style="background: linear-gradient(135deg, var(--primary), var(--secondary)); border-radius: 0.75rem; padding: 3rem; text-align: center; color: white; display: flex; align-items: center; justify-content: center; min-height: 250px;">
-                        <div>
-                            <i class="fas fa-image" style="font-size: 3rem; margin-bottom: 1rem; display: block;"></i>
-                            <p style="font-size: 1.1rem; font-weight: 500;">Coming Soon</p>
-                            <p style="font-size: 0.9rem; margin-top: 0.5rem; opacity: 0.9;">Photo albums and gallery updates will be added here</p>
+                    <div class="album-card card">
+                        <div style="background: linear-gradient(135deg, rgba(44,93,138,0.85), rgba(79,125,136,0.85)); padding: 1.5rem; min-height: 160px; display:flex; align-items:center; justify-content:center; color: white;">
+                            <i class="fas fa-camera-retro" style="font-size: 2.25rem;"></i>
+                        </div>
+                        <div style="padding: 0.9rem;">
+                            <div style="font-weight:700; margin-bottom:0.25rem;">Album 1</div>
+                            <div style="color: var(--muted); font-size:0.95rem;">Event photos — Coming soon</div>
+                        </div>
+                    </div>
+
+                    <div class="album-card card">
+                        <div style="background: linear-gradient(135deg, rgba(39,78,112,0.85), rgba(79,125,136,0.85)); padding: 1.5rem; min-height: 160px; display:flex; align-items:center; justify-content:center; color: white;">
+                            <i class="fas fa-photo-video" style="font-size: 2.25rem;"></i>
+                        </div>
+                        <div style="padding: 0.9rem;">
+                            <div style="font-weight:700; margin-bottom:0.25rem;">Album 2</div>
+                            <div style="color: var(--muted); font-size:0.95rem;">Community highlights</div>
+                        </div>
+                    </div>
+
+                    <div class="album-card card">
+                        <div style="background: linear-gradient(135deg, rgba(44,93,138,0.85), rgba(44,93,138,0.65)); padding: 1.5rem; min-height: 160px; display:flex; align-items:center; justify-content:center; color: white;">
+                            <i class="fas fa-images" style="font-size: 2.25rem;"></i>
+                        </div>
+                        <div style="padding: 0.9rem;">
+                            <div style="font-weight:700; margin-bottom:0.25rem;">Album 3</div>
+                            <div style="color: var(--muted); font-size:0.95rem;">Workshops & sessions</div>
+                        </div>
+                    </div>
+
+                    <div class="album-card card">
+                        <div style="background: linear-gradient(135deg, rgba(79,125,136,0.85), rgba(44,93,138,0.65)); padding: 1.5rem; min-height: 160px; display:flex; align-items:center; justify-content:center; color: white;">
+                            <i class="fas fa-book" style="font-size: 2.25rem;"></i>
+                        </div>
+                        <div style="padding: 0.9rem;">
+                            <div style="font-weight:700; margin-bottom:0.25rem;">Album 4</div>
+                            <div style="color: var(--muted); font-size:0.95rem;">Study trips & excursions</div>
                         </div>
                     </div>
                 </div>
@@ -1588,6 +1656,44 @@
         buildCalendar(new Date());
         setInterval(updateDashboardClock, 1000);
         setInterval(nextSlide, 5000);
+
+        // Announcement ticker rotation
+        (function() {
+            const announcements = [
+                'Pendaftaran Pelajar Baharu Sesi I: 2026 / 2027',
+                'SuperStar Esport Championship — Coming Soon!',
+                'Check out the Photo Album and Events for updates',
+                'Office Hours: Mon-Fri 8AM-5PM — Contact: jpppmklofficial@gmail.com'
+            ];
+
+            const ticker = document.getElementById('announcementTicker');
+            if (!ticker) return;
+            const textEl = ticker.querySelector('.ticker-text');
+            let idx = 0;
+            let tickerInterval = null;
+
+            function showNext() {
+                idx = (idx + 1) % announcements.length;
+                textEl.style.opacity = 0;
+                setTimeout(() => {
+                    textEl.textContent = announcements[idx];
+                    textEl.style.opacity = 1;
+                }, 380);
+            }
+
+            function start() {
+                if (tickerInterval) clearInterval(tickerInterval);
+                tickerInterval = setInterval(showNext, 5000);
+            }
+
+            // Pause on hover
+            ticker.addEventListener('mouseenter', () => { if (tickerInterval) clearInterval(tickerInterval); });
+            ticker.addEventListener('mouseleave', () => start());
+
+            // initialize
+            textEl.textContent = announcements[0];
+            start();
+        })();
 
     </script>
 </body>
