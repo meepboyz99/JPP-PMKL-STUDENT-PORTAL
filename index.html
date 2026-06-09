@@ -976,6 +976,7 @@
     font-weight: 800;
     padding: 0.3rem 0.75rem;
     border-radius: 8px;
+    z-index: 10;
   }
   .rent-card-body { padding: 1.25rem; flex: 1; display: flex; flex-direction: column; }
   .rent-card-body h4 {
@@ -1860,60 +1861,89 @@
 
   <section class="section" id="rent">
     <div class="sec-wrap" style="padding-top: 2.5rem;">
+      
+      <div id="rentNavHeader" style="display:none; margin-bottom: 1.5rem;">
+         <button class="qa-chip" onclick="showRentHome()" style="border:none; cursor:pointer;">
+           <i class="fas fa-arrow-left"></i> Kembali ke Kompleks Apartment
+         </button>
+      </div>
+
       <div class="sec-label"><i class="fas fa-home"></i> Student Housing</div>
-      <h2 class="sec-title">Rent House Listings</h2>
-      <p class="sec-sub">Affordable, verified student accommodations near Politeknik METrO Kuala Lumpur.</p>
+      <h2 class="sec-title" id="rentMainTitle">Rent House Listings</h2>
+      <p class="sec-sub" id="rentMainSub">Sila pilih kediaman apartment berdekatan politeknik untuk melihat senarai penginapan student yang sedia ada.</p>
 
-      <div class="rent-grid">
-        <div class="rent-card">
-          <div class="rent-thumb" style="background-image:url('pic 1.JPG');">
-            <div class="rent-price-badge">RM 270+/mo</div>
-          </div>
+      <div id="rentApartmentGrid" class="rent-grid">
+        <div class="rent-card" onclick="selectApartment('Apartment Mahsuri')">
+          <div class="rent-thumb" style="background: linear-gradient(135deg, #1a4bff, var(--navy)); font-size:3.5rem; display:flex; align-items:center; justify-content:center;">🏢</div>
           <div class="rent-card-body">
-            <h4>Mahsuri Apartment</h4>
-            <p>Muslim students only, gender-segregated housing for male and female. 7 minutes walk to college.</p>
-            <div class="rent-features">
-              <div class="feat-chip"><i class="fas fa-wifi"></i> WiFi</div>
-              <div class="feat-chip"><i class="fas fa-tint"></i> Water incl.</div>
-              <div class="feat-chip"><i class="fas fa-bolt"></i> Electric incl.</div>
-              <div class="feat-chip"><i class="fas fa-shield-alt"></i> 24hr Guard</div>
-              <div class="feat-chip"><i class="fas fa-snowflake"></i> AC Option</div>
-              <div class="feat-chip"><i class="fas fa-subway"></i> Near LRT</div>
-            </div>
-            <button class="btn-rent" onclick="openRentModal('Mahsuri Apartment','Mahsuri Apartment, Jalan Setiawangsa 13, Taman Setiawangsa, 54200 Kuala Lumpur','RM 270 / RM 300 / RM 300 per month','Muslim students only (Male &amp; Female, separate). RM270 (sharing, fan), RM300 (sharing, aircon), RM300 (single, fan). 2-month deposit. 1-year contract. Utilities: Electric ≤RM250, Water ≤RM100, WiFi fully covered. Facilities: Double decker beds, lockers, kitchen, fridge, washing machine, 24hr guarded. 7 min walk to college. Near LRT Setiawangsa (15 min walk), shops, pharmacy, clinic, bank.','012-328 0168')">View Details</button>
+            <h4>Apartment Mahsuri</h4>
+            <p>Sangat popular. 7 minit berjalan kaki ke kampus. Menyediakan pengasingan blok lelaki & perempuan.</p>
+            <span class="tag tag-gold">Pilih Blok <i class="fas fa-chevron-right" style="margin-left:5px"></i></span>
           </div>
         </div>
 
-        <div class="rent-card">
-          <div class="rent-thumb" style="background-image:url('pic 2.JPG');">
-            <div class="rent-price-badge">RM 350/mo</div>
-          </div>
+        <div class="rent-card" onclick="selectApartment('Apartment Intan')">
+          <div class="rent-thumb" style="background: linear-gradient(135deg, #f5c842, var(--navy)); font-size:3.5rem; display:flex; align-items:center; justify-content:center;">🏢</div>
           <div class="rent-card-body">
-            <h4>Hostel A</h4>
-            <p>Single room with shared bathroom. Conveniently located near Politeknik METrO Kuala Lumpur.</p>
-            <div class="rent-features">
-              <div class="feat-chip"><i class="fas fa-bed"></i> Single Room</div>
-              <div class="feat-chip"><i class="fas fa-bath"></i> Shared Bath</div>
-            </div>
-            <button class="btn-rent" onclick="openRentModal('Hostel A','No 17-3, Jalan Setiawangsa 8, Taman Setiawangsa, 54200 Kuala Lumpur','RM 350 / month','Single room with shared bathroom. Contact for more details and availability.','016-946 3923')">View Details</button>
+            <h4>Apartment Intan</h4>
+            <p>Lokasi strategik di Setiawangsa, berdekatan dengan kemudahan bas dan LRT pengangkutan mudah.</p>
+            <span class="tag tag-gold">Pilih Blok <i class="fas fa-chevron-right" style="margin-left:5px"></i></span>
           </div>
         </div>
 
-        <div class="rent-card">
-          <div class="rent-thumb" style="background:linear-gradient(135deg,#0a1628,#1c2538);display:flex;align-items:center;justify-content:center;font-size:3rem;">🏠</div>
+        <div class="rent-card" onclick="selectApartment('Apartment Puteri')">
+          <div class="rent-thumb" style="background: linear-gradient(135deg, #22d3a0, var(--navy)); font-size:3.5rem; display:flex; align-items:center; justify-content:center;">🏢</div>
           <div class="rent-card-body">
-            <h4>Intan Apartment</h4>
-            <p>Setiawangsa area, very close to PMKL. Walking or bus distance. Affordable with utilities included.</p>
-            <div class="rent-features">
-              <div class="feat-chip"><i class="fas fa-wifi"></i> WiFi incl.</div>
-              <div class="feat-chip"><i class="fas fa-tint"></i> Water incl.</div>
-              <div class="feat-chip"><i class="fas fa-bolt"></i> Electric incl.</div>
-              <div class="feat-chip"><i class="fas fa-walking"></i> Walk Distance</div>
-            </div>
-            <button class="btn-rent" onclick="openRentModal('Intan Apartment','Setiawangsa, near Politeknik METrO Kuala Lumpur. Walking/bus distance.','From RM xxx / month (contact for pricing)','Strategic Setiawangsa location, very close to PMKL. Suitable for male/female students. Affordable rent. Utilities (WiFi, water, electric) included.','012-466 2096 (En. Zul)')">View Details</button>
+            <h4>Apartment Puteri</h4>
+            <p>Kawasan persekitaran yang kondusif, aman, dan selamat dipantau kawalan keselamatan jagaan.</p>
+            <span class="tag tag-gold">Pilih Blok <i class="fas fa-chevron-right" style="margin-left:5px"></i></span>
+          </div>
+        </div>
+
+        <div class="rent-card" onclick="selectApartment('Apartment Sri Ayu')">
+          <div class="rent-thumb" style="background: linear-gradient(135deg, #ff7eb3, var(--navy)); font-size:3.5rem; display:flex; align-items:center; justify-content:center;">🏢</div>
+          <div class="rent-card-body">
+            <h4>Apartment Sri Ayu</h4>
+            <p>Pilihan alternatif kos berpatutan dengan unit bilik luas dilengkapi utiliti asas sedia sedia.</p>
+            <span class="tag tag-gold">Pilih Blok <i class="fas fa-chevron-right" style="margin-left:5px"></i></span>
           </div>
         </div>
       </div>
+
+      <div id="rentBlockGrid" class="dashboard-grid" style="display:none;"></div>
+
+      <div id="rentUnitGrid" class="rent-grid" style="display:none;"></div>
+
+      <div class="divider" id="rentDivider"></div>
+
+      <div id="rentFeaturesSection">
+        <div style="margin-bottom: 1rem;">
+          <div class="sec-label"><i class="fas fa-star"></i> Kenapa Guna RENT@PMKL?</div>
+        </div>
+        <div class="dashboard-grid">
+          <div class="stat-item">
+            <div class="stat-num" style="font-size:1.8rem;"><i class="fas fa-map-marker-alt"></i></div>
+            <div class="stat-label" style="margin-top:0.5rem; color:var(--text);">Berdekatan</div>
+            <p style="font-size:0.8rem; color:var(--text3); margin-top:0.25rem;">Semua listing berhampiran politeknik.</p>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num" style="font-size:1.8rem;"><i class="fas fa-list"></i></div>
+            <div class="stat-label" style="margin-top:0.5rem; color:var(--text);">Senarai Terkini</div>
+            <p style="font-size:0.8rem; color:var(--text3); margin-top:0.25rem;">Maklumat bilik & rumah dikemas kini.</p>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num" style="font-size:1.8rem;"><i class="fas fa-phone-alt"></i></div>
+            <div class="stat-label" style="margin-top:0.5rem; color:var(--text);">Hubungi Terus</div>
+            <p style="font-size:0.8rem; color:var(--text3); margin-top:0.25rem;">Terus hubungi owner tanpa orang tengah.</p>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num" style="font-size:1.8rem;"><i class="fas fa-shield-alt"></i></div>
+            <div class="stat-label" style="margin-top:0.5rem; color:var(--text);">Selamat & Mudah</div>
+            <p style="font-size:0.8rem; color:var(--text3); margin-top:0.25rem;">Antaramuka ringkas dipantau oleh JPP.</p>
+          </div>
+        </div>
+      </div>
+
     </div>
   </section>
 
@@ -1972,7 +2002,9 @@
     </div>
   </section>
 
-</div><div class="modal-overlay" id="rentModal">
+</div>
+
+<div class="modal-overlay" id="rentModal">
   <div class="modal-box">
     <div class="modal-top">
       <div class="modal-top-icon"><i class="fas fa-home"></i></div>
@@ -1989,16 +2021,16 @@
       </div>
       <div class="modal-detail-row">
         <i class="fas fa-info-circle"></i>
-        <div><div class="mdr-label">Details</div><div class="mdr-val" id="modalDetails">-</div></div>
+        <div><div class="mdr-label">Details & Rules</div><div class="mdr-val" id="modalDetails">-</div></div>
       </div>
       <div class="modal-detail-row">
-        <i class="fas fa-phone"></i>
-        <div><div class="mdr-label">Contact</div><div class="mdr-val" id="modalContact">-</div></div>
+        <i class="fas fa-user"></i>
+        <div><div class="mdr-label">Contact Person</div><div class="mdr-val" id="modalContact">-</div></div>
       </div>
     </div>
     <div class="modal-actions">
       <button class="btn-modal-close" onclick="closeRentModal()">Close</button>
-      <button class="btn-modal-primary" onclick="showToast('Contact details copied!');closeRentModal()"><i class="fas fa-copy"></i> Copy Contact</button>
+      <button class="btn-modal-primary" id="modalCopyBtn"><i class="fas fa-copy"></i> Copy Contact Details</button>
     </div>
   </div>
 </div>
@@ -2052,13 +2084,21 @@
 function navigate(section) {
   document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
   document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+  
   const el = document.getElementById(section);
   if (el) el.classList.add('active');
+  
   const lnk = document.querySelector(`.nav-link[data-section="${section}"]`);
   if (lnk) lnk.classList.add('active');
+  
   window.scrollTo({ top: 0, behavior: 'smooth' });
   if (document.getElementById('navLinks').classList.contains('open')) {
     document.getElementById('navLinks').classList.remove('open');
+  }
+
+  // Auto reset rental sub-grid levels when clicking away and returning to 'rent' tab
+  if(section === 'rent') {
+      showRentHome();
   }
 }
 
@@ -2069,7 +2109,7 @@ document.querySelectorAll('.nav-link').forEach(link => {
   });
 });
 
-// Mobile nav
+// Mobile nav toggle
 document.getElementById('navHamburger').addEventListener('click', () => {
   document.getElementById('navLinks').classList.toggle('open');
 });
@@ -2158,23 +2198,132 @@ const observer = new IntersectionObserver((entries) => {
 
 document.querySelectorAll('[data-count]').forEach(el => observer.observe(el));
 
-// ── Rent Modal ──
+// ── Rent House Application Logic Flow ──
+let currentApartmentSelection = "";
+let currentBlockSelection = "";
+
+function showRentHome() {
+    document.getElementById('rentApartmentGrid').style.display = 'grid';
+    document.getElementById('rentBlockGrid').style.display = 'none';
+    document.getElementById('rentUnitGrid').style.display = 'none';
+    document.getElementById('rentNavHeader').style.display = 'none';
+    document.getElementById('rentFeaturesSection').style.display = 'block';
+    document.getElementById('rentDivider').style.display = 'block';
+    
+    document.getElementById('rentMainTitle').innerText = "Rent House Listings";
+    document.getElementById('rentMainSub').innerText = "Sila pilih kediaman apartment berdekatan politeknik untuk melihat senarai penginapan student yang sedia ada.";
+}
+
+function selectApartment(apartmentName) {
+    currentApartmentSelection = apartmentName;
+    document.getElementById('rentApartmentGrid').style.display = 'none';
+    document.getElementById('rentFeaturesSection').style.display = 'none';
+    document.getElementById('rentDivider').style.display = 'none';
+    document.getElementById('rentNavHeader').style.display = 'block';
+    
+    document.getElementById('rentMainTitle').innerText = apartmentName + " — Pilih Blok";
+    document.getElementById('rentMainSub').innerText = "Sila pilih blok bangunan di bawah bagi melihat data unit rumah yang sedia disewa.";
+    
+    const blockGrid = document.getElementById('rentBlockGrid');
+    blockGrid.style.display = 'grid';
+    blockGrid.innerHTML = ''; // Wipe template contents
+    
+    // Dynamically insert 4 structured blocks matching original system styling
+    const blocks = ['Blok 1', 'Blok 2', 'Blok 3', 'Blok 4'];
+    blocks.forEach((block) => {
+        blockGrid.innerHTML += `
+            <a class="dash-card" onclick="selectBlock('${block}')" style="--card-color: #1a4bff; --card-color-bg: var(--primary-glow);">
+              <div class="dash-card-arrow"><i class="fas fa-arrow-right"></i></div>
+              <div class="dash-card-icon"><i class="fas fa-building"></i></div>
+              <h4>${block}</h4>
+              <p>Lihat senarai tawaran rumah bilik di dalam bangunan ini.</p>
+            </a>
+        `;
+    });
+}
+
+function selectBlock(blockName) {
+    currentBlockSelection = blockName;
+    document.getElementById('rentBlockGrid').style.display = 'none';
+    
+    const unitGrid = document.getElementById('rentUnitGrid');
+    unitGrid.style.display = 'grid';
+    unitGrid.innerHTML = ''; // Flush previous lists
+    
+    document.getElementById('rentMainTitle').innerText = `${currentApartmentSelection} — ${blockName}`;
+    document.getElementById('rentMainSub').innerText = `Menunjukkan senarai unit sedia dihuni di dalam ${currentApartmentSelection} (${blockName}).`;
+
+    // Dynamic Mock Database mapping to structure your secondary provided code properties
+    let listings = [];
+    
+    if (currentApartmentSelection === "Apartment Mahsuri") {
+        listings = [
+            { unit: 'Unit A-101', price: 'RM 450', details: 'Muslim students only. 2 Bilik, 1 Bilik Air. Fully furnished. Termasuk katil double-decker, lockers, peti sejuk, dapur memasak & mesin basuh.', contact: 'Encik Ahmad (012-328 0168)', address: 'Jalan Setiawangsa 13, Taman Setiawangsa, KL', features: ['WiFi', 'Air Incl.', 'Electric Incl.', '24hr Guarded'] },
+            { unit: 'Unit A-102', price: 'RM 470', details: 'Bilik Sewa berkongsi selesa (Kemasukan Segera). Fully furnished, 2 Bilik & 1 Bilik Air. Berdekatan stesen LRT Setiawangsa.', contact: 'Encik Ahmad (012-328 0168)', address: 'Jalan Setiawangsa 13, Taman Setiawangsa, KL', features: ['WiFi', 'Peti Sejuk', 'Mesin Basuh'] },
+            { unit: 'Unit A-201', price: 'RM 550', details: '3 Bilik & 2 Bilik Air besar strategik sesuai untuk student group sharing. Fully furnished berseri perabot lengkap lengkap.', contact: 'Puan Halima (016-946 3923)', address: 'Jalan Setiawangsa 13, Taman Setiawangsa, KL', features: ['Fully Furnished', 'Sofa', 'Katil'] }
+        ];
+    } else if (currentApartmentSelection === "Apartment Intan") {
+        listings = [
+            { unit: 'Unit Intan Premium', price: 'RM 350', details: 'Kemasukan Pelajar Segera. Kadar sewa berpatutan termasuk utiliti penuh (WiFi covered, api & air kos terkawal lancar). Walk distance ke kedai.', contact: 'En. Zul (012-466 2096)', address: 'Setiawangsa near Politeknik METrO KL', features: ['WiFi incl.', 'Water incl.', 'Electric incl.', 'Near PMKL'] }
+        ];
+    } else {
+        // Fallback default generation for empty categories placeholders
+        listings = [
+            { unit: 'Unit TBD-Bilik Standard', price: 'RM 300', details: 'Bilik Single/Sharing standard selesa berdekatan PMKL untuk kemasukan sesi baru semester ini.', contact: 'Pengurusan JPP Portal (Info Am)', address: 'Setiawangsa, Kuala Lumpur', features: ['Katil', 'Kipas'] }
+        ];
+    }
+
+    // Render cards using premium portal style setup mechanics
+    listings.forEach(item => {
+        // Build features tags
+        let featureChips = '';
+        item.features.forEach(f => {
+            featureChips += `<div class="feat-chip"><i class="fas fa-check-circle" style="color:var(--gold)"></i> ${f}</div>`;
+        });
+
+        unitGrid.innerHTML += `
+            <div class="rent-card">
+              <div class="rent-price-badge">${item.price}/mo</div>
+              <div class="rent-thumb" style="background: var(--surface2); font-size:2.5rem;">🛋️</div>
+              <div class="rent-card-body">
+                <h4>${item.unit}</h4>
+                <p style="font-size:0.85rem; color:var(--text2); margin-bottom:1rem; display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical; overflow:hidden;">${item.details}</p>
+                <div class="rent-features">${featureChips}</div>
+                <button class="btn-rent" onclick="openRentModal('${item.unit}', '${item.address}', '${item.price} / sebulan', '${item.details}', '${item.contact}')">Butiran Lanjut</button>
+              </div>
+            </div>
+        `;
+    });
+}
+
+// ── Rent Modal Handlers ──
 function openRentModal(title, address, price, details, contact) {
   document.getElementById('modalTitle').textContent = title;
   document.getElementById('modalAddress').textContent = address;
   document.getElementById('modalPrice').textContent = price;
   document.getElementById('modalDetails').textContent = details;
-  document.getElementById('modalContact').textContent = contact || 'See details above';
+  document.getElementById('modalContact').textContent = contact || 'Hubungi Tuan Kedai';
+  
+  // Set up copy behavior context cleanly
+  const copyBtn = document.getElementById('modalCopyBtn');
+  copyBtn.onclick = function() {
+      navigator.clipboard.writeText(`Kediaman: ${title}\nSewa: ${price}\nHubungi: ${contact}`);
+      showToast('Butiran maklumat hubungan disalin!');
+      closeRentModal();
+  };
+
   document.getElementById('rentModal').classList.add('open');
 }
+
 function closeRentModal() {
   document.getElementById('rentModal').classList.remove('open');
 }
+
 document.getElementById('rentModal').addEventListener('click', function(e) {
   if (e.target === this) closeRentModal();
 });
 
-// ── Toast ──
+// ── Toast System ──
 let toastTimeout;
 function showToast(msg) {
   const toast = document.getElementById('toast');
@@ -2184,7 +2333,7 @@ function showToast(msg) {
   toastTimeout = setTimeout(() => toast.classList.remove('show'), 3000);
 }
 
-// ── Nav shadow on scroll ──
+// ── Nav shadow configuration adjustments on scroll behavior ──
 window.addEventListener('scroll', () => {
   const nav = document.getElementById('mainNav');
   nav.style.background = window.scrollY > 20
