@@ -3418,6 +3418,8 @@
     }
 
     initMaintenanceMode();
+    // Re-run after DOM is fully parsed (overlay HTML is below this script)
+    document.addEventListener('DOMContentLoaded', initMaintenanceMode);
   </script>
   <!-- ══ MAINTENANCE OVERLAY ══ -->
   <div id="maintenanceOverlay" style="display:none;" aria-modal="true" role="dialog" aria-label="Under Maintenance">
