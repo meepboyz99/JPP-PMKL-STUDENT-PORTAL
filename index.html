@@ -79,7 +79,7 @@
       inset: 0;
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
       pointer-events: none;
-      z-index: 9999;
+      z-index: 1; /* Fixed: was 9999, which rendered above modals and toast */
       opacity: 0.4;
     }
 
@@ -2031,6 +2031,11 @@
       background: var(--border);
       margin: 2rem 0;
     }
+
+    /* Lightbox image fade transition — moved from inline JS */
+    #lightboxImg {
+      transition: opacity 0.15s ease;
+    }
   </style>
 </head>
 
@@ -2049,7 +2054,7 @@
   </div>
 
   <nav id="mainNav">
-    <a class="nav-logo" href="#">
+    <a class="nav-logo" href="#" onclick="navigate('dashboard'); return false;">
       <div class="nav-logo-icon"><i class="fas fa-graduation-cap"></i></div>
       JPP&nbsp;<span>PMKL</span>
     </a>
@@ -2880,8 +2885,8 @@
       </div>
       <div class="footer-col">
         <h4>Contact</h4>
-        <a>jpppmklofficial@gmail.com</a>
-        <a>03-4251 8000</a>
+        <a href="mailto:jpppmklofficial@gmail.com">jpppmklofficial@gmail.com</a>
+        <a href="tel:+60342518000">03-4251 8000</a>
         <a>Jalan Setiawangsa 10</a>
         <a>54200 Kuala Lumpur</a>
       </div>
@@ -2945,8 +2950,7 @@
       if (e.key === 'ArrowRight') lightboxNav(1);
       if (e.key === 'ArrowLeft') lightboxNav(-1);
     });
-
-    document.getElementById('lightboxImg').style.transition = 'opacity 0.15s ease';
+    // Lightbox img transition is now defined in CSS (#lightboxImg)
 
     // ── Navigation ──
     function navigate(section) {
@@ -3037,6 +3041,16 @@
       }
     }
     buildCalendar();
+
+    // Re-run calendar at midnight so "today" stays accurate if page is left open
+    (function scheduleMidnightCalendarRefresh() {
+      const now = new Date();
+      const msUntilMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1) - now;
+      setTimeout(function () {
+        buildCalendar();
+        scheduleMidnightCalendarRefresh(); // Reschedule for next midnight
+      }, msUntilMidnight);
+    })();
 
     // ── Stats counter animation ──
     function animateCount(el, target) {
