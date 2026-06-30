@@ -21,12 +21,14 @@
       align-items: center;
       justify-content: center;
       flex-direction: column;
-      overflow-y: auto; /* allow scroll if content taller than viewport */
+      overflow-y: auto;
+      /* allow scroll if content taller than viewport */
       -webkit-overflow-scrolling: touch;
     }
 
     .maint-scanlines {
-      position: fixed; /* fixed so scanlines don't scroll with content */
+      position: fixed;
+      /* fixed so scanlines don't scroll with content */
       inset: 0;
       background: repeating-linear-gradient(0deg,
           transparent,
@@ -39,8 +41,13 @@
     }
 
     @keyframes maint-scan {
-      0%   { background-position: 0 0; }
-      100% { background-position: 0 120px; }
+      0% {
+        background-position: 0 0;
+      }
+
+      100% {
+        background-position: 0 120px;
+      }
     }
 
     .maint-content {
@@ -53,7 +60,8 @@
       padding: clamp(1.5rem, 5vw, 3rem) clamp(1rem, 5vw, 2rem);
       max-width: 560px;
       width: 100%;
-      margin: auto; /* vertically center when scrollable */
+      margin: auto;
+      /* vertically center when scrollable */
     }
 
     .maint-logo {
@@ -87,8 +95,17 @@
     }
 
     @keyframes maint-pulse {
-      0%, 100% { opacity: 0.5; transform: scale(1); }
-      50%       { opacity: 1;   transform: scale(1.15); }
+
+      0%,
+      100% {
+        opacity: 0.5;
+        transform: scale(1);
+      }
+
+      50% {
+        opacity: 1;
+        transform: scale(1.15);
+      }
     }
 
     .maint-gear {
@@ -99,8 +116,13 @@
     }
 
     @keyframes maint-spin {
-      from { transform: rotate(0deg); }
-      to   { transform: rotate(360deg); }
+      from {
+        transform: rotate(0deg);
+      }
+
+      to {
+        transform: rotate(360deg);
+      }
     }
 
     .maint-title {
@@ -136,17 +158,51 @@
     }
 
     @keyframes maint-glitch-before {
-      0%, 88%, 100% { opacity: 0; transform: translateX(0); }
-      90% { opacity: 0.7; transform: translateX(-4px); }
-      92% { opacity: 0.5; transform: translateX(4px); }
-      94% { opacity: 0; }
+
+      0%,
+      88%,
+      100% {
+        opacity: 0;
+        transform: translateX(0);
+      }
+
+      90% {
+        opacity: 0.7;
+        transform: translateX(-4px);
+      }
+
+      92% {
+        opacity: 0.5;
+        transform: translateX(4px);
+      }
+
+      94% {
+        opacity: 0;
+      }
     }
 
     @keyframes maint-glitch-after {
-      0%, 88%, 100% { opacity: 0; transform: translateX(0); }
-      91% { opacity: 0.6; transform: translateX(4px); }
-      93% { opacity: 0.4; transform: translateX(-4px); }
-      95% { opacity: 0; }
+
+      0%,
+      88%,
+      100% {
+        opacity: 0;
+        transform: translateX(0);
+      }
+
+      91% {
+        opacity: 0.6;
+        transform: translateX(4px);
+      }
+
+      93% {
+        opacity: 0.4;
+        transform: translateX(-4px);
+      }
+
+      95% {
+        opacity: 0;
+      }
     }
 
     .maint-sub {
@@ -159,7 +215,8 @@
     }
 
     .maint-bar-wrap {
-      width: min(280px, 80vw); /* fluid — won't overflow small screens */
+      width: min(280px, 80vw);
+      /* fluid — won't overflow small screens */
       height: 4px;
       background: #1c2538;
       border-radius: 99px;
@@ -176,8 +233,13 @@
     }
 
     @keyframes maint-progress {
-      0%   { transform: translateX(-100%); }
-      100% { transform: translateX(320%); }
+      0% {
+        transform: translateX(-100%);
+      }
+
+      100% {
+        transform: translateX(320%);
+      }
     }
 
     .maint-contact {
@@ -199,9 +261,14 @@
       white-space: nowrap;
     }
 
-    .maint-link:hover { color: #f5c842; }
+    .maint-link:hover {
+      color: #f5c842;
+    }
 
-    .maint-sep { color: #5a6b8a; font-size: 0.75rem; }
+    .maint-sep {
+      color: #5a6b8a;
+      font-size: 0.75rem;
+    }
 
     /* Mobile tweaks */
     @media (max-width: 480px) {
@@ -211,14 +278,21 @@
         align-items: center;
       }
 
-      .maint-sep { display: none; }
+      .maint-sep {
+        display: none;
+      }
 
-      .maint-link { white-space: normal; justify-content: center; }
+      .maint-link {
+        white-space: normal;
+        justify-content: center;
+      }
     }
 
     /* Extra-small screens (e.g. 320px wide) */
     @media (max-width: 360px) {
-      .maint-content { padding: 1rem 0.75rem; }
+      .maint-content {
+        padding: 1rem 0.75rem;
+      }
     }
 
     :root {
