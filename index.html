@@ -11,7 +11,6 @@
     rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
-
     /* ══ MAINTENANCE OVERLAY ══ */
     #maintenanceOverlay {
       position: fixed;
@@ -28,21 +27,24 @@
     .maint-scanlines {
       position: absolute;
       inset: 0;
-      background: repeating-linear-gradient(
-        0deg,
-        transparent,
-        transparent 3px,
-        rgba(255, 255, 255, 0.018) 3px,
-        rgba(255, 255, 255, 0.018) 4px
-      );
+      background: repeating-linear-gradient(0deg,
+          transparent,
+          transparent 3px,
+          rgba(255, 255, 255, 0.018) 3px,
+          rgba(255, 255, 255, 0.018) 4px);
       animation: maint-scan 8s linear infinite;
       pointer-events: none;
       z-index: 1;
     }
 
     @keyframes maint-scan {
-      0%   { background-position: 0 0; }
-      100% { background-position: 0 120px; }
+      0% {
+        background-position: 0 0;
+      }
+
+      100% {
+        background-position: 0 120px;
+      }
     }
 
     .maint-content {
@@ -88,8 +90,17 @@
     }
 
     @keyframes maint-pulse {
-      0%, 100% { opacity: 0.5; transform: scale(1); }
-      50%       { opacity: 1;   transform: scale(1.15); }
+
+      0%,
+      100% {
+        opacity: 0.5;
+        transform: scale(1);
+      }
+
+      50% {
+        opacity: 1;
+        transform: scale(1.15);
+      }
     }
 
     .maint-gear {
@@ -100,8 +111,13 @@
     }
 
     @keyframes maint-spin {
-      from { transform: rotate(0deg); }
-      to   { transform: rotate(360deg); }
+      from {
+        transform: rotate(0deg);
+      }
+
+      to {
+        transform: rotate(360deg);
+      }
     }
 
     .maint-title {
@@ -136,17 +152,51 @@
     }
 
     @keyframes maint-glitch-before {
-      0%, 88%, 100% { opacity: 0; transform: translateX(0); }
-      90%  { opacity: 0.7; transform: translateX(-4px); }
-      92%  { opacity: 0.5; transform: translateX(4px); }
-      94%  { opacity: 0; }
+
+      0%,
+      88%,
+      100% {
+        opacity: 0;
+        transform: translateX(0);
+      }
+
+      90% {
+        opacity: 0.7;
+        transform: translateX(-4px);
+      }
+
+      92% {
+        opacity: 0.5;
+        transform: translateX(4px);
+      }
+
+      94% {
+        opacity: 0;
+      }
     }
 
     @keyframes maint-glitch-after {
-      0%, 88%, 100% { opacity: 0; transform: translateX(0); }
-      91%  { opacity: 0.6; transform: translateX(4px); }
-      93%  { opacity: 0.4; transform: translateX(-4px); }
-      95%  { opacity: 0; }
+
+      0%,
+      88%,
+      100% {
+        opacity: 0;
+        transform: translateX(0);
+      }
+
+      91% {
+        opacity: 0.6;
+        transform: translateX(4px);
+      }
+
+      93% {
+        opacity: 0.4;
+        transform: translateX(-4px);
+      }
+
+      95% {
+        opacity: 0;
+      }
     }
 
     .maint-sub {
@@ -175,8 +225,13 @@
     }
 
     @keyframes maint-progress {
-      0%   { transform: translateX(-100%); }
-      100% { transform: translateX(320%); }
+      0% {
+        transform: translateX(-100%);
+      }
+
+      100% {
+        transform: translateX(320%);
+      }
     }
 
     .maint-contact {
@@ -197,13 +252,24 @@
       transition: color 0.2s;
     }
 
-    .maint-link:hover { color: #f5c842; }
+    .maint-link:hover {
+      color: #f5c842;
+    }
 
-    .maint-sep { color: #5a6b8a; font-size: 0.75rem; }
+    .maint-sep {
+      color: #5a6b8a;
+      font-size: 0.75rem;
+    }
 
     @media (max-width: 480px) {
-      .maint-contact { flex-direction: column; gap: 0.6rem; }
-      .maint-sep { display: none; }
+      .maint-contact {
+        flex-direction: column;
+        gap: 0.6rem;
+      }
+
+      .maint-sep {
+        display: none;
+      }
     }
 
     :root {
@@ -3422,7 +3488,7 @@
 
     // ══ MAINTENANCE MODE ══
     // Set to true to show the maintenance overlay, false for normal portal.
-    const MAINTENANCE_MODE = false;
+    const MAINTENANCE_MODE = true;
 
     function initMaintenanceMode() {
       if (!MAINTENANCE_MODE) return;
@@ -3451,7 +3517,8 @@
         <i class="fas fa-cog maint-gear"></i>
       </div>
       <h1 class="maint-title" data-text="UNDER MAINTENANCE">UNDER MAINTENANCE</h1>
-      <p class="maint-sub">Kami sedang menaik taraf portal untuk pengalaman yang lebih baik.<br>We'll be back very soon!</p>
+      <p class="maint-sub">Kami sedang menaik taraf portal untuk pengalaman yang lebih baik.<br>We'll be back very soon!
+      </p>
       <div class="maint-bar-wrap">
         <div class="maint-bar"></div>
       </div>
