@@ -11,6 +11,201 @@
     rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
+
+    /* ══ MAINTENANCE OVERLAY ══ */
+    #maintenanceOverlay {
+      position: fixed;
+      inset: 0;
+      z-index: 99999;
+      background: #07090f;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .maint-scanlines {
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 3px,
+        rgba(255, 255, 255, 0.018) 3px,
+        rgba(255, 255, 255, 0.018) 4px
+      );
+      animation: maint-scan 8s linear infinite;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    @keyframes maint-scan {
+      0%   { background-position: 0 0; }
+      100% { background-position: 0 120px; }
+    }
+
+    .maint-content {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 2rem 1.5rem;
+      max-width: 560px;
+      width: 100%;
+    }
+
+    .maint-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      font-family: var(--font-head);
+      font-weight: 800;
+      font-size: 1.1rem;
+      color: #f0f4ff;
+      margin-bottom: 2.5rem;
+      opacity: 0.85;
+    }
+
+    .maint-gear-wrap {
+      position: relative;
+      width: 90px;
+      height: 90px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 2rem;
+    }
+
+    .maint-gear-glow {
+      position: absolute;
+      inset: -10px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(245, 200, 66, 0.25) 0%, transparent 70%);
+      animation: maint-pulse 2.5s ease-in-out infinite;
+    }
+
+    @keyframes maint-pulse {
+      0%, 100% { opacity: 0.5; transform: scale(1); }
+      50%       { opacity: 1;   transform: scale(1.15); }
+    }
+
+    .maint-gear {
+      font-size: 4rem;
+      color: #f5c842;
+      animation: maint-spin 4s linear infinite;
+      filter: drop-shadow(0 0 16px rgba(245, 200, 66, 0.5));
+    }
+
+    @keyframes maint-spin {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+
+    .maint-title {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2rem, 6vw, 3.5rem);
+      font-weight: 800;
+      color: #f0f4ff;
+      letter-spacing: 0.04em;
+      margin-bottom: 1rem;
+      position: relative;
+    }
+
+    .maint-title::before,
+    .maint-title::after {
+      content: attr(data-text);
+      position: absolute;
+      left: 0;
+      right: 0;
+      opacity: 0;
+    }
+
+    .maint-title::before {
+      color: #f5c842;
+      animation: maint-glitch-before 4s infinite;
+      clip-path: polygon(0 20%, 100% 20%, 100% 40%, 0 40%);
+    }
+
+    .maint-title::after {
+      color: #1a4bff;
+      animation: maint-glitch-after 4s infinite;
+      clip-path: polygon(0 60%, 100% 60%, 100% 80%, 0 80%);
+    }
+
+    @keyframes maint-glitch-before {
+      0%, 88%, 100% { opacity: 0; transform: translateX(0); }
+      90%  { opacity: 0.7; transform: translateX(-4px); }
+      92%  { opacity: 0.5; transform: translateX(4px); }
+      94%  { opacity: 0; }
+    }
+
+    @keyframes maint-glitch-after {
+      0%, 88%, 100% { opacity: 0; transform: translateX(0); }
+      91%  { opacity: 0.6; transform: translateX(4px); }
+      93%  { opacity: 0.4; transform: translateX(-4px); }
+      95%  { opacity: 0; }
+    }
+
+    .maint-sub {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem;
+      color: #8b9cbf;
+      line-height: 1.7;
+      margin-bottom: 2rem;
+    }
+
+    .maint-bar-wrap {
+      width: 280px;
+      height: 4px;
+      background: #1c2538;
+      border-radius: 99px;
+      overflow: hidden;
+      margin-bottom: 2.5rem;
+    }
+
+    .maint-bar {
+      height: 100%;
+      width: 45%;
+      background: linear-gradient(90deg, transparent, #f5c842, transparent);
+      border-radius: 99px;
+      animation: maint-progress 2s ease-in-out infinite;
+    }
+
+    @keyframes maint-progress {
+      0%   { transform: translateX(-100%); }
+      100% { transform: translateX(320%); }
+    }
+
+    .maint-contact {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .maint-link {
+      font-size: 0.82rem;
+      color: #5a6b8a;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: color 0.2s;
+    }
+
+    .maint-link:hover { color: #f5c842; }
+
+    .maint-sep { color: #5a6b8a; font-size: 0.75rem; }
+
+    @media (max-width: 480px) {
+      .maint-contact { flex-direction: column; gap: 0.6rem; }
+      .maint-sep { display: none; }
+    }
+
     :root {
       --bg: #07090f;
       --bg2: #0d1118;
@@ -3224,7 +3419,53 @@
           ? 'rgba(242,245,252,0.95)' : 'rgba(7,9,15,0.92)')
         : '';
     });
+
+    // ══ MAINTENANCE MODE ══
+    // Set to true to show the maintenance overlay, false for normal portal.
+    const MAINTENANCE_MODE = false;
+
+    function initMaintenanceMode() {
+      if (!MAINTENANCE_MODE) return;
+      const overlay = document.getElementById('maintenanceOverlay');
+      if (overlay) {
+        overlay.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+      }
+    }
+
+    // Run once inline + once after full DOM parse (overlay is below this script)
+    initMaintenanceMode();
+    document.addEventListener('DOMContentLoaded', initMaintenanceMode);
   </script>
+
+  <!-- ══ MAINTENANCE OVERLAY ══ -->
+  <div id="maintenanceOverlay" style="display:none;" role="dialog" aria-modal="true" aria-label="Under Maintenance">
+    <div class="maint-scanlines"></div>
+    <div class="maint-content">
+      <div class="maint-logo">
+        <div class="nav-logo-icon"><i class="fas fa-graduation-cap"></i></div>
+        <span>JPP&nbsp;<span style="color:#f5c842">PMKL</span></span>
+      </div>
+      <div class="maint-gear-wrap">
+        <div class="maint-gear-glow"></div>
+        <i class="fas fa-cog maint-gear"></i>
+      </div>
+      <h1 class="maint-title" data-text="UNDER MAINTENANCE">UNDER MAINTENANCE</h1>
+      <p class="maint-sub">Kami sedang menaik taraf portal untuk pengalaman yang lebih baik.<br>We'll be back very soon!</p>
+      <div class="maint-bar-wrap">
+        <div class="maint-bar"></div>
+      </div>
+      <div class="maint-contact">
+        <a href="https://www.instagram.com/jpp.pmklofficial" target="_blank" rel="noopener" class="maint-link">
+          <i class="fab fa-instagram"></i> @jpp.pmklofficial
+        </a>
+        <span class="maint-sep">&bull;</span>
+        <a href="mailto:jpppmklofficial@gmail.com" class="maint-link">
+          <i class="fas fa-envelope"></i> jpppmklofficial@gmail.com
+        </a>
+      </div>
+    </div>
+  </div>
 </body>
 
 </html>
