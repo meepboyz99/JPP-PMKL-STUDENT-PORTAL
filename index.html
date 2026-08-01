@@ -19,7 +19,7 @@
       position: fixed;
       inset: 0;
       z-index: 99999;
-      background: #07090f;
+      background: var(--bg);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -299,22 +299,41 @@
     }
 
     :root {
-      --bg: #07090f;
-      --bg2: #0d1118;
-      --bg3: #121824;
-      --surface: #161d2b;
-      --surface2: #1c2538;
-      --border: rgba(255, 255, 255, 0.07);
-      --border2: rgba(255, 255, 255, 0.12);
-      --text: #f0f4ff;
-      --text2: #8b9cbf;
-      --text3: #5a6b8a;
-      --primary: #1a4bff;
-      --primary-glow: rgba(26, 75, 255, 0.3);
-      --gold: #f5c842;
-      --gold-dim: rgba(245, 200, 66, 0.15);
-      --gold-glow: rgba(245, 200, 66, 0.25);
-      --navy: #0a1628;
+      /* DottoUI Native Tokens - Dark Mode */
+      --background: oklch(26.69% 0.0484 257.47);
+      --foreground: oklch(93.22% 0.0103 81.79);
+      --card: oklch(31.72% 0.0611 259.79);
+      --card-foreground: oklch(93.22% 0.0103 81.79);
+      --popover: oklch(31.72% 0.0611 259.79);
+      --popover-foreground: oklch(93.22% 0.0103 81.79);
+      --primary-token: oklch(70.81% 0.0796 260.06);
+      --primary-foreground: oklch(26.69% 0.0484 257.47);
+      --secondary-token: oklch(35.09% 0.0517 266.03);
+      --secondary-foreground: oklch(93.22% 0.0103 81.79);
+      --muted: oklch(35.09% 0.0517 266.03);
+      --muted-foreground: oklch(81.46% 0.0273 251.7);
+      --accent: oklch(71.15% 0.0534 260.39);
+      --accent-foreground: oklch(26.69% 0.0484 257.47);
+      --destructive: oklch(62.87% 0.1217 33.94);
+      --destructive-foreground: oklch(26.69% 0.0484 257.47);
+
+      /* Application Theme Mapping - Dark Mode */
+      --bg: oklch(26.69% 0.0484 257.47);
+      --bg2: oklch(28.5% 0.052 258);
+      --bg3: oklch(30% 0.056 259);
+      --surface: oklch(31.72% 0.0611 259.79);
+      --surface2: oklch(35.09% 0.0517 266.03);
+      --border: rgba(244, 240, 232, 0.12);
+      --border2: rgba(244, 240, 232, 0.22);
+      --text: oklch(93.22% 0.0103 81.79);
+      --text2: oklch(81.46% 0.0273 251.7);
+      --text3: oklch(68% 0.035 255);
+      --primary: oklch(70.81% 0.0796 260.06);
+      --primary-glow: rgba(117, 156, 239, 0.3);
+      --gold: oklch(90.1% 0.0293 82.59);
+      --gold-dim: rgba(237, 228, 211, 0.15);
+      --gold-glow: rgba(237, 228, 211, 0.25);
+      --navy: oklch(23% 0.045 256);
       --radius: 16px;
       --radius-sm: 10px;
       --font-head: 'Syne', sans-serif;
@@ -324,19 +343,41 @@
     }
 
     [data-theme="light"] {
-      --bg: #f2f5fc;
-      --bg2: #e8edf8;
-      --bg3: #dde4f5;
-      --surface: #ffffff;
-      --surface2: #f0f4ff;
-      --border: rgba(0, 0, 0, 0.07);
-      --border2: rgba(0, 0, 0, 0.12);
-      --text: #0d1118;
-      --text2: #4a5878;
-      --text3: #8090aa;
-      --primary-glow: rgba(26, 75, 255, 0.12);
-      --gold-dim: rgba(180, 130, 10, 0.1);
-      --navy: #e0e8f8;
+      /* DottoUI Native Tokens - Light Mode */
+      --background: oklch(93.22% 0.0103 81.79);
+      --foreground: oklch(30.76% 0.0566 257.95);
+      --card: oklch(95.3% 0.0115 84.58);
+      --card-foreground: oklch(30.76% 0.0566 257.95);
+      --popover: oklch(95.3% 0.0115 84.58);
+      --popover-foreground: oklch(30.76% 0.0566 257.95);
+      --primary-token: oklch(71.15% 0.0534 260.39);
+      --primary-foreground: oklch(30.76% 0.0566 257.95);
+      --secondary-token: oklch(90.1% 0.0293 82.59);
+      --secondary-foreground: oklch(30.76% 0.0566 257.95);
+      --muted: oklch(89.57% 0.0187 86.15);
+      --muted-foreground: oklch(48.77% 0.0489 262.7);
+      --accent: oklch(70.81% 0.0796 260.06);
+      --accent-foreground: oklch(30.76% 0.0566 257.95);
+      --destructive: oklch(56.16% 0.1298 33.73);
+      --destructive-foreground: oklch(95.3% 0.0115 84.58);
+
+      /* Application Theme Mapping - Light Mode */
+      --bg: oklch(93.22% 0.0103 81.79);
+      --bg2: oklch(91.5% 0.011 83);
+      --bg3: oklch(89.57% 0.0187 86.15);
+      --surface: oklch(95.3% 0.0115 84.58);
+      --surface2: oklch(90.1% 0.0293 82.59);
+      --border: rgba(30, 45, 74, 0.12);
+      --border2: rgba(30, 45, 74, 0.22);
+      --text: oklch(30.76% 0.0566 257.95);
+      --text2: oklch(48.77% 0.0489 262.7);
+      --text3: oklch(60% 0.04 260);
+      --primary: oklch(71.15% 0.0534 260.39);
+      --primary-glow: rgba(124, 158, 235, 0.2);
+      --gold: oklch(78% 0.05 80);
+      --gold-dim: rgba(195, 155, 90, 0.15);
+      --gold-glow: rgba(195, 155, 90, 0.25);
+      --navy: oklch(88% 0.02 85);
     }
 
     *,
@@ -397,14 +438,10 @@
       align-items: center;
       justify-content: space-between;
       padding: 0 1.5rem;
-      background: rgba(7, 9, 15, 0.75);
+      background: color-mix(in srgb, var(--bg) 80%, transparent);
       backdrop-filter: blur(24px) saturate(1.4);
       border-bottom: 1px solid var(--border);
       transition: background var(--transition);
-    }
-
-    [data-theme="light"] nav {
-      background: rgba(242, 245, 252, 0.82);
     }
 
     .nav-logo {
