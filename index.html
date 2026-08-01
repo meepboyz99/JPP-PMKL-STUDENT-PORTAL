@@ -7,7 +7,7 @@
   <title>JPP PMKL — Student Portal</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link
-    href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link rel="icon" type="image/png" href="JPP LOGO.png">
@@ -334,10 +334,11 @@
       --gold-dim: rgba(237, 228, 211, 0.15);
       --gold-glow: rgba(237, 228, 211, 0.25);
       --navy: oklch(23% 0.045 256);
-      --radius: 16px;
-      --radius-sm: 10px;
-      --font-head: 'Syne', sans-serif;
-      --font-body: 'DM Sans', sans-serif;
+      --radius: 0px;
+      --radius-sm: 0px;
+      --font-display: 'Silkscreen', cursive, monospace;
+      --font-head: 'Silkscreen', cursive, monospace;
+      --font-body: 'Space Mono', monospace;
       --nav-h: 68px;
       --transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
     }
@@ -378,6 +379,98 @@
       --gold-dim: rgba(195, 155, 90, 0.15);
       --gold-glow: rgba(195, 155, 90, 0.25);
       --navy: oklch(88% 0.02 85);
+    }
+
+    /* ══ DOTTO-UI PIXEL UTILITIES ══ */
+    .font-display {
+      font-family: var(--font-display);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .pixel-corner {
+      clip-path: polygon(0 8px, 4px 8px, 4px 4px, 8px 4px, 8px 0, calc(100% - 8px) 0, calc(100% - 8px) 4px, calc(100% - 4px) 4px, calc(100% - 4px) 8px, 100% 8px, 100% calc(100% - 8px), calc(100% - 4px) calc(100% - 8px), calc(100% - 4px) calc(100% - 4px), calc(100% - 8px) calc(100% - 4px), calc(100% - 8px) 100%, 8px 100%, 8px calc(100% - 4px), 4px calc(100% - 4px), 4px calc(100% - 8px), 0 calc(100% - 8px));
+    }
+
+    .pixel-corner-1 {
+      clip-path: polygon(0 4px, 4px 0, calc(100% - 4px) 0, 100% 4px, 100% calc(100% - 4px), calc(100% - 4px) 100%, 4px 100%, 0 calc(100% - 4px));
+    }
+
+    .pixel-corner-lg {
+      clip-path: polygon(0 12px, 6px 12px, 6px 6px, 12px 6px, 12px 0, calc(100% - 12px) 0, calc(100% - 12px) 6px, calc(100% - 6px) 6px, calc(100% - 6px) 12px, 100% 12px, 100% calc(100% - 12px), calc(100% - 6px) calc(100% - 12px), calc(100% - 6px) calc(100% - 6px), calc(100% - 12px) calc(100% - 6px), calc(100% - 12px) 100%, 12px 100%, 12px calc(100% - 6px), 6px calc(100% - 6px), 6px calc(100% - 12px), 0 calc(100% - 12px));
+    }
+
+    .pixel-bordered {
+      isolation: isolate;
+      background-color: transparent;
+      position: relative;
+    }
+
+    .pixel-bordered::before,
+    .pixel-bordered::after {
+      content: "";
+      z-index: -1;
+      clip-path: polygon(0 8px, 4px 8px, 4px 4px, 8px 4px, 8px 0, calc(100% - 8px) 0, calc(100% - 8px) 4px, calc(100% - 4px) 4px, calc(100% - 4px) 8px, 100% 8px, 100% calc(100% - 8px), calc(100% - 4px) calc(100% - 8px), calc(100% - 4px) calc(100% - 4px), calc(100% - 8px) calc(100% - 4px), calc(100% - 8px) 100%, 8px 100%, 8px calc(100% - 4px), 4px calc(100% - 4px), 4px calc(100% - 8px), 0 calc(100% - 8px));
+      position: absolute;
+    }
+
+    .pixel-bordered::before {
+      background-color: var(--border2);
+      inset: 0;
+    }
+
+    .pixel-bordered::after {
+      inset: var(--pf-border, 2px);
+      background-color: var(--pf-fill, var(--surface));
+    }
+
+    .pixel-bordered-1 {
+      isolation: isolate;
+      background-color: transparent;
+      position: relative;
+    }
+
+    .pixel-bordered-1::before,
+    .pixel-bordered-1::after {
+      content: "";
+      z-index: -1;
+      clip-path: polygon(0 4px, 4px 0, calc(100% - 4px) 0, 100% 4px, 100% calc(100% - 4px), calc(100% - 4px) 100%, 4px 100%, 0 calc(100% - 4px));
+      position: absolute;
+    }
+
+    .pixel-bordered-1::before {
+      background-color: var(--border2);
+      inset: 0;
+    }
+
+    .pixel-bordered-1::after {
+      inset: var(--pf-border, 2px);
+      background-color: var(--pf-fill, var(--surface));
+    }
+
+    .pixel-shadow {
+      filter: drop-shadow(var(--pf-shadow, 4px) var(--pf-shadow, 4px) 0 var(--border2));
+    }
+
+    .pixel-shadow-sm {
+      filter: drop-shadow(2px 2px 0 var(--border2));
+    }
+
+    .pixel-depth {
+      position: relative;
+    }
+
+    .pixel-depth::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      box-shadow: inset 3px 3px 0 0 rgba(255, 255, 255, 0.15), inset -3px -3px 0 0 rgba(0, 0, 0, 0.3);
+    }
+
+    .pixelated,
+    img {
+      image-rendering: pixelated;
     }
 
     *,
@@ -697,10 +790,10 @@
       border: 1px solid rgba(245, 200, 66, 0.25);
       color: var(--gold);
       padding: 0.4rem 1.2rem;
-      border-radius: 99px;
-      font-size: 0.75rem;
-      font-weight: 600;
-      letter-spacing: 0.04em;
+      clip-path: polygon(0 4px, 4px 0, calc(100% - 4px) 0, 100% 4px, 100% calc(100% - 4px), calc(100% - 4px) 100%, 4px 100%, 0 calc(100% - 4px));
+      font-family: var(--font-head);
+      font-size: 0.7rem;
+      letter-spacing: 0.05em;
       text-transform: uppercase;
       margin-bottom: 1.5rem;
       animation: fadeUp 0.5s ease 0.1s both;
@@ -722,6 +815,7 @@
         transform: translateY(28px) scale(0.97);
         letter-spacing: 0.08em;
       }
+
       to {
         opacity: 1;
         transform: translateY(0) scale(1);
@@ -732,15 +826,13 @@
     .hero h1 em {
       font-style: normal;
       display: inline-block;
-      background: linear-gradient(
-        90deg,
-        #f5c842 0%,
-        #ffe88a 25%,
-        #ffffff 45%,
-        #7ab4ff 60%,
-        #f5c842 80%,
-        #ffe88a 100%
-      );
+      background: linear-gradient(90deg,
+          #f5c842 0%,
+          #ffe88a 25%,
+          #ffffff 45%,
+          #7ab4ff 60%,
+          #f5c842 80%,
+          #ffe88a 100%);
       background-size: 250% auto;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -749,30 +841,43 @@
         heroEmIn 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.4s both,
         shimmerFlow 4s linear 1.2s infinite,
         glowPulse 3s ease-in-out 1.2s infinite;
-      filter: drop-shadow(0 0 18px rgba(245,200,66,0.45));
+      filter: drop-shadow(0 0 18px rgba(245, 200, 66, 0.45));
     }
 
     @keyframes heroEmIn {
       from {
         opacity: 0;
         transform: translateY(18px) scaleX(0.94);
-        filter: drop-shadow(0 0 0px rgba(245,200,66,0));
+        filter: drop-shadow(0 0 0px rgba(245, 200, 66, 0));
       }
+
       to {
         opacity: 1;
         transform: translateY(0) scaleX(1);
-        filter: drop-shadow(0 0 18px rgba(245,200,66,0.45));
+        filter: drop-shadow(0 0 18px rgba(245, 200, 66, 0.45));
       }
     }
 
     @keyframes shimmerFlow {
-      0%   { background-position: 200% center; }
-      100% { background-position: -50% center; }
+      0% {
+        background-position: 200% center;
+      }
+
+      100% {
+        background-position: -50% center;
+      }
     }
 
     @keyframes glowPulse {
-      0%, 100% { filter: drop-shadow(0 0 14px rgba(245,200,66,0.35)); }
-      50%       { filter: drop-shadow(0 0 28px rgba(245,200,66,0.7)) drop-shadow(0 0 50px rgba(122,180,255,0.25)); }
+
+      0%,
+      100% {
+        filter: drop-shadow(0 0 14px rgba(245, 200, 66, 0.35));
+      }
+
+      50% {
+        filter: drop-shadow(0 0 28px rgba(245, 200, 66, 0.7)) drop-shadow(0 0 50px rgba(122, 180, 255, 0.25));
+      }
     }
 
     .hero-sub {
@@ -795,15 +900,23 @@
 
     .btn-hero {
       padding: 0.85rem 1.75rem;
-      border-radius: 12px;
-      font-family: var(--font-body);
-      font-size: 0.95rem;
-      font-weight: 600;
+      border-radius: 0;
+      clip-path: polygon(0 6px, 3px 6px, 3px 3px, 6px 3px, 6px 0, calc(100% - 6px) 0, calc(100% - 6px) 3px, calc(100% - 3px) 3px, calc(100% - 3px) 6px, 100% 6px, 100% calc(100% - 6px), calc(100% - 3px) calc(100% - 6px), calc(100% - 3px) calc(100% - 3px), calc(100% - 6px) calc(100% - 3px), calc(100% - 6px) 100%, 6px 100%, 6px calc(100% - 3px), 3px calc(100% - 3px), 3px calc(100% - 6px), 0 calc(100% - 6px));
+      font-family: var(--font-head);
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
       cursor: pointer;
-      transition: all 0.25s;
+      filter: drop-shadow(3px 3px 0 var(--border2));
+      transition: all 0.15s ease;
       display: flex;
       align-items: center;
       gap: 0.5rem;
+    }
+
+    .btn-hero:active {
+      transform: translate(2px, 2px);
+      filter: drop-shadow(1px 1px 0 var(--border2));
     }
 
     .btn-hero-primary {
@@ -813,9 +926,8 @@
     }
 
     .btn-hero-primary:hover {
-      background: #2d5bff;
-      transform: translateY(-2px);
-      box-shadow: 0 8px 30px var(--primary-glow);
+      background: oklch(65% 0.09 260);
+      filter: drop-shadow(4px 4px 0 var(--primary-glow));
     }
 
     .btn-hero-outline {
@@ -826,7 +938,7 @@
 
     .btn-hero-outline:hover {
       background: var(--surface);
-      transform: translateY(-2px);
+      filter: drop-shadow(4px 4px 0 var(--border2));
     }
 
     .quick-access {
@@ -844,20 +956,21 @@
       padding: 0.55rem 1rem;
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: 99px;
-      font-size: 0.8rem;
-      font-weight: 500;
+      clip-path: polygon(0 4px, 4px 0, calc(100% - 4px) 0, 100% 4px, 100% calc(100% - 4px), calc(100% - 4px) 100%, 4px 100%, 0 calc(100% - 4px));
+      font-family: var(--font-head);
+      font-size: 0.75rem;
       color: var(--text2);
       cursor: pointer;
       transition: all 0.2s;
       text-decoration: none;
+      filter: drop-shadow(2px 2px 0 var(--border2));
     }
 
     .qa-chip:hover {
       background: var(--surface2);
       color: var(--text);
-      border-color: var(--border2);
-      transform: translateY(-2px);
+      filter: drop-shadow(3px 3px 0 var(--gold));
+      transform: translateY(-1px);
     }
 
     .qa-chip i {
@@ -971,16 +1084,17 @@
 
     .dash-card {
       background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
+      border: 1px solid var(--border2);
+      clip-path: polygon(0 8px, 4px 8px, 4px 4px, 8px 4px, 8px 0, calc(100% - 8px) 0, calc(100% - 8px) 4px, calc(100% - 4px) 4px, calc(100% - 4px) 8px, 100% 8px, 100% calc(100% - 8px), calc(100% - 4px) calc(100% - 8px), calc(100% - 4px) calc(100% - 4px), calc(100% - 8px) calc(100% - 4px), calc(100% - 8px) 100%, 8px 100%, 8px calc(100% - 4px), 4px calc(100% - 4px), 4px calc(100% - 8px), 0 calc(100% - 8px));
       padding: 1.5rem;
       cursor: pointer;
-      transition: all 0.25s;
+      transition: all 0.2s ease;
       position: relative;
       overflow: hidden;
       text-decoration: none;
       display: flex;
       flex-direction: column;
+      filter: drop-shadow(4px 4px 0 var(--border2));
     }
 
     .dash-card::before {
@@ -990,13 +1104,16 @@
       background: linear-gradient(135deg, var(--card-color, var(--primary)), transparent 70%);
       opacity: 0;
       transition: opacity 0.3s;
-      border-radius: inherit;
     }
 
     .dash-card:hover {
-      transform: translateY(-4px);
-      border-color: var(--border2);
-      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.2);
+      transform: translateY(-2px);
+      filter: drop-shadow(5px 5px 0 var(--gold));
+    }
+
+    .dash-card:active {
+      transform: translate(2px, 2px);
+      filter: drop-shadow(1px 1px 0 var(--border2));
     }
 
     .dash-card:hover::before {
@@ -1006,7 +1123,7 @@
     .dash-card-icon {
       width: 44px;
       height: 44px;
-      border-radius: 12px;
+      clip-path: polygon(0 4px, 4px 0, calc(100% - 4px) 0, 100% 4px, 100% calc(100% - 4px), calc(100% - 4px) 100%, 4px 100%, 0 calc(100% - 4px));
       display: flex;
       align-items: center;
       justify-content: center;
@@ -1018,10 +1135,11 @@
 
     .dash-card h4 {
       font-family: var(--font-head);
-      font-size: 0.95rem;
+      font-size: 0.85rem;
       font-weight: 700;
       color: var(--text);
       margin-bottom: 0.3rem;
+      letter-spacing: 0.02em;
     }
 
     .dash-card p {
@@ -1037,7 +1155,7 @@
       width: 28px;
       height: 28px;
       background: var(--surface2);
-      border-radius: 8px;
+      clip-path: polygon(0 3px, 3px 0, calc(100% - 3px) 0, 100% 3px, 100% calc(100% - 3px), calc(100% - 3px) 100%, 3px 100%, 0 calc(100% - 3px));
       display: flex;
       align-items: center;
       justify-content: center;
@@ -1049,7 +1167,6 @@
     .dash-card:hover .dash-card-arrow {
       background: var(--card-color, var(--primary));
       color: white;
-      transform: rotate(45deg);
     }
 
     /* ══ STATS ══ */
@@ -1063,16 +1180,17 @@
     .stat-item {
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: var(--radius);
+      clip-path: polygon(0 8px, 4px 8px, 4px 4px, 8px 4px, 8px 0, calc(100% - 8px) 0, calc(100% - 8px) 4px, calc(100% - 4px) 4px, calc(100% - 4px) 8px, 100% 8px, 100% calc(100% - 8px), calc(100% - 4px) calc(100% - 8px), calc(100% - 4px) calc(100% - 4px), calc(100% - 8px) calc(100% - 4px), calc(100% - 8px) 100%, 8px 100%, 8px calc(100% - 4px), 4px calc(100% - 4px), 4px calc(100% - 8px), 0 calc(100% - 8px));
       padding: 1.5rem;
       text-align: center;
       transition: all 0.25s;
+      filter: drop-shadow(4px 4px 0 var(--border2));
     }
 
     .stat-item:hover {
       border-color: var(--gold);
-      transform: translateY(-3px);
-      box-shadow: 0 8px 30px var(--gold-glow);
+      transform: translateY(-2px);
+      filter: drop-shadow(5px 5px 0 var(--gold));
     }
 
     .stat-num {
@@ -3020,7 +3138,8 @@
 
         <div class="sec-label"><i class="fas fa-home"></i> Student Housing</div>
         <h2 class="sec-title" id="rentMainTitle">Rent House Listings</h2>
-        <p class="sec-sub" id="rentMainSub">Select an apartment complex near the polytechnic to view available student accommodation listings.</p>
+        <p class="sec-sub" id="rentMainSub">Select an apartment complex near the polytechnic to view available student
+          accommodation listings.</p>
 
         <div id="rentApartmentGrid" class="rent-grid">
           <div class="rent-card" onclick="selectApartment('Apartment Mahsuri')">
@@ -3030,7 +3149,8 @@
             <div class="rent-card-body">
               <h4>Apartment Mahsuri</h4>
               <p>Very popular. 7-minute walk to campus. Separate blocks for male & female students.</p>
-              <span class="tag tag-gold">Select Block <i class="fas fa-chevron-right" style="margin-left:5px"></i></span>
+              <span class="tag tag-gold">Select Block <i class="fas fa-chevron-right"
+                  style="margin-left:5px"></i></span>
             </div>
           </div>
 
@@ -3041,7 +3161,8 @@
             <div class="rent-card-body">
               <h4>Apartment Intan</h4>
               <p>Strategic location in Setiawangsa, close to bus and LRT transit facilities.</p>
-              <span class="tag tag-gold">Select Block <i class="fas fa-chevron-right" style="margin-left:5px"></i></span>
+              <span class="tag tag-gold">Select Block <i class="fas fa-chevron-right"
+                  style="margin-left:5px"></i></span>
             </div>
           </div>
 
@@ -3052,7 +3173,8 @@
             <div class="rent-card-body">
               <h4>Apartment Puteri</h4>
               <p>Conducive, peaceful, and safe environment with round-the-clock security monitoring.</p>
-              <span class="tag tag-gold">Select Block <i class="fas fa-chevron-right" style="margin-left:5px"></i></span>
+              <span class="tag tag-gold">Select Block <i class="fas fa-chevron-right"
+                  style="margin-left:5px"></i></span>
             </div>
           </div>
 
@@ -3063,7 +3185,8 @@
             <div class="rent-card-body">
               <h4>Apartment Sri Ayu</h4>
               <p>Budget-friendly alternative with spacious rooms and basic utilities included.</p>
-              <span class="tag tag-gold">Select Block <i class="fas fa-chevron-right" style="margin-left:5px"></i></span>
+              <span class="tag tag-gold">Select Block <i class="fas fa-chevron-right"
+                  style="margin-left:5px"></i></span>
             </div>
           </div>
         </div>
@@ -3082,7 +3205,8 @@
             <div class="stat-item">
               <div class="stat-num" style="font-size:1.8rem;"><i class="fas fa-map-marker-alt"></i></div>
               <div class="stat-label" style="margin-top:0.5rem; color:var(--text);">Nearby</div>
-              <p style="font-size:0.8rem; color:var(--text3); margin-top:0.25rem;">All listings are close to the polytechnic.
+              <p style="font-size:0.8rem; color:var(--text3); margin-top:0.25rem;">All listings are close to the
+                polytechnic.
               </p>
             </div>
             <div class="stat-item">
@@ -3094,7 +3218,8 @@
             <div class="stat-item">
               <div class="stat-num" style="font-size:1.8rem;"><i class="fas fa-phone-alt"></i></div>
               <div class="stat-label" style="margin-top:0.5rem; color:var(--text);">Direct Contact</div>
-              <p style="font-size:0.8rem; color:var(--text3); margin-top:0.25rem;">Contact the owner directly — no middleman.</p>
+              <p style="font-size:0.8rem; color:var(--text3); margin-top:0.25rem;">Contact the owner directly — no
+                middleman.</p>
             </div>
             <div class="stat-item">
               <div class="stat-num" style="font-size:1.8rem;"><i class="fas fa-shield-alt"></i></div>
